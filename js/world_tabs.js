@@ -5,184 +5,79 @@
 
 window.currentWorld = 'inicio';
 
-window.switchWorld = function(worldId, pushHash = true) {
-  if (!worldId) worldId = 'inicio';
-  window.currentWorld = worldId;
-  document.body.setAttribute('data-current-world', worldId);
+window.switchWorld = function(targetWorldId, pushHash = true) {
+  // Restricción: Solo queda activo el Home (Inicio).
+  // Clics en Colegios, S-cool Hub, Idiomas, Emisora o Prueba siempre llevan al inicio.
+  const worldId = 'inicio';
+  window.currentWorld = 'inicio';
+  document.body.setAttribute('data-current-world', 'inicio');
 
-  // 1. Update Tab Bar Buttons & Close Dropdown if Open
+  // 1. Cerrar menú desplegable de Ecosistemas si está abierto
   const bar = document.getElementById('world-tab-bar');
   if (bar) bar.classList.remove('is-menu-open');
   const toggle = document.getElementById('world-tab-toggle');
   if (toggle) toggle.setAttribute('aria-expanded', 'false');
 
+  // 2. Mantener Inicio como activo en la lista
   const tabBtns = document.querySelectorAll('.world-tab-btn');
   tabBtns.forEach(btn => {
-    if (btn.getAttribute('data-world') === worldId) {
+    if (btn.getAttribute('data-world') === 'inicio') {
       btn.classList.add('is-active');
     } else {
       btn.classList.remove('is-active');
     }
   });
 
-  // 2. Update World Views Visibility
+  // 3. Solo la vista de inicio permanece activa, todas las demás se ocultan
   const views = document.querySelectorAll('.world-view');
   views.forEach(view => {
-    if (view.id === `view-${worldId}`) {
+    if (view.id === 'view-inicio') {
       view.classList.add('is-active');
     } else {
       view.classList.remove('is-active');
     }
   });
 
-  // 3. Handle Hub 3D Elements Visibility
+  // 4. Ocultar elementos de fondos ajenos al Home
   const spheresCanvas = document.getElementById('spheres-canvas-container');
   const ecosystemBubbles = document.getElementById('ecosystem-bubbles-dock');
   const replayBtn = document.getElementById('hero-replay-btn');
 
-  if (worldId === 'hub') {
-    if (typeof window.set3DLogoTheme === 'function') {
-      window.set3DLogoTheme('default');
-    }
-    if (spheresCanvas) {
-      spheresCanvas.style.display = 'block';
-      spheresCanvas.style.opacity = '1';
-    }
-    if (ecosystemBubbles) {
-      ecosystemBubbles.style.display = 'block';
-      ecosystemBubbles.style.opacity = '1';
-      ecosystemBubbles.style.pointerEvents = 'auto';
-    }
-    if (replayBtn) replayBtn.style.display = 'inline-flex';
-  } else if (worldId === 'prueba') {
-    // Activate integrated velvet crimson & amber gold 3D logo beside the character's face!
-    if (typeof window.set3DLogoTheme === 'function') {
-      window.set3DLogoTheme('prueba');
-    }
-    if (spheresCanvas) {
-      spheresCanvas.style.display = 'block';
-      spheresCanvas.style.opacity = '1';
-    }
-    if (ecosystemBubbles) {
-      ecosystemBubbles.style.display = 'none';
-      ecosystemBubbles.style.pointerEvents = 'none';
-    }
-  } else if (worldId === 'inicio') {
-    if (spheresCanvas) {
-      spheresCanvas.style.display = 'none';
-      spheresCanvas.style.opacity = '0';
-    }
-    if (ecosystemBubbles) {
-      ecosystemBubbles.style.display = 'none';
-      ecosystemBubbles.style.pointerEvents = 'none';
-    }
-    if (replayBtn) replayBtn.style.display = 'none';
-  } else {
-    // Dim background spheres slightly and hide bubbles to focus on world content
-    if (spheresCanvas) {
-      spheresCanvas.style.display = 'block';
-      spheresCanvas.style.opacity = '0.35';
-    }
-    if (ecosystemBubbles) {
-      ecosystemBubbles.style.display = 'none';
-      ecosystemBubbles.style.pointerEvents = 'none';
-    }
-    if (replayBtn) replayBtn.style.display = 'none';
+  if (spheresCanvas) {
+    spheresCanvas.style.display = 'none';
+    spheresCanvas.style.opacity = '0';
+  }
+  if (ecosystemBubbles) {
+    ecosystemBubbles.style.display = 'none';
+    ecosystemBubbles.style.opacity = '0';
+    ecosystemBubbles.style.pointerEvents = 'none';
+  }
+  if (replayBtn) replayBtn.style.display = 'none';
+
+  // 5. Desactivar otros ciclos de vida
+  if (typeof window.deactivateMainframe === 'function') window.deactivateMainframe();
+  if (typeof window.onJulyIdiomasDeactivated === 'function') window.onJulyIdiomasDeactivated();
+  if (typeof window.onJulyHubDeactivated === 'function') window.onJulyHubDeactivated();
+
+  // 6. Activar Home (Inicio)
+  if (typeof window.onInicioActivated === 'function') {
+    window.onInicioActivated();
   }
 
-  // 4. Scroll to top of the newly activated world (both native and Lenis)
+  // 7. Scroll suave y fluido hacia arriba del Home
   if (window.lenisInstance && typeof window.lenisInstance.scrollTo === 'function') {
-    window.lenisInstance.scrollTo(0, { immediate: true });
+    window.lenisInstance.scrollTo(0, { immediate: false, duration: 1.2 });
   } else {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Refresh ScrollTrigger and scrollytelling triggers for the newly active view
-  if (typeof ScrollTrigger !== 'undefined') {
-    setTimeout(() => {
-      ScrollTrigger.refresh();
-      if (worldId === 'colegios' && typeof window.initScrollytelling === 'function') {
-        window.initScrollytelling();
-      }
-    }, 60);
-  }
-
-  // 5. Trigger Scrubber Resize / Draw for this world
-  if (window.initWorldScrubbers) {
-    window.initWorldScrubbers();
-  }
-
-  if (window.worldScrubbers && window.worldScrubbers[worldId]) {
-    window.worldScrubbers[worldId].setupResize();
-    window.worldScrubbers[worldId].drawFrame(0);
-    setTimeout(() => {
-      window.worldScrubbers[worldId].setupResize();
-      window.worldScrubbers[worldId].drawFrame(0);
-    }, 60);
-  }
-
-  // 5b. Mainframe (Prueba Tab) Lifecycle Management
-  if (worldId === 'prueba') {
-    if (typeof window.activateMainframe === 'function') {
-      window.activateMainframe();
-    }
-  } else {
-    if (typeof window.deactivateMainframe === 'function') {
-      window.deactivateMainframe();
-    }
-  }
-
-  // 5c. July Experiences Lifecycle Management (Idiomas Mouse Track & Hub Scroll Scrub)
-  if (worldId === 'idiomas') {
-    if (typeof window.onJulyIdiomasActivated === 'function') {
-      window.onJulyIdiomasActivated();
-    }
-  } else {
-    if (typeof window.onJulyIdiomasDeactivated === 'function') {
-      window.onJulyIdiomasDeactivated();
-    }
-  }
-
-  if (worldId === 'hub') {
-    if (typeof window.onJulyHubActivated === 'function') {
-      window.onJulyHubActivated();
-    }
-  } else {
-    if (typeof window.onJulyHubDeactivated === 'function') {
-      window.onJulyHubDeactivated();
-    }
-  }
-
-  // 5d. Inicio Lifecycle Management
-  if (worldId === 'inicio') {
-    if (typeof window.onInicioActivated === 'function') {
-      window.onInicioActivated();
-    }
-  } else {
-    if (typeof window.onInicioDeactivated === 'function') {
-      window.onInicioDeactivated();
-    }
-  }
-
-  // 5e. Colegios Lifecycle Management
-  if (worldId === 'colegios') {
-    if (typeof window.reinitColegiosHeroScroll === 'function') {
-      window.reinitColegiosHeroScroll();
-    }
-  }
-
-  // 6. Update URL Hash
+  // 8. Hash limpio en URL
   if (pushHash && history.pushState) {
-    history.pushState(null, null, `#${worldId}`);
+    history.pushState(null, null, '#inicio');
   }
 
-  // 7. Refresh ScrollTrigger / Lenis
-  if (window.ScrollTrigger) {
-    setTimeout(() => ScrollTrigger.refresh(), 200);
-  }
-
-  // 8. Dispatch worldChanged Custom Event
-  window.dispatchEvent(new CustomEvent('worldChanged', { detail: { world: worldId } }));
+  // 9. Dispatch worldChanged Custom Event
+  window.dispatchEvent(new CustomEvent('worldChanged', { detail: { world: 'inicio' } }));
 };
 
 // Wire up Bubble clicks to switch world
@@ -268,4 +163,28 @@ document.addEventListener('click', (e) => {
     }
   }
 });
+
+// Interceptor global: Cualquier interacción hacia Colegios, S-cool Hub, Idiomas, Emisora o Prueba redirige a Inicio
+document.addEventListener('click', (e) => {
+  const target = e.target.closest('a, button, [data-world], [data-section]');
+  if (!target) return;
+
+  const href = (target.getAttribute('href') || '').toLowerCase();
+  const dataWorld = (target.getAttribute('data-world') || '').toLowerCase();
+  const dataSection = (target.getAttribute('data-section') || '').toLowerCase();
+  const text = (target.textContent || '').trim().toLowerCase();
+
+  const isEcosystemTrigger = 
+    ['colegios', 'hub', 'idiomas', 'emisora', 'prueba'].includes(dataWorld) ||
+    ['colegios', 'canadá', 'canada', 'emisora', 'idiomas', 'hub', 'prueba'].includes(dataSection) ||
+    ['#colegios', '#hub', '#idiomas', '#emisora', '#prueba'].includes(href) ||
+    href.startsWith('#view-colegios') || href.startsWith('#view-hub') || href.startsWith('#view-idiomas') || href.startsWith('#view-emisora') || href.startsWith('#view-prueba') ||
+    text === 'colegios' || text === 's-cool hub' || text === 'idiomas' || text === 'emisora' || text === 'prueba';
+
+  if (isEcosystemTrigger) {
+    e.preventDefault();
+    e.stopPropagation();
+    window.switchWorld('inicio');
+  }
+}, true);
 

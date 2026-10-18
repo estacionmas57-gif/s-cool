@@ -463,3 +463,25 @@ html, body {
     display: none;
   }
 }
+
+/* ==========================================================================
+   DESHABILITAR RESTO DE PÁGINAS (SOLO HOME / INICIO ACTIVO)
+   ========================================================================== */
+#view-hub,
+#view-colegios,
+#view-idiomas,
+#view-emisora,
+#view-prueba {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+}
+
+#view-inicio {
+  display: block !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}

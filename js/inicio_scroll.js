@@ -163,13 +163,13 @@
 
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        console.log(`Sección seleccionada: ${section}`);
-        if (section === 'Colegios' && typeof window.switchWorld === 'function') {
-          window.switchWorld('colegios');
-        } else if (section === 'Canadá' && typeof window.switchWorld === 'function') {
-          window.switchWorld('idiomas');
-        } else if (section === 'Emisora' && typeof window.switchWorld === 'function') {
-          window.switchWorld('emisora');
+        console.log(`Lámina ${section} seleccionada: Redirigiendo al inicio`);
+        if (typeof window.switchWorld === 'function') {
+          window.switchWorld('inicio');
+        } else if (window.lenisInstance && typeof window.lenisInstance.scrollTo === 'function') {
+          window.lenisInstance.scrollTo(0, { immediate: false, duration: 1.2 });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       });
     });
