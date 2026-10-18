@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Card Replica Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 1024px;
+      height: 341px;
+      overflow: hidden;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .holo-card {
+      position: relative;
+      width: 320px;
+      height: 177px;
+      border-radius: 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      overflow: hidden;
+      
+      /* Base jelly glass gradient */
+      background: linear-gradient(180deg, 
+        #4f9cf2 0%, 
+        #3b8ae8 22%, 
+        #2974d6 50%, 
+        #1c61c5 78%, 
+        #1353b3 100%
+      );
+
+      /* Electric cyan glowing border & inner bevels */
+      border: 2.5px solid #00f0ff;
+      box-shadow: 
+        0 0 10px rgba(0, 240, 255, 0.75),
+        0 0 20px rgba(0, 210, 255, 0.45),
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.8),
+        inset 0 0 14px rgba(0, 220, 255, 0.6),
+        inset 0 -3px 8px rgba(0, 230, 255, 0.5);
+    }
+
+    /* Top-left glossy specular pill highlight */
+    .holo-card::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 20px;
+      width: 140px;
+      height: 18px;
+      border-radius: 20px;
+      background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(255, 255, 255, 0.75) 30%, 
+        rgba(255, 255, 255, 0.25) 70%, 
+        transparent 100%
+      );
+      filter: blur(1.5px);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Inner subtle glass contour rim */
+    .holo-card::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, transparent 40%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .holo-card span {
+      position: relative;
+      z-index: 3;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 48px;
+      letter-spacing: -0.01em;
+      text-shadow: 
+        0 2px 4px rgba(0, 20, 60, 0.4),
+        0 0 12px rgba(56, 189, 248, 0.6);
+    }
+
+    .holo-card.double-line span {
+      font-size: 38px;
+      line-height: 1.08;
+    }
+  </style>
+</head>
+<body>
+  <div class="holo-card">
+    <span>Colegio</span>
+  </div>
+  <div class="holo-card">
+    <span>Canadá</span>
+  </div>
+  <div class="holo-card double-line">
+    <span>Emisora<br>Digital</span>
+  </div>
+</body>
+</html>

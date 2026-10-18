@@ -1,0 +1,162 @@
+import os, subprocess
+from PIL import Image
+
+# We'll test rotation angles from 12deg to 20deg to find the exact match
+html = """<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1280px;
+      height: 720px;
+      overflow: hidden;
+      background: url('assets/frames_inicio/frame_0120.webp') no-repeat center center;
+      background-size: cover;
+      position: relative;
+    }
+
+    .cards-stage {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      perspective: 1000px;
+      perspective-origin: 50% 40%;
+    }
+
+    .holo-card {
+      position: absolute;
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      overflow: hidden;
+      
+      /* Pure translucent crystal frosted glass */
+      background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.16) 0%, 
+        rgba(180, 230, 255, 0.06) 40%, 
+        rgba(100, 200, 255, 0.05) 70%, 
+        rgba(0, 225, 255, 0.12) 100%
+      );
+
+      backdrop-filter: blur(5px) saturate(115%) brightness(1.02);
+      -webkit-backdrop-filter: blur(5px) saturate(115%) brightness(1.02);
+
+      border: 2px solid #5de4ff;
+      box-shadow: 
+        0 0 10px rgba(0, 240, 255, 0.7),
+        0 0 20px rgba(0, 240, 255, 0.35),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8),
+        inset 0 0 10px rgba(0, 230, 255, 0.15);
+      
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .holo-card::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 21px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-top-color: rgba(255, 255, 255, 0.85);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .holo-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 12%;
+      right: 12%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, #ffffff 30%, #5de4ff 70%, transparent 100%);
+      filter: blur(0.5px);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .holo-card span {
+      position: relative;
+      z-index: 3;
+      color: #ffffff;
+      font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+      font-weight: 700;
+      font-size: 52px;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      text-shadow: 
+        0 2px 4px rgba(0, 15, 45, 0.35),
+        0 0 12px rgba(90, 220, 255, 0.5);
+    }
+
+    .holo-card.double-line span {
+      font-size: 42px;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Posicionamiento 3D con Ángulo Perspectivo ── */
+    
+    /* 1. Colegio: Ángulo hacia adentro (rotateY positivo para que la derecha se meta a la pantalla) */
+    .hotspot-colegios {
+      left: 6.8%; top: 31.5%;
+      width: 21.5%; height: 24.5%;
+      transform: rotateY(16deg) rotateX(1deg);
+      transform-origin: center right;
+    }
+
+    /* 2. Canadá: Frontal absoluto (rotateY 0) */
+    .hotspot-canada {
+      left: 47.0%; top: 32.5%;
+      width: 21.0%; height: 23.5%;
+      transform: rotateY(0deg);
+      transform-origin: center center;
+    }
+
+    /* 3. Emisora Digital: Ángulo hacia adentro (rotateY negativo para que la izquierda se meta a la pantalla) */
+    .hotspot-emisora {
+      left: 70.0%; top: 30.5%;
+      width: 22.5%; height: 25.5%;
+      transform: rotateY(-16deg) rotateX(1deg);
+      transform-origin: center left;
+    }
+  </style>
+</head>
+<body>
+  <div class="cards-stage">
+    <div class="holo-card hotspot-colegios">
+      <span>Colegio</span>
+    </div>
+    <div class="holo-card hotspot-canada">
+      <span>Canadá</span>
+    </div>
+    <div class="holo-card double-line hotspot-emisora">
+      <span>Emisora<br>Digital</span>
+    </div>
+  </div>
+</body>
+</html>
+"""
+
+with open('test_3d_perspective.html', 'w', encoding='utf-8') as f:
+    f.write(html)
+
+edge = r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
+png_file = os.path.abspath('test_3d_perspective.png')
+subprocess.run([
+    edge,
+    '--headless=new',
+    '--disable-gpu',
+    '--window-size=1280,720',
+    f'--screenshot={png_file}',
+    'file:///' + os.path.abspath('test_3d_perspective.html')
+], capture_output=True)
+
+print('test_3d_perspective.png saved')

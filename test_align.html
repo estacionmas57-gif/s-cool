@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  width: 1280px; height: 720px; overflow: hidden;
+  background: url('assets/frames_inicio/frame_0120.webp') no-repeat center center;
+  background-size: cover; position: relative;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+.stage {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  perspective: 1200px;
+  perspective-origin: 50% 42%;
+}
+.card {
+  position: absolute;
+  border-radius: 24px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+  background: rgba(0, 200, 255, 0.05);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 2px solid #00ff66;
+  box-shadow: 0 0 10px rgba(0, 255, 100, 0.7);
+  color: #00ff66; font-weight: 700; font-size: 50px;
+}
+.card.double { font-size: 40px; line-height: 1.05; }
+
+/* Colegio: Left: 6.8%, top: 31.6% */
+#col_A {
+  left: 6.9%; top: 31.6%; width: 22.2%; height: 24.2%;
+  transform: rotateY(16deg) rotateX(0.5deg);
+  transform-origin: center right;
+}
+
+/* Canada: Center, flat frontal */
+#can_A {
+  left: 46.2%; top: 33.2%; width: 21.2%; height: 23.0%;
+  transform: rotateY(0deg);
+}
+
+/* Emisora: Right, angle around -6deg */
+#emi_A {
+  left: 69.0%; top: 32.2%; width: 22.2%; height: 23.2%;
+  transform: rotateY(-6deg) rotateX(0.5deg);
+  transform-origin: center left;
+}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div id="col_A" class="card"><span>Colegio</span></div>
+  <div id="can_A" class="card"><span>Canadá</span></div>
+  <div id="emi_A" class="card double"><span>Emisora<br>Digital</span></div>
+</div>
+</body>
+</html>

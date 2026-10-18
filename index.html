@@ -1,0 +1,2675 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SYNAPSE EDU • Aceleración Cognitiva y Alto Rendimiento Académico</title>
+  <meta name="description" content="SYNAPSE EDU: El ecosistema que une idiomas con propósito migratorio internacional, preparación Saber 11 de máximo puntaje y transformación digital de colegios.">
+
+  <!-- Google Fonts: Modern Luxury Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/design-tokens.css?v=46.0">
+  <link rel="stylesheet" href="css/layout.css?v=51.0">
+  <link rel="stylesheet" href="css/components.css?v=54.0">
+  <link rel="stylesheet" href="css/world-tabs.css?v=4.0_glass">
+  <link rel="stylesheet" href="css/mainframe.css?v=2.0">
+  <link rel="stylesheet" href="css/stacking-deck.css?v=2.0">
+  <link rel="stylesheet" href="css/july-experience.css?v=1.0">
+  <link rel="stylesheet" href="css/inicio.css?v=11.0_logo_shift">
+  <link rel="stylesheet" href="css/colegios-hero.css?v=3.6">
+  <link rel="stylesheet" href="css/colegios-hud-cards.css?v=2.1">
+  <link rel="stylesheet" href="css/colegios-storytelling.css?v=3.0">
+  <!-- Editorial Serif Accent Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&display=swap">
+
+  <!-- Priority Preloads -->
+  <link rel="preload" as="image" href="assets/frames_inicio/frame_0001.webp?v=v8_clean_no_cards_20261018" type="image/webp">
+  <link rel="preload" as="image" href="assets/frames_july_hub/frame_0001.webp" type="image/webp">
+
+  <!-- Mainframe HelveticaNow Display Fonts -->
+  <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/5ac3fe7c6abd2f62067f266d89671492?family=HelveticaNowDisplay-Medium">
+  <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/1aa3377e489837a26d019bba501e779d?family=HelveticaNowDisplayW01-Rg">
+
+  <!-- Core Libraries (Three.js r128, GLTFLoader, RoomEnvironment, GSAP, Lenis) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/environments/RoomEnvironment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+</head>
+<body data-current-world="inicio">
+
+  <!-- Custom Magnetic Cursor Elements -->
+  <div id="custom-cursor" class="custom-cursor"></div>
+  <div id="custom-cursor-follower" class="custom-cursor-follower"></div>
+
+  <!-- Background 3D Canvas (Matte Spheres from Figma Reference) -->
+  <div id="spheres-canvas-container">
+    <canvas id="spheres-canvas"></canvas>
+  </div>
+
+  <!-- 3 Distributed White Pearl Ecosystem Bubbles (Colegios, Idiomas, Emisora) -->
+  <nav id="ecosystem-bubbles-dock" class="ecosystem-bubbles-dock" aria-label="Ecosistemas de Navegación">
+    <!-- Burbuja 1: COLEGIOS (Superior, arriba de la S y DIGITAL) -->
+    <a href="#scrolly-showcase" class="eco-bubble-item bubble-colegios is-dormant-pillar" id="bubble-colegios" onclick="handleBubbleClick(event, 'colegios')" aria-label="Pilar Colegios 3D" title="Colegios • Salón 3D & Preicfes (Clic para explorar apps)">
+      <div class="bubble-pulse-ring"></div>
+      <div class="bubble-gloss-highlight"></div>
+      <div class="bubble-icon-wrap">
+        <svg class="bubble-svg" viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+      </div>
+      <div class="bubble-text-wrap">
+        <span class="bubble-title">Colegios</span>
+        <span class="bubble-tag">Salón 3D</span>
+        <span class="bubble-active-chip"><span class="chip-dot"></span><span>En Foco</span></span>
+      </div>
+    </a>
+
+    <!-- Burbuja 2: IDIOMAS (Medio-izquierdo, a la izquierda de la S) -->
+    <a href="#idiomas-hub" class="eco-bubble-item bubble-idiomas is-active-pillar" id="bubble-idiomas" onclick="handleBubbleClick(event, 'idiomas')" aria-label="Pilar Idiomas TEF & IELTS" title="Idiomas • TEF Canadá & IELTS Hub (Clic para explorar apps)">
+      <div class="bubble-pulse-ring"></div>
+      <div class="bubble-gloss-highlight"></div>
+      <div class="bubble-icon-wrap">
+        <svg class="bubble-svg" viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+      </div>
+      <div class="bubble-text-wrap">
+        <span class="bubble-title">Idiomas</span>
+        <span class="bubble-tag">TEF • IELTS</span>
+        <span class="bubble-active-chip"><span class="chip-dot"></span><span>En Foco</span></span>
+      </div>
+    </a>
+
+    <!-- Burbuja 3: EMISORA (Inferior-izquierdo, abajo a la izquierda) -->
+    <a href="#emisora-hub" class="eco-bubble-item bubble-emisora is-dormant-pillar" id="bubble-emisora" onclick="handleBubbleClick(event, 'emisora')" aria-label="Pilar Emisora Escolar" title="Emisora • Radio Escolar & Podcasts (Clic para ir al estudio)">
+      <div class="bubble-pulse-ring"></div>
+      <div class="bubble-gloss-highlight"></div>
+      <div class="bubble-icon-wrap">
+        <svg class="bubble-svg" viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="22"/>
+        </svg>
+      </div>
+      <div class="bubble-text-wrap">
+        <span class="bubble-title">Emisora</span>
+        <span class="bubble-tag">Radio 360</span>
+        <span class="bubble-active-chip"><span class="chip-dot"></span><span>On-Air</span></span>
+      </div>
+    </a>
+  </nav>
+
+  <!-- Top Floating Glass World Tab Bar (Inicio • Hub • Colegios • Idiomas • Emisora • Prueba) -->
+  <nav class="world-tab-bar" id="world-tab-bar" aria-label="Navegación por Mundos">
+    <!-- Botón minimalista flotante de vidrio en esquina para el Hero de Inicio -->
+    <button type="button" class="world-tab-toggle" id="world-tab-toggle" onclick="toggleWorldNavMenu(event)" aria-expanded="false" aria-label="Abrir Menú de Ecosistemas">
+      <span class="tab-toggle-text">Ecosistemas</span>
+      <span class="tab-toggle-arrow">▾</span>
+    </button>
+
+    <div class="world-tab-list" id="world-tab-list">
+      <button class="world-tab-btn is-active" data-world="inicio" onclick="switchWorld('inicio')">
+        <span class="tab-icon">✨</span>
+        <span>Inicio</span>
+        <span class="tab-dot"></span>
+      </button>
+      <button class="world-tab-btn" data-world="hub" onclick="switchWorld('hub')">
+        <span class="tab-icon">✦</span>
+        <span>S-cool Hub</span>
+        <span class="tab-dot"></span>
+      </button>
+      <button class="world-tab-btn" data-world="colegios" onclick="switchWorld('colegios')">
+        <span class="tab-icon">🏫</span>
+        <span>Colegios</span>
+        <span class="tab-dot"></span>
+      </button>
+      <button class="world-tab-btn" data-world="idiomas" onclick="switchWorld('idiomas')">
+        <span class="tab-icon">🌐</span>
+        <span>Idiomas</span>
+        <span class="tab-dot"></span>
+      </button>
+      <button class="world-tab-btn" data-world="emisora" onclick="switchWorld('emisora')">
+        <span class="tab-icon">🎙️</span>
+        <span>Emisora</span>
+        <span class="tab-dot"></span>
+      </button>
+      <button class="world-tab-btn" data-world="prueba" onclick="switchWorld('prueba')">
+        <span class="tab-icon">⚡</span>
+        <span>Prueba</span>
+        <span class="tab-dot"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="world-view-container">
+
+      <!-- ====================================================================
+           0. PESTAÑA: INICIO (STORYTELLING HERO CON SCROLL SCRUB)
+           ==================================================================== -->
+      <div id="view-inicio" class="world-view is-active">
+        <!-- Scroll Track Container for Pinned Hero -->
+        <div class="inicio-scroll-wrapper" id="inicio-scroll-wrapper">
+          <!-- Hero de pantalla completa (contenedor de toda la animación) -->
+          <section class="inicio-hero-section" id="inicio-hero">
+            
+            <!-- 1. Canvas 60fps de alta velocidad sincronizado al scroll -->
+            <canvas
+              id="inicio-story-canvas"
+              class="inicio-canvas-bg"
+            ></canvas>
+
+            <!-- Capa de texto narrativo Video 1 (Sincronizado con scroll) -->
+            <div class="inicio-story-phrases style-editorial" id="inicio-story-phrases" data-story-style="editorial" aria-live="polite">
+              <!-- Viñeta ambiental difusa para contraste y legibilidad -->
+              <div class="story-ambient-glow" id="story-ambient-glow" aria-hidden="true"></div>
+
+              <div class="story-phrase phrase-1" id="story-phrase-1">
+                <div class="phrase-meta">
+                  <span class="meta-tag">01 // 04</span>
+                  <span class="meta-line"></span>
+                </div>
+                <div class="phrase-text-wrap">
+                  <span class="phrase-text">Todo comienza con una <em>idea</em>.</span>
+                </div>
+              </div>
+
+              <div class="story-phrase phrase-2" id="story-phrase-2">
+                <div class="phrase-meta">
+                  <span class="meta-tag">02 // 04</span>
+                  <span class="meta-line"></span>
+                </div>
+                <div class="phrase-text-wrap">
+                  <span class="phrase-text">Aprende.</span>
+                </div>
+              </div>
+
+              <div class="story-phrase phrase-3" id="story-phrase-3">
+                <div class="phrase-meta">
+                  <span class="meta-tag">03 // 04</span>
+                  <span class="meta-line"></span>
+                </div>
+                <div class="phrase-text-wrap">
+                  <span class="phrase-text">Prepárate.</span>
+                </div>
+              </div>
+
+              <div class="story-phrase phrase-4" id="story-phrase-4">
+                <div class="phrase-meta">
+                  <span class="meta-tag">04 // 04</span>
+                  <span class="meta-line"></span>
+                </div>
+                <div class="phrase-text-wrap">
+                  <span class="phrase-text">Conecta.</span>
+                </div>
+              </div>
+
+              <!-- Indicador de barras de progreso sutiles sincronizadas al scroll -->
+              <div class="story-dots-indicator" id="story-dots-indicator" aria-hidden="true">
+                <span class="story-dot dot-1" id="story-dot-1"></span>
+                <span class="story-dot dot-2" id="story-dot-2"></span>
+                <span class="story-dot dot-3" id="story-dot-3"></span>
+                <span class="story-dot dot-4" id="story-dot-4"></span>
+              </div>
+            </div>
+
+            <!-- 2. Zonas interactivas transparentes sobre el video (Colegios, Canadá, Emisora) -->
+            <div id="inicio-hotspots-layer" class="inicio-hotspots-layer" aria-label="Ecosistemas Interactivos">
+
+              <!-- Botones y tarjetas holográficas por código idénticas a la referencia -->
+              <button type="button" class="inicio-hotspot holo-card hotspot-colegios" id="hotspot-colegios"
+                data-section="Colegios" aria-label="Ir a Colegios: Transforma tu institución" tabindex="0">
+                <span>Colegio</span>
+              </button>
+              <button type="button" class="inicio-hotspot holo-card hotspot-canada" id="hotspot-canada"
+                data-section="Canadá" aria-label="Ir a Canadá: Prepárate para tu futuro" tabindex="0">
+                <span>Canadá</span>
+              </button>
+              <button type="button" class="inicio-hotspot holo-card double-line hotspot-emisora" id="hotspot-emisora"
+                data-section="Emisora" aria-label="Ir a Emisora: Tu voz, más lejos" tabindex="0">
+                <span>Emisora<br>Digital</span>
+              </button>
+
+              <!-- 3. Logo 3D Interactivo Desacoplado (Reacciona al Scroll, Mouse 3D Tilt y Pilares) -->
+              <div id="inicio-interactive-logo" class="inicio-interactive-logo" title="Digital S-cool 3D interactivo • Clic para pulsar">
+                <div class="logo-orbit-ring" id="logo-orbit-ring" aria-hidden="true">
+                  <div class="orbit-particle-spark p1"></div>
+                  <div class="orbit-particle-spark p2"></div>
+                </div>
+                <div class="logo-glow-aura" id="logo-glow-aura" aria-hidden="true"></div>
+                <div class="logo-3d-wrapper" id="logo-3d-wrapper">
+                  <img class="logo-3d-img" id="logo-3d-img" src="assets/images/digital_scool_tight.png?v=20261017" alt="Digital S-cool 3D Logo">
+                </div>
+              </div>
+
+              <!-- Fin de capas holográficas interactivas -->
+            </div>
+
+            <!-- Mensaje central en el segundo video (sin tapar a la protagonista ni los destinos) -->
+            <div id="inicio-pointing-message" class="inicio-pointing-message" aria-live="polite">
+              <h2 class="pointing-msg-title">¿Cuál es tu camino?</h2>
+              <p class="pointing-msg-subtitle">Explora nuestras experiencias.</p>
+            </div>
+
+          </section>
+        </div>
+
+      </div>
+
+      <!-- ====================================================================
+           1. PESTAÑA: S-COOL HUB (PORTADA 3D & 5 SUITE APPS)
+           ==================================================================== -->
+      <div id="view-hub" class="world-view">
+        <section id="hero" class="hero-section hero-spheres-stage">
+      <div class="hero-layout-container">
+        
+        <!-- Left: Airy, Minimalist Typography with Dual Portal Gateway -->
+        <div class="hero-brand-lead">
+          <div class="hero-live-pill">
+            <span class="live-pulse-dot"></span>
+            <span class="live-pill-text">SYNAPSE LEARNING SYSTEMS • ECOSISTEMA DUAL 2026</span>
+          </div>
+          <h1 class="hero-brand-title">
+            Alto Rendimiento Escolar<br>
+            <span class="hero-brand-gradient">& Idiomas con <span class="word-rendimiento">Propósito</span></span>
+          </h1>
+          <p class="hero-brand-subtitle">
+            Dos universos especializados: <strong>Salón 3D para Colegios</strong> (Preicfes Saber 11, Agenda Virtual y Guías Web) y <strong>Hub de Alta Exigencia</strong> para certificar TEF Canadá e IELTS.
+          </p>
+
+          <div class="hero-cta-quick-group">
+            <button class="btn-primary hero-explore-btn" onclick="document.getElementById('scrolly-showcase').scrollIntoView({behavior: 'smooth'})" style="background: var(--chalkboard-deep); border: 1px solid rgba(255,255,255,0.25);">
+              <span>🏫 Salón 3D Colegios</span>
+              <span class="btn-arrow-icon">↓</span>
+            </button>
+            <button class="btn-secondary hero-console-btn" onclick="document.getElementById('idiomas-hub').scrollIntoView({behavior: 'smooth'})" style="border: 1.5px solid var(--canadian-crimson); color: var(--canadian-crimson); font-weight: 700;">
+              <span>🌐 Hub TEF & IELTS</span>
+              <span class="btn-arrow-icon">→</span>
+            </button>
+          </div>
+
+          <div class="hero-scroll-cue" onclick="document.getElementById('scrolly-showcase').scrollIntoView({behavior: 'smooth'})">
+            <div class="mouse-scroll-indicator">
+              <div class="mouse-scroll-wheel"></div>
+            </div>
+            <span class="scroll-cue-label">Desliza para recorrer el Salón de Clases 3D</span>
+          </div>
+        </div>
+
+        <!-- Right Side: 5 Frosted Glass Cards (Cajitas Esmeriladas) -->
+        <!-- Right Side: Frosted Glass Suite Apps In-Place Accordion -->
+        <aside class="hero-apps-dock" id="hero-apps-dock" aria-label="Suite de 5 Aplicaciones SYNAPSE">
+          <!-- Floating Frosted Sparkle Badge on top-left of the dock -->
+          <div class="dock-floating-sparkle" aria-hidden="true" title="SYNAPSE Ecosystem">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z"/>
+            </svg>
+          </div>
+
+          <!-- Dynamic Accordion List: Expands active app in-place, keeping previous titles above and next titles below -->
+          <div class="dock-accordion-list" id="dock-accordion-list">
+            <!-- Slot 0: ÉLAN TEF (Initially Expanded) -->
+            <div class="dock-accordion-slot dock-slot-expanded" data-index="0">
+              <div class="dock-hero-card" id="dock-hero-card">
+                <div class="dock-card-top-row">
+                  <div class="dock-card-titles">
+                    <div class="dock-ecosystem-tag-row">
+                      <span class="dock-card-kicker" id="dock-active-kicker">FRANCÉS MIGRATORIO</span>
+                      <button class="dock-ecosystem-pill" onclick="handleEcosystemPillClick('idiomas')" title="Pilar Idiomas (Ver burbuja interactiva)">
+                        <span class="eco-pill-dot"></span>
+                        <span>Idiomas</span>
+                        <span class="eco-pill-sparkle">✦</span>
+                      </button>
+                    </div>
+                    <h3 class="dock-card-title" id="dock-active-title">ÉLAN TEF Canada</h3>
+                  </div>
+                  <button class="dock-action-circle" id="dock-action-btn" title="Explorar esta aplicación" aria-label="Explorar aplicación" onclick="handleActiveCardClick()">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </button>
+                </div>
+
+                <p class="dock-card-description" id="dock-active-desc">
+                  Preparación integral con simulador cronometrado oficial y rúbricas NCLC 7+.
+                </p>
+
+                <!-- Photo Strip ("pequeñas foticos") -->
+                <div class="dock-photos-strip" id="dock-photos-strip">
+                  <div class="dock-photo-box dock-photo-wide">
+                    <img id="dock-img-wide" src="assets/images/elan_tef_wide.jpg" alt="Plataforma interactiva ÉLAN TEF">
+                  </div>
+                  <div class="dock-photo-box dock-photo-thumb">
+                    <img id="dock-img-thumb1" src="assets/images/elan_tef_thumb1.jpg" alt="Estudiante en biblioteca">
+                  </div>
+                  <div class="dock-photo-box dock-photo-thumb">
+                    <img id="dock-img-thumb2" src="assets/images/elan_tef_thumb2.jpg" alt="Campus universitario Canadá">
+                  </div>
+                </div>
+
+                <!-- Pagination Capsule -->
+                <div class="dock-pagination-capsule" id="dock-pagination-capsule">
+                  <span class="dock-pag-indicator active" onclick="selectSuiteApp(0)" data-index="0" title="ÉLAN TEF Canada"></span>
+                  <span class="dock-pag-indicator" onclick="selectSuiteApp(1)" data-index="1" title="APEX IELTS"></span>
+                  <span class="dock-pag-indicator" onclick="selectSuiteApp(2)" data-index="2" title="VECTOR 11"></span>
+                  <span class="dock-pag-indicator" onclick="selectSuiteApp(3)" data-index="3" title="MORPHO GUIDES"></span>
+                  <span class="dock-pag-indicator" onclick="selectSuiteApp(4)" data-index="4" title="PULSE ACADÉMICO"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slot 1: APEX IELTS (Initially Collapsed) -->
+            <div class="dock-accordion-slot dock-slot-collapsed" data-index="1" onclick="selectSuiteApp(1)" role="button" tabindex="0" title="Ver detalles de APEX IELTS">
+              <div class="dock-sub-row">
+                <div class="dock-sub-sparkle">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+                    <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z"/>
+                  </svg>
+                </div>
+                <div class="dock-sub-text">
+                  <span class="dock-sub-kicker">Inglés Internacional</span>
+                  <span class="dock-sub-title">APEX IELTS</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slot 2: VECTOR 11 (Initially Collapsed) -->
+            <div class="dock-accordion-slot dock-slot-collapsed" data-index="2" onclick="selectSuiteApp(2)" role="button" tabindex="0" title="Ver detalles de VECTOR 11">
+              <div class="dock-sub-row">
+                <div class="dock-sub-sparkle">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+                    <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z"/>
+                  </svg>
+                </div>
+                <div class="dock-sub-text">
+                  <span class="dock-sub-kicker">Saber 11 Preicfes</span>
+                  <span class="dock-sub-title">VECTOR 11</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slot 3: MORPHO GUIDES (Initially Collapsed) -->
+            <div class="dock-accordion-slot dock-slot-collapsed" data-index="3" onclick="selectSuiteApp(3)" role="button" tabindex="0" title="Ver detalles de MORPHO GUIDES">
+              <div class="dock-sub-row">
+                <div class="dock-sub-sparkle">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+                    <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z"/>
+                  </svg>
+                </div>
+                <div class="dock-sub-text">
+                  <span class="dock-sub-kicker">Editorial Inteligente</span>
+                  <span class="dock-sub-title">MORPHO GUIDES</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slot 4: PULSE ACADÉMICO (Initially Collapsed) -->
+            <div class="dock-accordion-slot dock-slot-collapsed" data-index="4" onclick="selectSuiteApp(4)" role="button" tabindex="0" title="Ver detalles de PULSE ACADÉMICO">
+              <div class="dock-sub-row">
+                <div class="dock-sub-sparkle">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+                    <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z"/>
+                  </svg>
+                </div>
+                <div class="dock-sub-text">
+                  <span class="dock-sub-kicker">Gestión Institucional</span>
+                  <span class="dock-sub-title">PULSE ACADÉMICO</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECCIÓN: DESTINO CANADÁ 2026 • FULL-SCREEN PINNED SCROLL JOURNEY (JULY)
+         Scrubbing Cinemático a 60FPS a través de 10 Segundos de Recorrido Completo
+         ========================================================================== -->
+    <section id="hub-july-scroll-stage" class="hub-july-scroll-stage" aria-label="Destino Canadá 2026 - Experiencia Inmersiva">
+      <div class="hub-july-sticky-viewport">
+        <!-- Full-screen 60FPS WebP Canvas -->
+        <canvas id="hub-july-canvas" class="hub-july-canvas"></canvas>
+        <div class="hub-july-scrim"></div>
+
+        <!-- Free-Floating 3D Brandmark: S-cool TEF (Canadian Flag Red Edition) -->
+        <aside class="hub-tef-brand-badge" id="hub-tef-brand-badge" aria-label="S-cool TEF Brandmark">
+          <canvas id="hub-tef-brand-canvas" class="hub-tef-brand-canvas"></canvas>
+        </aside>
+
+        <!-- Progressive Narrative Story Cards -->
+        <div class="hub-story-overlay">
+          
+          <!-- Chapter 1 (0% - 25% Scroll): July Close-Up Greeting -->
+          <article class="hub-chapter-card is-active" id="hub-chapter-1">
+            <div class="hub-chapter-pill">
+              <span class="pulse-cyan"></span>
+              <span>✦ DESTINO CANADÁ 2026 // BIENVENIDO</span>
+            </div>
+            <h2 class="hub-chapter-title">Tu Proyecto de Vida <span>Internacional</span></h2>
+            <p class="hub-chapter-desc">
+              Desliza para recorrer la ruta bilingüe de alta exigencia hacia Toronto, Vancouver y Montreal. Acompaña a July a descubrir el horizonte canadiense.
+            </p>
+            <div class="hub-chapter-features">
+              <span class="hub-feature-pill">🍁 Toronto, Ontario</span>
+              <span class="hub-feature-pill">✦ Metodología de Alto Rendimiento</span>
+              <span class="hub-feature-pill">↓ Desliza para Explorar</span>
+            </div>
+          </article>
+
+          <!-- Chapter 2 (25% - 55% Scroll): July Turns & Autumn Leaves -->
+          <article class="hub-chapter-card is-incoming" id="hub-chapter-2">
+            <div class="hub-chapter-pill">
+              <span class="pulse-cyan"></span>
+              <span>🍁 ESTRATEGIA BILINGÜE DOBLE IMPACTO</span>
+            </div>
+            <h2 class="hub-chapter-title">Francés TEF & <span>Inglés IELTS</span></h2>
+            <p class="hub-chapter-desc">
+              Gana hasta <strong>+50 puntos adicionales directos</strong> al puntaje CRS de Express Entry dominando el idioma francés con ÉLAN TEF (NCLC 7+) y asegura tu admisión universitaria con IELTS Band 7.5+.
+            </p>
+            <div class="hub-chapter-features">
+              <span class="hub-feature-pill">🇨🇦 NCLC 7+ TEF Canada</span>
+              <span class="hub-feature-pill">🇬🇧 Band 7.5+ IELTS Academic</span>
+              <span class="hub-feature-pill">+50 Pts Express Entry</span>
+            </div>
+          </article>
+
+          <!-- Chapter 3 (55% - 80% Scroll): Lake Ontario & CN Tower Skyline -->
+          <article class="hub-chapter-card is-incoming" id="hub-chapter-3">
+            <div class="hub-chapter-pill">
+              <span class="pulse-cyan"></span>
+              <span>🏙️ HORIZONTE MIGRATORIO & ACADÉMICO</span>
+            </div>
+            <h2 class="hub-chapter-title">El Horizonte <span>Canadiense</span></h2>
+            <p class="hub-chapter-desc">
+              Articulación integral: preparación lingüística, homologación documental ECA, admisión en colleges de élite y plan migratorio con asesoría experta.
+            </p>
+            <div class="hub-chapter-features">
+              <span class="hub-feature-pill">✈️ Convocatorias 2026</span>
+              <span class="hub-feature-pill">🎓 Admisión Verificada</span>
+              <span class="hub-feature-pill">📋 Auditoría Documental</span>
+            </div>
+          </article>
+
+          <!-- Chapter 4 (80% - 100% Scroll): Canadian Flag & Transition to Deck -->
+          <article class="hub-chapter-card is-incoming" id="hub-chapter-4">
+            <div class="hub-chapter-pill">
+              <span class="pulse-cyan"></span>
+              <span>🇨🇦 BIENVENIDO A CANADÁ // ECOSISTEMA SYNAPSE</span>
+            </div>
+            <h2 class="hub-chapter-title">La Baraja de <span>Aplicaciones</span></h2>
+            <p class="hub-chapter-desc">
+              Descubre las herramientas inteligentes de software que aceleran tu aprendizaje y multiplican tus resultados académicos y migratorios.
+            </p>
+            <div class="hub-chapter-features">
+              <button class="hub-chapter-btn" onclick="document.getElementById('stacking-apps-deck').scrollIntoView({behavior: 'smooth'})">
+                <span>Explorar Baraja de Apps</span>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </button>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECCIÓN: BARAJA DE APLICACIONES EN SCROLL (STACKING CARDS DECK)
+         ========================================================================== -->
+    <section id="stacking-apps-deck" class="stacking-deck-section" aria-label="Baraja de Aplicaciones SYNAPSE">
+      <div class="stacking-deck-header">
+        <div class="stacking-deck-eyebrow">
+          <span>✦</span>
+          <span>ARQUITECTURA DE SOFTWARE EDUCATIVO</span>
+        </div>
+        <h2 class="stacking-deck-title">
+          La Baraja de <span>Aplicaciones Inteligentes</span>
+        </h2>
+        <p class="stacking-deck-desc">
+          Desliza hacia abajo para recorrer la suite interactiva de SYNAPSE. Cada aplicación se apila con tecnología de alta fidelidad, métricas en tiempo real y entrenamiento cognitivo de alto rendimiento.
+        </p>
+      </div>
+
+      <div class="stacking-cards-container">
+        <!-- Card 01: ÉLAN TEF Canada -->
+        <article class="stacking-card" data-card-index="0">
+          <div class="stacking-card-header">
+            <div class="stacking-card-identity">
+              <div class="stacking-card-num">01</div>
+              <div class="stacking-card-titles">
+                <span class="stacking-card-category">FRANCÉS MIGRATORIO • NCLC 7+</span>
+                <h3 class="stacking-card-name">ÉLAN TEF Canada</h3>
+              </div>
+            </div>
+            <a href="#idiomas" class="stacking-card-cta" onclick="handleDeckCardCta(event, 'idiomas')">
+              <span>Live Project</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+          </div>
+          <div class="stacking-card-bento">
+            <div class="stacking-bento-left">
+              <div class="stacking-bento-box stacking-box-thumb">
+                <img src="assets/images/elan_tef_thumb1.jpg" alt="Simulador de Redacción TEF">
+                <div class="stacking-box-overlay">
+                  <span class="stacking-box-tag">Simulador NCLC 7+</span>
+                  <span class="stacking-box-chip"><span class="chip-dot"></span>Oficial</span>
+                </div>
+              </div>
+              <div class="stacking-bento-box stacking-box-thumb">
+                <img src="assets/images/elan_tef_thumb2.jpg" alt="Campus y Certificación Canadá">
+                <div class="stacking-box-overlay">
+                  <span class="stacking-box-tag">Rúbricas Ottawa</span>
+                  <span class="stacking-box-chip"><span class="chip-dot"></span>Inmersivo</span>
+                </div>
+              </div>
+            </div>
+            <div class="stacking-bento-right">
+              <img src="assets/images/elan_tef_wide.jpg" alt="Plataforma interactiva ÉLAN TEF">
+              <div class="stacking-box-overlay">
+                <span class="stacking-box-tag">Entrenamiento de Alta Exigencia • 1,200 Preguntas Cronometradas</span>
+                <span class="stacking-box-chip"><span class="chip-dot"></span>IA Activa</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 02: APEX IELTS Academic -->
+        <article class="stacking-card" data-card-index="1">
+          <div class="stacking-card-header">
+            <div class="stacking-card-identity">
+              <div class="stacking-card-num">02</div>
+              <div class="stacking-card-titles">
+                <span class="stacking-card-category">INGLÉS INTERNACIONAL • BAND 8.5</span>
+                <h3 class="stacking-card-name">APEX IELTS Academic</h3>
+              </div>
+            </div>
+            <a href="#idiomas" class="stacking-card-cta" onclick="handleDeckCardCta(event, 'idiomas')">
+              <span>Live Project</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+          </div>
+          <div class="stacking-card-bento">
+            <div class="stacking-bento-left">
+              <div class="stacking-bento-box stacking-box-thumb">
+                <img src="assets/frames_idiomas/frame_0040.webp" alt="IELTS Writing Task 1 & 2">
+                <div class="stacking-box-overlay">
+                  <span class="stacking-box-tag">Writing Task 1 & 2</span>
+                  <span class="stacking-box-chip"><span class="chip-dot"></span>Rubric 9.0</span>
+                </div>
+              </div>
+              <div class="stacking-bento-box stacking-box-thumb">
+                <img src="assets/frames_idiomas/frame_0080.webp" alt="Speaking AI Interviewer">
+                <div class="stacking-box-overlay">
+                  <span class="stacking-box-tag">Speaking Simulator</span>
+                  <span class="stacking-box-chip"><span class="chip-dot"></span>Audio IA</span>
+                </div>
+              </div>
+            </div>
+            <div class="stacking-bento-right">
+              <img src="assets/frames_idiomas/frame_0120.webp" alt="Entrenamiento Auditivo Oficial">
+              <div class="stacking-box-overlay">
+                <span class="stacking-box-tag">Listening & Reading • Simulación Cronometrada Real</span>
+                <span class="stacking-box-chip"><span class="chip-dot"></span>Examinador</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 03: VECTOR 11 Saber Pro -->
+        <article class="stacking-card" data-card-index="2">
+          <div class="stacking-card-header">
+            <div class="stacking-card-identity">
+              <div class="stacking-card-num">03</div>
+              <div class="stacking-card-titles">
+                <span class="stacking-card-category">PREICFES • ALTO RENDIMIENTO ESCOLAR</span>
+                <h3 class="stacking-card-name">VECTOR 11 Saber Pro</h3>
+              </div>
+            </div>
+            <a href="#colegios" class="stacking-card-cta" onclick="handleDeckCardCta(event, 'colegios')">
+              <span>Live Project</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+          </div>
+          <div class="stacking-card-bento">
+            <div class="stacking-bento-left">
+              <div class="stacking-bento-box stacking-box-thumb">
+                <img src="assets/frames_colegios/frame_0030.webp" alt="Simulacro Diagnóstico Saber 11">
+                <div class="stacking-box-overlay">
+                  <span class="stacking-box-tag">Diagnóstico 400+</span>
+                  <span class="stacking-box-chip"><span class="chip-dot"></span>Adaptativo</span>
+                </div>
+              </div>
+              <div class="stacking-bento-box stacking-box-thumb">
+                <img src="assets/frames_colegios/frame_0070.webp" alt="Batallas Académicas Gamificadas">
+                <div class="stacking-box-overlay">
+                  <span class="stacking-box-tag">Batalla Diaria</span>
+                  <span class="stacking-box-chip"><span class="chip-dot"></span>Rankings</span>
+                </div>
+              </div>
+            </div>
+            <div class="stacking-bento-right">
+              <img src="assets/frames_colegios/frame_0110.webp" alt="Salón de Clases 3D con Desglose por Áreas">
+              <div class="stacking-box-overlay">
+                <span class="stacking-box-tag">Matemáticas, Lectura Crítica, Ciencias y Sociales • Trazabilidad Total</span>
+                <span class="stacking-box-chip"><span class="chip-dot"></span>Colegios</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 04: MORPHO Digital Guides -->
+        <article class="stacking-card" data-card-index="3">
+          <div class="stacking-card-header">
+            <div class="stacking-card-identity">
+              <div class="stacking-card-num">04</div>
+              <div class="stacking-card-titles">
+                <span class="stacking-card-category">EDITORIAL DIGITAL • GUÍAS ESCOLARES WEB</span>
+                <h3 class="stacking-card-name">MORPHO Digital Guides</h3>
+              </div>
+            </div>
+            <a href="#colegios" class="stacking-card-cta" onclick="handleDeckCardCta(event, 'colegios')">
+              <span>Live Project</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+          </div>
+          <div class="stacking-card-bento">
+            <div class="stacking-bento-left">
+              <div class="stacking-bento-box stacking-box-thumb">
+                <img src="assets/frames_colegios/frame_0140.webp" alt="Guías Interactivas con Autocalificación">
+                <div class="stacking-box-overlay">
+                  <span class="stacking-box-tag">Autocalificación</span>
+                  <span class="stacking-box-chip"><span class="chip-dot"></span>Cero Papel</span>
+                </div>
+              </div>
+              <div class="stacking-bento-box stacking-box-thumb">
+                <img src="assets/frames_colegios/frame_0170.webp" alt="Dashboard Docente en Tiempo Real">
+                <div class="stacking-box-overlay">
+                  <span class="stacking-box-tag">Analítica Docente</span>
+                  <span class="stacking-box-chip"><span class="chip-dot"></span>-70% Tiempo</span>
+                </div>
+              </div>
+            </div>
+            <div class="stacking-bento-right">
+              <img src="assets/frames_colegios/frame_0185.webp" alt="Transformación Digital Curricular">
+              <div class="stacking-box-overlay">
+                <span class="stacking-box-tag">Guías Curriculares Vivas • Retroalimentación Paso a Paso con IA</span>
+                <span class="stacking-box-chip"><span class="chip-dot"></span>Didáctico</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 05: PULSE Agenda Virtual 360 -->
+        <article class="stacking-card" data-card-index="4">
+          <div class="stacking-card-header">
+            <div class="stacking-card-identity">
+              <div class="stacking-card-num">05</div>
+              <div class="stacking-card-titles">
+                <span class="stacking-card-category">GESTIÓN ESCOLAR • FAMILIAS & RECTORÍA</span>
+                <h3 class="stacking-card-name">PULSE Agenda Virtual 360</h3>
+              </div>
+            </div>
+            <a href="#emisora" class="stacking-card-cta" onclick="handleDeckCardCta(event, 'emisora')">
+              <span>Live Project</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+          </div>
+          <div class="stacking-card-bento">
+            <div class="stacking-bento-left">
+              <div class="stacking-bento-box stacking-box-thumb">
+                <img src="assets/frames_emisora/frame_0030.webp" alt="Observador del Estudiante Digital">
+                <div class="stacking-box-overlay">
+                  <span class="stacking-box-tag">Observador Móvil</span>
+                  <span class="stacking-box-chip"><span class="chip-dot"></span>Acuse Firmado</span>
+                </div>
+              </div>
+              <div class="stacking-bento-box stacking-box-thumb">
+                <img src="assets/frames_emisora/frame_0070.webp" alt="Emisora Escolar Comunitaria">
+                <div class="stacking-box-overlay">
+                  <span class="stacking-box-tag">Radio 360 & Podcasts</span>
+                  <span class="stacking-box-chip"><span class="chip-dot"></span>Voz Estudiantil</span>
+                </div>
+              </div>
+            </div>
+            <div class="stacking-bento-right">
+              <img src="assets/frames_emisora/frame_0120.webp" alt="Control de Asistencia y Citaciones">
+              <div class="stacking-box-overlay">
+                <span class="stacking-box-tag">Comunicación Institucional en Vivo • Notificaciones Push a Padres</span>
+                <span class="stacking-box-chip"><span class="chip-dot"></span>360 Conexión</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  <!-- ==========================================================================
+       DATOS Y MÉTRICAS DE IMPACTO
+       ========================================================================== -->
+  <section id="metricas" class="metrics-section">
+      <div class="section-title-wrap" id="metrics-title-card">
+        <span class="section-eyebrow">LA CIENCIA DETRÁS DE LOS RESULTADOS</span>
+        <h2 class="section-title">Métricas de Alto Rendimiento Académico</h2>
+        <p class="section-desc">Resultados respaldados por el entrenamiento activo y la retroalimentación inmediata.</p>
+      </div>
+
+      <div class="metrics-grid" id="metrics-grid">
+        <div class="metric-stat-card" id="metric-card-1">
+          <div class="metric-big-num" data-target="3.5" data-decimals="1" data-prefix="+" data-suffix="x">+3.5x</div>
+          <div class="metric-telemetry-bar"><div class="metric-telemetry-fill" style="width: 88%;"></div></div>
+          <div class="metric-stat-title">Mayor Retención</div>
+          <p class="metric-stat-desc">Frente al estudio tradicional con guías impresas y lectura pasiva en papel.</p>
+        </div>
+
+        <div class="metric-stat-card" id="metric-card-2">
+          <div class="metric-big-num" data-target="94" data-decimals="0" data-suffix="%">94%</div>
+          <div class="metric-telemetry-bar"><div class="metric-telemetry-fill" style="width: 94%;"></div></div>
+          <div class="metric-stat-title">Éxito en Primer Intento</div>
+          <p class="metric-stat-desc">De los estudiantes alcanzan o superan el umbral de puntaje requerido en su examen oficial.</p>
+        </div>
+
+        <div class="metric-stat-card" id="metric-card-3">
+          <div class="metric-big-num" data-target="70" data-decimals="0" data-prefix="-" data-suffix="%">-70%</div>
+          <div class="metric-telemetry-bar"><div class="metric-telemetry-fill" style="width: 70%;"></div></div>
+          <div class="metric-stat-title">Tiempo Administrativo</div>
+          <p class="metric-stat-desc">Reducción del tiempo invertido por docentes en calificación rutinaria de talleres.</p>
+        </div>
+
+        <div class="metric-stat-card" id="metric-card-4">
+          <div class="metric-big-num" data-target="100" data-decimals="0" data-suffix="%">100%</div>
+          <div class="metric-telemetry-bar"><div class="metric-telemetry-fill" style="width: 100%;"></div></div>
+          <div class="metric-stat-title">Trazabilidad Analítica</div>
+          <p class="metric-stat-desc">Visibilidad en tiempo real del tiempo de estudio, fortalezas y áreas débiles por estudiante.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECCIÓN DE CIERRE Y DOBLE CONVERSIÓN
+         ========================================================================== -->
+    <section id="contacto-cierre" class="conversion-section">
+      <div class="section-title-wrap" id="conversion-title-card">
+        <span class="section-eyebrow">COMIENZA HOY</span>
+        <h2 class="section-title">El Futuro Educativo No Se Espera.<br>Se Construye con Alto Rendimiento.</h2>
+        <p class="section-desc">Elige la ruta que transformará tus resultados académicos o los de tu institución educativa.</p>
+      </div>
+
+      <div class="conversion-grid" id="conversion-grid">
+        <!-- Track 1: Idiomas (TEF Canadá / IELTS) & Saber 11 -->
+        <div class="conversion-card" id="conversion-card-students">
+          <span class="conversion-pill-label">Candidatos TEF Canadá • IELTS • Saber 11</span>
+          <h3>¿Preparándote para Inmigrar a Canadá, Pasar tu Examen Oficial o Saber 11?</h3>
+          <p>
+            Comienza a entrenar con la exigencia que pide el examen: redacción rápida sin faltas ortográficas, verbos y conectores clave para TEF Canadá e IELTS, y simulacros con batallas diarias para Saber 11.
+          </p>
+          <div class="conversion-btn-group">
+            <button class="btn-primary" onclick="document.getElementById('scrolly-showcase').scrollIntoView({behavior: 'smooth'})">
+              Ver Demostración en Vivo
+            </button>
+            <button class="btn-secondary" onclick="document.getElementById('interactive-console').scrollIntoView({behavior: 'smooth'})">
+              Explorar las 5 Aplicaciones
+            </button>
+          </div>
+        </div>
+
+        <!-- Track 2: Colegios, Rectores y Coordinadores -->
+        <div class="conversion-card institutional" id="conversion-card-institutions">
+          <span class="conversion-pill-label">Rectoría • Coordinación • Colegios</span>
+          <h3>¿Quieres Modernizar tu Colegio, Automatizar Boletines y Elevar Saber 11?</h3>
+          <p>
+            Agenda virtual con observador del estudiante y acuses de recibo en el celular, guías escolares transformadas a la web interactiva con autocalificación, y entrenamiento diario Saber 11 para tus estudiantes.
+          </p>
+          <div class="conversion-btn-group">
+            <button class="btn-primary" onclick="alert('¡Gracias por su interés! Un consultor educativo se comunicará para coordinar la demostración personalizada para Rectoría y Coordinación.')">
+              Agendar Presentación Institucional
+            </button>
+            <button class="btn-secondary" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+              Conocer el Ecosistema
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FOOTER INSTITUCIONAL SYNAPSE
+         ========================================================================== -->
+    <footer class="app-footer">
+      <div class="footer-brand">SYNAPSE • LEARNING SYSTEMS</div>
+      <p style="color: var(--text-secondary); max-width: 580px; font-size: 0.95rem; line-height: 1.6;">
+        El Ecosistema de Aceleración Cognitiva y Alto Rendimiento Académico.<br>
+        ÉLAN TEF Canada • APEX IELTS • VECTOR 11 • MORPHO GUIDES • PULSE ACADÉMICO
+      </p>
+
+      <!-- Domain References from Dossier -->
+      <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; font-family: var(--font-mono); font-size: 0.8rem; color: var(--slate-blue);">
+        <span>🌐 synapseedu.co (Colombia / Latam)</span>
+        <span>•</span>
+        <span>🌐 synapselearning.io (Global)</span>
+        <span>•</span>
+        <span>🌐 synapseapp.co (Suite Apps)</span>
+      </div>
+
+      <div style="display: flex; gap: 12px; margin-top: 10px;">
+        <button class="btn-primary" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Subir al Inicio</button>
+      </div>
+      <p class="footer-copy">© 2026 SYNAPSE EDU Inc. Todos los derechos reservados. Diseñado bajo estándares de vanguardia web experiencial.</p>
+    </footer>
+
+      <!-- ====================================================================
+           5. PESTAÑA: DE PRUEBA (MAINFRAME CREATIVE AGENCY HERO & MOUSE SCRUB)
+           ==================================================================== -->
+
+  </div> <!-- /#view-hub -->
+
+  <!-- ====================================================================
+       2. PESTAÑA: MUNDO COLEGIOS (VIRTUAL AGENDA 3D & ECOSISTEMA ESCOLAR)
+       ==================================================================== -->
+  <div id="view-colegios" class="world-view">
+    
+    <!-- ====================================================================
+         1. PRIMERA ESCENA INMERSIVA (100VH): "Tu colegio, más digital."
+         ==================================================================== -->
+    <section id="colegios-hero-track" class="colegios-hero-scroll-track" aria-label="Ecosistema Digital y Tres Necesidades de Colegios">
+      <div class="colegios-hero-sticky" id="colegios-hero-sticky">
+
+        <!-- Capa 1: Fondo Base (Protagonista en campus escolar en alta resolución) -->
+        <div class="colegios-hero-bg-base" id="colegios-hero-bg-base">
+          <img src="assets/images/Atrio%20escolar%20luminoso%20con%20estudiantes.png?v=hires_v2"
+               alt="Tu colegio, más digital - Protagonista en atrio escolar luminoso con estudiantes"
+               loading="eager"
+               decoding="sync"
+               fetchpriority="high">
+        </div>
+
+
+
+        <!-- Scrim sutil de iluminación y legibilidad -->
+        <div class="colegios-hero-scrim-layer" id="colegios-hero-scrim-layer" aria-hidden="true"></div>
+
+        <!-- Identidad 3D S-COOL a mano izquierda arriba (Top-Left Floating Brand Anchor) -->
+        <div class="colegios-top-brand" id="colegios-top-brand" aria-label="S-Cool 3D">
+          <div class="colegios-brand-logo-wrap">
+            <img src="assets/images/scool_3d_logo.png" alt="S-Cool 3D Logo" class="colegios-brand-3d-img">
+          </div>
+          <div class="colegios-brand-text">
+            <span class="colegios-brand-title">S-COOL</span>
+            <span class="colegios-brand-badge">SISTEMA ESCOLAR</span>
+          </div>
+        </div>
+
+        <!-- FASE 1: Recuadro inicial (Diseño Editorial Arquitectónico • Monolito Glass) -->
+        <div class="colegios-hero-card" id="colegios-hero-card">
+          <!-- Metadata arquitectónica con Emblema 3D S-Cool -->
+          <div class="hero-card-brand-header">
+            <div class="hero-card-logo-mini">
+              <img src="assets/images/scool_3d_logo.png" alt="S-Cool 3D Logo" class="hero-card-logo-img">
+            </div>
+            <div class="hero-card-meta">
+              <span class="hero-meta-kicker">01 // PLATAFORMA INTEGRAL</span>
+              <div class="hero-meta-divider"></div>
+              <span class="hero-meta-system">S-COOL CORE</span>
+            </div>
+          </div>
+
+          <h1 class="colegios-hero-title">
+            Tu colegio,<br>
+            <em class="hero-title-editorial">más digital.</em>
+          </h1>
+
+          <p class="colegios-hero-subtitle">
+            Una arquitectura educativa que articula la vida pedagógica, la gestión institucional y los recursos interactivos.
+          </p>
+
+          <!-- Triptych Arquitectónico: 3 Pilares en Dock Segmentado -->
+          <div class="hero-triptych-dock" role="group" aria-label="Ejes de la experiencia educativa">
+            <div class="triptych-segment" tabindex="0">
+              <div class="segment-head">
+                <span class="segment-num">01</span>
+                <span class="segment-bar"></span>
+              </div>
+              <span class="segment-title">Aprendizaje</span>
+              <span class="segment-sub">Pedagogía activa</span>
+            </div>
+
+            <div class="triptych-divider" aria-hidden="true"></div>
+
+            <div class="triptych-segment" tabindex="0">
+              <div class="segment-head">
+                <span class="segment-num">02</span>
+                <span class="segment-bar"></span>
+              </div>
+              <span class="segment-title">Organización</span>
+              <span class="segment-sub">Gestión escolar</span>
+            </div>
+
+            <div class="triptych-divider" aria-hidden="true"></div>
+
+            <div class="triptych-segment" tabindex="0">
+              <div class="segment-head">
+                <span class="segment-num">03</span>
+                <span class="segment-bar"></span>
+              </div>
+              <span class="segment-title">Contenido</span>
+              <span class="segment-sub">Recursos & medios</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FASE 2: LAS 4 TARJETAS HOLOGRÁFICAS HUD (Réplica exacta en código HTML/CSS/SVG) -->
+        <div class="colegios-hud-layer" id="colegios-hud-layer" aria-label="Tablero Digital Educativo">
+          <div class="colegios-hud-grid">
+            
+            <!-- TARJETA 1: AGENDA DIGITAL -->
+            <article class="hud-card hud-card-agenda" aria-labelledby="hud-title-agenda">
+              <div class="hud-card-header">
+                <div class="hud-header-title-group">
+                  <svg class="hud-header-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#00F0FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="18" rx="3.5" stroke="#00F0FF" stroke-width="2" fill="rgba(0, 240, 255, 0.08)"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="3" y1="9" x2="21" y2="9"/>
+                    <circle cx="7.5" cy="13" r="1.1" fill="#00F0FF"/>
+                    <circle cx="12" cy="13" r="1.1" fill="#00F0FF"/>
+                    <circle cx="16.5" cy="13" r="1.1" fill="#00F0FF"/>
+                    <circle cx="7.5" cy="17" r="1.1" fill="#00F0FF"/>
+                    <circle cx="12" cy="17" r="1.1" fill="#00F0FF"/>
+                    <circle cx="16.5" cy="17" r="1.1" fill="#00F0FF"/>
+                  </svg>
+                  <h3 class="hud-card-title" id="hud-title-agenda">AGENDA DIGITAL</h3>
+                </div>
+                <div class="hud-status-badge" aria-hidden="true">
+                  <svg class="hud-status-leaf" viewBox="0 0 24 24" width="20" height="20">
+                    <defs>
+                      <linearGradient id="leafGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#6DFFA8"/>
+                        <stop offset="45%" stop-color="#00FF66"/>
+                        <stop offset="100%" stop-color="#00C853"/>
+                      </linearGradient>
+                      <filter id="leafGlow1" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="2.2" result="blur"/>
+                        <feMerge>
+                          <feMergeNode in="blur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                    </defs>
+                    <path d="M 18.5 5 C 18.5 5, 20 12, 14 17.5 C 9.5 21.5, 4 19, 3 14 C 2 8.5, 7.5 4, 13 3 C 16 2.5, 18.5 5, 18.5 5 Z"
+                          fill="url(#leafGrad1)"
+                          filter="url(#leafGlow1)"/>
+                    <ellipse cx="10" cy="8.5" rx="1.8" ry="3" transform="rotate(-30 10 8.5)" fill="#FFFFFF" opacity="0.85"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="hud-schedule-list">
+                <div class="hud-schedule-row">
+                  <div class="hud-time-pill pill-orange">8:00</div>
+                  <div class="hud-class-info">
+                    <span class="hud-class-subject">Matemáticas</span>
+                    <span class="hud-class-room">Aula 3-2</span>
+                  </div>
+                </div>
+                <div class="hud-schedule-row">
+                  <div class="hud-time-pill pill-green">9:00</div>
+                  <div class="hud-class-info">
+                    <span class="hud-class-subject">Ciencias</span>
+                    <span class="hud-class-room">Laboratorio</span>
+                  </div>
+                </div>
+                <div class="hud-schedule-row">
+                  <div class="hud-time-pill pill-blue">10:30</div>
+                  <div class="hud-class-info">
+                    <span class="hud-class-subject">Inglés</span>
+                    <span class="hud-class-room">Aula 1-1</span>
+                  </div>
+                </div>
+                <div class="hud-schedule-row">
+                  <div class="hud-time-pill pill-purple">12:00</div>
+                  <div class="hud-class-info">
+                    <span class="hud-class-subject">Proyecto STEAM</span>
+                    <span class="hud-class-room">Aula Maker</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- TARJETA 2: PROGRESO ESTUDIANTIL -->
+            <article class="hud-card hud-card-progreso" aria-labelledby="hud-title-progreso">
+              <div class="hud-card-header">
+                <div class="hud-header-title-group">
+                  <h3 class="hud-card-title" id="hud-title-progreso">PROGRESO ESTUDIANTIL</h3>
+                </div>
+                <div class="hud-status-badge" aria-hidden="true">
+                  <svg class="hud-status-leaf" viewBox="0 0 24 24" width="20" height="20">
+                    <defs>
+                      <linearGradient id="leafGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#6DFFA8"/>
+                        <stop offset="45%" stop-color="#00FF66"/>
+                        <stop offset="100%" stop-color="#00C853"/>
+                      </linearGradient>
+                      <filter id="leafGlow2" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="2.2" result="blur"/>
+                        <feMerge>
+                          <feMergeNode in="blur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                    </defs>
+                    <path d="M 18.5 5 C 18.5 5, 20 12, 14 17.5 C 9.5 21.5, 4 19, 3 14 C 2 8.5, 7.5 4, 13 3 C 16 2.5, 18.5 5, 18.5 5 Z"
+                          fill="url(#leafGrad2)"
+                          filter="url(#leafGlow2)"/>
+                    <ellipse cx="10" cy="8.5" rx="1.8" ry="3" transform="rotate(-30 10 8.5)" fill="#FFFFFF" opacity="0.85"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="hud-progreso-body">
+                <!-- Panel Izquierdo: Gráfico de Barras y Tendencia -->
+                <div class="hud-chart-panel">
+                  <div class="hud-chart-axes" aria-hidden="true">
+                    <div class="hud-axis-mark"><span>100</span><div class="hud-axis-line"></div></div>
+                    <div class="hud-axis-mark"><span>75</span><div class="hud-axis-line"></div></div>
+                    <div class="hud-axis-mark"><span>25</span><div class="hud-axis-line"></div></div>
+                    <div class="hud-axis-mark"><span>0</span><div class="hud-axis-line"></div></div>
+                  </div>
+                  <div class="hud-axis-range-icon" aria-hidden="true">⟷</div>
+
+                  <div class="hud-bars-container">
+                    <svg class="hud-trend-svg-overlay" viewBox="0 0 160 100" preserveAspectRatio="none" aria-hidden="true">
+                      <defs>
+                        <filter id="trendGlow" x="-30%" y="-30%" width="160%" height="160%">
+                          <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#00FF66" flood-opacity="0.9"/>
+                        </filter>
+                        <marker id="trendArrowMarker" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 1 L 9 5 L 0 9 z" fill="#00FF66"/>
+                        </marker>
+                      </defs>
+                      <path d="M 12 75 L 52 54 L 98 62 L 146 16"
+                            fill="none"
+                            stroke="#00FF66"
+                            stroke-width="2.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            filter="url(#trendGlow)"
+                            marker-end="url(#trendArrowMarker)"/>
+                      <circle cx="12" cy="75" r="3.2" fill="#00FF66" filter="url(#trendGlow)"/>
+                      <circle cx="52" cy="54" r="3.2" fill="#00FF66" filter="url(#trendGlow)"/>
+                      <circle cx="98" cy="62" r="3.2" fill="#00FF66" filter="url(#trendGlow)"/>
+                    </svg>
+
+                    <div class="hud-bar-col">
+                      <div class="hud-bar-fill bar-ene"></div>
+                      <span class="hud-bar-label">Ene</span>
+                    </div>
+                    <div class="hud-bar-col">
+                      <div class="hud-bar-fill bar-feb"></div>
+                      <span class="hud-bar-label">Feb</span>
+                    </div>
+                    <div class="hud-bar-col">
+                      <div class="hud-bar-fill bar-mar"></div>
+                      <span class="hud-bar-label">Mar</span>
+                    </div>
+                    <div class="hud-bar-col">
+                      <div class="hud-bar-fill bar-abr"></div>
+                      <span class="hud-bar-label">Abr</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Panel Derecho: Donut Gauge 85% y Slider Runner -->
+                <div class="hud-gauge-panel">
+                  <div class="hud-donut-wrap">
+                    <svg class="hud-donut-svg" viewBox="0 0 140 140" width="126" height="126" aria-label="Progreso general 85%">
+                      <defs>
+                        <filter id="donutCyanGlow" x="-30%" y="-30%" width="160%" height="160%">
+                          <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#00F0FF" flood-opacity="0.85"/>
+                          <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#00F0FF" flood-opacity="0.4"/>
+                        </filter>
+                      </defs>
+                      <circle cx="70" cy="70" r="52" fill="none" stroke="rgba(0, 240, 255, 0.16)" stroke-width="11"/>
+                      <circle cx="70" cy="70" r="52" fill="none"
+                              stroke="#00F0FF"
+                              stroke-width="11"
+                              stroke-dasharray="277.7 326.7"
+                              stroke-linecap="round"
+                              transform="rotate(-90 70 70)"
+                              filter="url(#donutCyanGlow)"/>
+                      <text x="70" y="73" text-anchor="middle" dominant-baseline="central"
+                            font-family="'Outfit', sans-serif" font-size="29" font-weight="800" fill="#FFFFFF">85%</text>
+                    </svg>
+                  </div>
+
+                  <div class="hud-activity-slider" aria-hidden="true">
+                    <div class="hud-runner-dot"></div>
+                    <div class="hud-runner-track"></div>
+                    <div class="hud-runner-icon">
+                      <svg viewBox="0 0 24 24" width="22" height="22" fill="#00FF66">
+                        <path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7z"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- HOLOGRAPHIC SUB-PILL: Preparación Saber 11 (Anclada directamente debajo de Progreso) -->
+              <div class="hud-subpill hud-subpill-saber11" id="subpill-saber11" aria-label="Preparación Saber 11">
+                <div class="hud-tether-line tether-purple">
+                  <span class="tether-node-top"></span>
+                  <span class="tether-node-bot"></span>
+                </div>
+                <div class="hud-subpill-box">
+                  <div class="subpill-icon-wrap">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none">
+                      <rect x="3" y="14" width="4.5" height="8" rx="2" fill="#C084FC"/>
+                      <rect x="9.75" y="8" width="4.5" height="14" rx="2" fill="#C084FC"/>
+                      <rect x="16.5" y="2" width="4.5" height="20" rx="2" fill="#C084FC"/>
+                    </svg>
+                  </div>
+                  <div class="subpill-divider"></div>
+                  <div class="subpill-text-wrap">
+                    <span class="subpill-text-line1">Preparación</span>
+                    <span class="subpill-text-line2">Saber 11</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- TARJETA 3: RECURSOS INTERACTIVOS -->
+            <article class="hud-card hud-card-recursos" aria-labelledby="hud-title-recursos">
+              <div class="hud-card-header">
+                <div class="hud-header-title-group">
+                  <h3 class="hud-card-title" id="hud-title-recursos">RECURSOS INTERACTIVOS</h3>
+                </div>
+                <div class="hud-status-badge" aria-hidden="true">
+                  <svg class="hud-status-leaf" viewBox="0 0 24 24" width="20" height="20">
+                    <defs>
+                      <linearGradient id="leafGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#6DFFA8"/>
+                        <stop offset="45%" stop-color="#00FF66"/>
+                        <stop offset="100%" stop-color="#00C853"/>
+                      </linearGradient>
+                      <filter id="leafGlow3" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="2.2" result="blur"/>
+                        <feMerge>
+                          <feMergeNode in="blur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                    </defs>
+                    <path d="M 18.5 5 C 18.5 5, 20 12, 14 17.5 C 9.5 21.5, 4 19, 3 14 C 2 8.5, 7.5 4, 13 3 C 16 2.5, 18.5 5, 18.5 5 Z"
+                          fill="url(#leafGrad3)"
+                          filter="url(#leafGlow3)"/>
+                    <ellipse cx="10" cy="8.5" rx="1.8" ry="3" transform="rotate(-30 10 8.5)" fill="#FFFFFF" opacity="0.85"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="hud-buttons-row">
+                <div class="hud-interactive-tile" role="button" tabindex="0" aria-label="Recurso Guías">
+                  <div class="hud-tile-box">
+                    <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#00F0FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                      <line x1="5" y1="7" x2="9" y2="7"/>
+                      <line x1="5" y1="11" x2="9" y2="11"/>
+                      <line x1="15" y1="7" x2="19" y2="7"/>
+                      <line x1="15" y1="11" x2="19" y2="11"/>
+                    </svg>
+                  </div>
+                  <span class="hud-tile-label">Guías</span>
+                </div>
+
+                <div class="hud-interactive-tile" role="button" tabindex="0" aria-label="Recurso Videos">
+                  <div class="hud-tile-box">
+                    <svg viewBox="0 0 36 36" width="34" height="34" fill="none" aria-hidden="true">
+                      <!-- Insignia play triangular redondeada cian con triángulo blanco interior -->
+                      <path d="M9 7.5C9 5.2 11.5 3.8 13.5 5L28.5 14C30.5 15.2 30.5 17.8 28.5 19L13.5 28C11.5 29.2 9 27.8 9 25.5V7.5Z" fill="#00F0FF" filter="drop-shadow(0 0 6px rgba(0, 240, 255, 0.8))"/>
+                      <polygon points="15 11 23 16.5 15 22" fill="#FFFFFF"/>
+                    </svg>
+                  </div>
+                  <span class="hud-tile-label">Videos</span>
+                </div>
+
+                <div class="hud-interactive-tile" role="button" tabindex="0" aria-label="Recurso Evaluaciones">
+                  <div class="hud-tile-box">
+                    <svg viewBox="0 0 32 36" width="30" height="34" fill="none" aria-hidden="true">
+                      <!-- Hoja de examen con doblez, líneas y acento cian -->
+                      <path d="M4 2C2.9 2 2 2.9 2 4V32C2 33.1 2.9 34 4 34H28C29.1 34 30 33.1 30 32V10L22 2H4Z" fill="rgba(0, 240, 255, 0.18)" stroke="#00F0FF" stroke-width="1.8"/>
+                      <polyline points="22 2 22 10 30 10" stroke="#00F0FF" stroke-width="1.8" fill="rgba(0, 240, 255, 0.45)"/>
+                      <line x1="7" y1="16" x2="25" y2="16" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                      <line x1="7" y1="21" x2="25" y2="21" stroke="#00F0FF" stroke-width="2" stroke-linecap="round"/>
+                      <line x1="7" y1="26" x2="19" y2="26" stroke="#00F0FF" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <span class="hud-tile-label">Evaluaciones</span>
+                </div>
+
+                <div class="hud-interactive-tile" role="button" tabindex="0" aria-label="Recurso Actividades">
+                  <div class="hud-tile-box">
+                    <svg viewBox="0 0 24 24" width="32" height="32" fill="#00F0FF" aria-hidden="true">
+                      <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.1 11.9 1 10.5 1S8 2.1 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.4 0 2.5 1.1 2.5 2.5s-1.1 2.5-2.5 2.5H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5V22H17c1.1 0 2-.9 2-2v-4h1.5c1.4 0 2.5-1.1 2.5-2.5s-1.1-2.5-2.5-2.5z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- HOLOGRAPHIC SUB-PILL: Guías interactivas (Anclada directamente debajo de Recursos) -->
+              <div class="hud-subpill hud-subpill-guias" id="subpill-guias" aria-label="Guías interactivas">
+                <div class="hud-tether-line tether-green">
+                  <span class="tether-node-top"></span>
+                  <span class="tether-node-bot"></span>
+                </div>
+                <div class="hud-subpill-box">
+                  <div class="subpill-icon-wrap">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                      <line x1="5" y1="8" x2="9" y2="8" stroke="#34D399" stroke-width="1.8"/>
+                      <line x1="5" y1="12" x2="9" y2="12" stroke="#34D399" stroke-width="1.8"/>
+                      <line x1="15" y1="8" x2="19" y2="8" stroke="#34D399" stroke-width="1.8"/>
+                      <line x1="15" y1="12" x2="19" y2="12" stroke="#34D399" stroke-width="1.8"/>
+                    </svg>
+                  </div>
+                  <div class="subpill-divider"></div>
+                  <div class="subpill-text-wrap">
+                    <span class="subpill-text-line1">Guías</span>
+                    <span class="subpill-text-line2">interactivas</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- TARJETA 4: COMUNIDAD EDUCATIVA -->
+            <article class="hud-card hud-card-comunidad" aria-labelledby="hud-title-comunidad">
+              <div class="hud-card-header">
+                <div class="hud-header-title-group">
+                  <h3 class="hud-card-title" id="hud-title-comunidad">COMUNIDAD EDUCATIVA</h3>
+                </div>
+                <div class="hud-status-badge" aria-hidden="true">
+                  <svg class="hud-status-leaf" viewBox="0 0 24 24" width="20" height="20">
+                    <defs>
+                      <linearGradient id="leafGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#6DFFA8"/>
+                        <stop offset="45%" stop-color="#00FF66"/>
+                        <stop offset="100%" stop-color="#00C853"/>
+                      </linearGradient>
+                      <filter id="leafGlow4" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="2.2" result="blur"/>
+                        <feMerge>
+                          <feMergeNode in="blur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                    </defs>
+                    <path d="M 18.5 5 C 18.5 5, 20 12, 14 17.5 C 9.5 21.5, 4 19, 3 14 C 2 8.5, 7.5 4, 13 3 C 16 2.5, 18.5 5, 18.5 5 Z"
+                          fill="url(#leafGrad4)"
+                          filter="url(#leafGlow4)"/>
+                    <ellipse cx="10" cy="8.5" rx="1.8" ry="3" transform="rotate(-30 10 8.5)" fill="#FFFFFF" opacity="0.85"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="hud-buttons-row">
+                <div class="hud-interactive-tile" role="button" tabindex="0" aria-label="Comunidad Estudiantes">
+                  <div class="hud-tile-box">
+                    <svg viewBox="0 0 24 24" width="34" height="34" fill="#00F0FF" aria-hidden="true">
+                      <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                    </svg>
+                  </div>
+                  <span class="hud-tile-label">Estudiantes</span>
+                </div>
+
+                <div class="hud-interactive-tile" role="button" tabindex="0" aria-label="Comunidad Docentes">
+                  <div class="hud-tile-box">
+                    <svg viewBox="0 0 24 24" width="34" height="34" fill="#00F0FF" stroke="#00F0FF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M12 3L1 9L12 15L21 10.09V17H23V9L12 3Z"/>
+                      <path d="M5 13.18V17.5C5 19.43 8.13 21 12 21C15.87 21 19 19.43 19 17.5V13.18L12 17L5 13.18Z" fill="rgba(0, 240, 255, 0.45)"/>
+                    </svg>
+                  </div>
+                  <span class="hud-tile-label">Docentes</span>
+                </div>
+
+                <div class="hud-interactive-tile" role="button" tabindex="0" aria-label="Comunidad Familias">
+                  <div class="hud-tile-box">
+                    <svg viewBox="0 0 24 24" width="34" height="34" fill="#00F0FF" aria-hidden="true">
+                      <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                    </svg>
+                  </div>
+                  <span class="hud-tile-label">Familias</span>
+                </div>
+
+                <div class="hud-interactive-tile" role="button" tabindex="0" aria-label="Comunidad Directivos">
+                  <div class="hud-tile-box">
+                    <svg viewBox="0 0 24 24" width="32" height="32" fill="#00F0FF" aria-hidden="true">
+                      <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- HOLOGRAPHIC SUB-PILL: Gestión académica (Anclada directamente debajo de Comunidad Educativa) -->
+              <div class="hud-subpill hud-subpill-gestion" id="subpill-gestion" aria-label="Gestión académica">
+                <div class="hud-tether-line tether-cyan">
+                  <span class="tether-node-top"></span>
+                  <span class="tether-node-bot"></span>
+                </div>
+                <div class="hud-subpill-box">
+                  <div class="subpill-icon-wrap">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00F0FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="4" ry="4" stroke="#00F0FF" stroke-width="2"/>
+                      <line x1="16" y1="2" x2="16" y2="6" stroke="#00F0FF" stroke-width="2.5"/>
+                      <line x1="8" y1="2" x2="8" y2="6" stroke="#00F0FF" stroke-width="2.5"/>
+                      <line x1="3" y1="10" x2="21" y2="10" stroke="#00F0FF" stroke-width="1.8"/>
+                      <circle cx="7.5" cy="14" r="1.2" fill="#00F0FF"/>
+                      <circle cx="12" cy="14" r="1.2" fill="#00F0FF"/>
+                      <circle cx="16.5" cy="14" r="1.2" fill="#00F0FF"/>
+                      <circle cx="7.5" cy="18" r="1.2" fill="#00F0FF"/>
+                      <circle cx="12" cy="18" r="1.2" fill="#00F0FF"/>
+                      <circle cx="16.5" cy="18" r="1.2" fill="#00F0FF"/>
+                    </svg>
+                  </div>
+                  <div class="subpill-divider"></div>
+                  <div class="subpill-text-wrap">
+                    <span class="subpill-text-line1">Gestión</span>
+                    <span class="subpill-text-line2">académica</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- Indicador de Scroll Interactivo y Navegación entre Fases -->
+        <div class="colegios-scroll-cue" id="colegios-scroll-cue" onclick="advanceColegiosHeroScroll()" role="button" tabindex="0" aria-label="Desliza para continuar">
+          <div class="colegios-scroll-mouse" aria-hidden="true">
+            <div class="colegios-scroll-wheel"></div>
+          </div>
+          <span id="colegios-cue-text">Desliza para continuar</span>
+          <span class="colegios-scroll-arrow" aria-hidden="true">↓</span>
+        </div>
+
+        <!-- Indicador discreto de fase (Fase 1: Introducción | Fase 2: Las 3 Necesidades) -->
+        <div class="colegios-phase-indicator" id="colegios-phase-indicator" aria-hidden="true">
+          <span class="phase-dot is-active" id="phase-dot-1" onclick="scrollHeroToPhase(0)" title="Fase 1: Introducción"></span>
+          <span class="phase-dot" id="phase-dot-2" onclick="scrollHeroToPhase(1)" title="Fase 2: Tres necesidades"></span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         EL PROBLEMA / CONTEXTO: DEL PAPEL INERTE AL RENDIMIENTO ANALÍTICO
+         ========================================================================== -->
+    <section id="el-problema" class="friction-section">
+      <div class="section-title-wrap" id="friction-title-card">
+        <span class="section-eyebrow">EL DIAGNÓSTICO GLOBAL</span>
+        <h2 class="section-title">El Futuro Educativo No Se Espera.<br><span style="font-weight: 500; font-size: 0.82em; color: var(--text-secondary); text-transform: lowercase;">se construye con alto rendimiento</span></h2>
+        <p class="section-desc">
+          La mayoría de los estudiantes no fallan por falta de capacidad intelectual, sino por estudiar con métodos pasivos del siglo pasado que no entrenan bajo simulación real ni retroalimentación analítica inmediata.
+        </p>
+      </div>
+
+      <div class="friction-grid" id="friction-grid">
+        <!-- Friction 1 -->
+        <div class="friction-card-wrapper friction-wrapper-left" id="friction-wrapper-1">
+          <div class="friction-card">
+            <span class="friction-tag">Fricción en Idiomas (TEF & IELTS)</span>
+            <h3>Reglas en Papel vs. Velocidad Nativa y Presión del Cronómetro</h3>
+            <p>
+              Los estudiantes aprenden gramática descontextualizada en papel, pero colapsan ante la velocidad de un hablante nativo, la falta de vocabulario C1/C2 y la implacable cuenta regresiva de la prueba oficial.
+            </p>
+            <div class="friction-solution-pill">
+              ✓ Solución SYNAPSE: Simuladores orales y auditivos cronometrados con audios nativos a velocidad real.
+            </div>
+          </div>
+        </div>
+
+        <!-- Friction 2 -->
+        <div class="friction-card-wrapper friction-wrapper-center" id="friction-wrapper-2">
+          <div class="friction-card">
+            <span class="friction-tag">Fricción en Pruebas de Estado</span>
+            <h3>Memorización Ciega vs. Razonamiento Analítico y Descarte de Trampas</h3>
+            <p>
+              Se memorizan preguntas de bancos estáticos en vez de entrenar la lectura crítica profunda, la interpretación de datos científicos y la técnica para neutralizar los distractores trampa del examen.
+            </p>
+            <div class="friction-solution-pill">
+              ✓ Solución SYNAPSE: Desglose analítico paso a paso y algoritmo predictivo de percentil nacional.
+            </div>
+          </div>
+        </div>
+
+        <!-- Friction 3 -->
+        <div class="friction-card-wrapper friction-wrapper-right" id="friction-wrapper-3">
+          <div class="friction-card">
+            <span class="friction-tag">Fricción en las Instituciones</span>
+            <h3>Fotocopias que Aburren y Docentes Perdiendo Fines de Semana</h3>
+            <p>
+              Fotocopias en blanco y negro y PDFs estáticos que desmotivan al alumno, mientras los docentes pierden decenas de horas semanales calificando a mano sin datos de analítica o progreso real.
+            </p>
+            <div class="friction-solution-pill">
+              ✓ Solución SYNAPSE: Guías vivas interactivas con autocalificación al 100% y tableros en tiempo real.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         TRACK A: ECOSISTEMA COLEGIOS • SALÓN DE CLASES 3D
+         Cinematic Three.js School Environment with GSAP Camera Choreography:
+           Station 1: El Tablero -> Saber 11 / Preicfes (Vector)
+           Station 2: El Pupitre del Estudiante -> Agenda Virtual (Pulse)
+           Station 3: La Estación de Guías -> Guías Web Interactivas (Morpho)
+         ========================================================================== -->
+    <section id="scrolly-showcase" class="scrolly-showcase-section">
+      <div id="scrolly-pin-container" class="scrolly-pin-container">
+
+        <!-- Top School Stations Bar (3 Stations in 3D Classroom) -->
+        <div class="scrolly-app-tabs-bar">
+          <button class="scrolly-tab-btn active" data-app="0">📐 1. EL TABLERO // PREICFES SABER 11</button>
+          <button class="scrolly-tab-btn" data-app="1">📱 2. EL PUPITRE // AGENDA VIRTUAL</button>
+          <button class="scrolly-tab-btn" data-app="2">📘 3. ESTACIÓN DE GUÍAS // GUÍAS WEB</button>
+        </div>
+
+        <!-- Dynamic 3D Camera Focus Indicator -->
+        <div class="classroom-camera-status" id="classroom-camera-status">
+          <span class="camera-status-dot"></span>
+          <span class="camera-status-text" id="classroom-status-text">CÁMARA ENFOCANDO: EL TABLERO INSTITUCIONAL (SABER 11)</span>
+        </div>
+
+        <!-- ====================================================================
+             STATION 1: EL TABLERO // SABER 11 VECTOR (PREICFES)
+             Camera zooms into the Classroom Chalkboard
+             ==================================================================== -->
+        <article id="card-vector" class="app-scrolly-card active-card">
+          <div class="app-card-details">
+            <div class="app-badge-tag tag-station-chalkboard">
+              <span>📐 ESTACIÓN 1: EL TABLERO // PRUEBAS SABER 11</span>
+            </div>
+            <h2>SABER 11 // VECTOR</h2>
+            <p class="app-intent-phrase">
+              "Práctica diaria de preguntas ICFES en el tablero, batallas académicas en tiempo real entre compañeros y puntaje predictivo."
+            </p>
+            <p class="app-description-body">
+              Diseñada para que los estudiantes de grado 10° y 11° refuercen y dominen la resolución de preguntas oficiales del ICFES día tras día. En lugar de memorizar sin sentido, entrenan la técnica de descarte de distractores en el tablero, compiten en batallas académicas en vivo y acumulan analítica predictiva de puntaje hacia los 500 puntos.
+            </p>
+            <ul class="app-feature-list">
+              <li class="app-feature-item">
+                <span class="feature-check-icon">✓</span>
+                <span><strong>Práctica Diaria en las 5 Áreas Oficiales:</strong> Entrenamiento continuo en Lectura Crítica, Matemáticas, Ciencias Naturales, Sociales e Inglés con desglose lógico.</span>
+              </li>
+              <li class="app-feature-item">
+                <span class="feature-check-icon">✓</span>
+                <span><strong>Batallas Académicas en Tiempo Real:</strong> Desafíos en vivo entre compañeros del aula que convierten el estudio en una experiencia motivante y participativa.</span>
+              </li>
+              <li class="app-feature-item">
+                <span class="feature-check-icon">✓</span>
+                <span><strong>Historial y Progreso Almacenado:</strong> Cada respuesta se guarda en el perfil del estudiante, otorgando puntos XP, estadísticas y ranking de rendimiento.</span>
+              </li>
+              <li class="app-feature-item">
+                <span class="feature-check-icon">✓</span>
+                <span><strong>Algoritmo Predictivo de Percentil:</strong> Proyección del puntaje global (escala 0 a 500) y percentil nacional para asegurar becas universitarias y alto promedio escolar.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="app-card-mockup-wrapper">
+            <div class="mockup-header-bar">
+              <div class="mockup-dots">
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+              </div>
+              <span class="mockup-status-text">SABER 11 // ALGORITMO PREDICTIVO Y BATALLAS EN VIVO</span>
+            </div>
+            <div class="mockup-metric-highlight">
+              <div>
+                <span class="metric-highlight-label">Puntaje Estimado Saber 11</span>
+                <div class="metric-highlight-number">418 / 500</div>
+              </div>
+              <div style="text-align: right;">
+                <span class="metric-highlight-label">Batallas en Vivo Ganadas</span>
+                <div class="metric-highlight-number" style="color: var(--gold-warm);">88% Éxito</div>
+              </div>
+            </div>
+            <div class="mockup-preview-snippet" style="background: rgba(255, 255, 255, 0.75); border-radius: 14px; padding: 14px; font-size: 0.85rem; color: var(--slate-blue-dark);">
+              <strong>Simulación en el Tablero:</strong> Desafío de Razonamiento Científico y Matemático. 28 estudiantes compitiendo en vivo con resolución paso a paso de distractores ICFES.
+            </div>
+          </div>
+        </article>
+
+        <!-- ====================================================================
+             STATION 2: EL PUPITRE // PULSE AGENDA VIRTUAL (GESTIÓN ESCOLAR)
+             Camera swoops down to the Student Desk and Glowing Tablet
+             ==================================================================== -->
+        <article id="card-pulse" class="app-scrolly-card">
+          <div class="app-card-details">
+            <div class="app-badge-tag tag-station-desk">
+              <span>📱 ESTACIÓN 2: EL PUPITRE DEL ESTUDIANTE // AGENDA VIRTUAL</span>
+            </div>
+            <h2>PULSE // AGENDA ESCOLAR</h2>
+            <p class="app-intent-phrase">
+              "Calificaciones, boletines en 1 clic, observador digital del estudiante, analítica institucional y acuses de recibo en el celular."
+            </p>
+            <p class="app-description-body">
+              La plataforma que centraliza la administración y comunicación del colegio directamente en los dispositivos de estudiantes, familias y directivos. Permite registrar calificaciones, emitir boletines periódicos automáticos, gestionar el observador del alumno con respaldo institucional, monitorear el desempeño del colegio y recibir acuses de recibo confirmados en tiempo real.
+            </p>
+            <ul class="app-feature-list">
+              <li class="app-feature-item">
+                <span class="feature-check-icon">✓</span>
+                <span><strong>Calificaciones y Boletines Periódicos:</strong> Registro centralizado de notas por periodos y emisión instantánea de boletines sin errores ni demoras administrativas.</span>
+              </li>
+              <li class="app-feature-item">
+                <span class="feature-check-icon">✓</span>
+                <span><strong>Observador del Estudiante Digital:</strong> Registro de anotaciones convivenciales, acuerdos y reconocimientos en un expediente seguro accesible al instante.</span>
+              </li>
+              <li class="app-feature-item">
+                <span class="feature-check-icon">✓</span>
+                <span><strong>Tableros Analíticos para Rectoría:</strong> Estadísticas en tiempo real para rectores y coordinadores sobre cómo va el colegio, cada curso y cada alumno.</span>
+              </li>
+              <li class="app-feature-item">
+                <span class="feature-check-icon">✓</span>
+                <span><strong>Comunicación Oficial con Acuse de Recibo:</strong> Envío de circulares, citaciones y tareas con confirmación de lectura firmada digitalmente por los acudientes.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="app-card-mockup-wrapper">
+            <div class="mockup-header-bar">
+              <div class="mockup-dots">
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+              </div>
+              <span class="mockup-status-text">PULSE // CONTROL INSTITUCIONAL Y RECTORÍA</span>
+            </div>
+            <div class="mockup-metric-highlight">
+              <div>
+                <span class="metric-highlight-label">Boletines Emitidos</span>
+                <div class="metric-highlight-number">100% Digital</div>
+              </div>
+              <div style="text-align: right;">
+                <span class="metric-highlight-label">Acuses de Recibido</span>
+                <div class="metric-highlight-number" style="color: var(--slate-blue);">99.4% Firmados</div>
+              </div>
+            </div>
+            <div class="mockup-preview-snippet" style="background: rgba(255, 255, 255, 0.75); border-radius: 14px; padding: 14px; font-size: 0.85rem; color: var(--slate-blue-dark);">
+              <strong>Tablet del Estudiante Mateo Gómez (11-A):</strong> Promedio general 4.8 / 5.0. Circular institucional de convivencia confirmada por acudientes y boletín digital disponible.
+            </div>
+          </div>
+        </article>
+
+        <!-- ====================================================================
+             STATION 3: LA ESTACIÓN DE GUÍAS // MORPHO GUÍAS INTERACTIVAS
+             Camera pans to the Educational Bookshelf and Digital Guide Slabs
+             ==================================================================== -->
+        <article id="card-morpho" class="app-scrolly-card">
+          <div class="app-card-details">
+            <div class="app-badge-tag tag-station-guides">
+              <span>📘 ESTACIÓN 3: ESTACIÓN DE GUÍAS // DIGITALIZACIÓN CURRICULAR</span>
+            </div>
+            <h2>MORPHO // GUÍAS INTERACTIVAS</h2>
+            <p class="app-intent-phrase">
+              "Transformamos las guías del colegio: de fotocopias y PDFs aburridos a experiencias web interactivas y autocalificables."
+            </p>
+            <p class="app-description-body">
+              Tomamos las guías escolares tradicionales en papel o PDF de tu institución educativa, renovamos su aspecto visual por completo y las convertimos en páginas web dinámicas e interactivas. Los estudiantes aprenden con recursos multimedia y micro-quizzes integrados, mientras los profesores ahorran el 100% del tiempo de calificación manual.
+            </p>
+            <ul class="app-feature-list">
+              <li class="app-feature-item">
+                <span class="feature-check-icon">✓</span>
+                <span><strong>De Papel Estático a Páginas Web Vivas:</strong> Modernizamos talleres y textos escolares para que se consulten e interactúen con diseño de vanguardia.</span>
+              </li>
+              <li class="app-feature-item">
+                <span class="feature-check-icon">✓</span>
+                <span><strong>Micro-Quizzes Autocalificables:</strong> Comprobación continua de lectura con actividades que se evalúan automáticamente al instante.</span>
+              </li>
+              <li class="app-feature-item">
+                <span class="feature-check-icon">✓</span>
+                <span><strong>Ahorro Total para los Profesores:</strong> Cero horas perdidas calificando fotocopias a mano los fines de semana; el sistema consolida la nota del curso.</span>
+              </li>
+              <li class="app-feature-item">
+                <span class="feature-check-icon">✓</span>
+                <span><strong>Analítica y Trazabilidad Docente:</strong> Los directivos y docentes saben quién abrió la guía, cuánto tiempo dedicó y qué conceptos requirieron refuerzo.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="app-card-mockup-wrapper">
+            <div class="mockup-header-bar">
+              <div class="mockup-dots">
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+              </div>
+              <span class="mockup-status-text">MORPHO // GUÍA WEB INTERACTIVA & ANALÍTICA DOCENTE</span>
+            </div>
+            <div class="mockup-metric-highlight">
+              <div>
+                <span class="metric-highlight-label">Tiempo de Calificación Ahorrado</span>
+                <div class="metric-highlight-number">100% Automático</div>
+              </div>
+              <div style="text-align: right;">
+                <span class="metric-highlight-label">Comprensión de Lectura</span>
+                <div class="metric-highlight-number" style="color: var(--sage-success);">96.4%</div>
+              </div>
+            </div>
+            <div class="mockup-preview-snippet" style="background: rgba(255, 255, 255, 0.75); border-radius: 14px; padding: 14px; font-size: 0.85rem; color: var(--slate-blue-dark);">
+              <strong>Guía Web Interactiva (Física & Leyes de Newton):</strong> 34 estudiantes resolvieron actividades interactivas en línea con autocalificación instantánea y analítica para el docente.
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         DEMOSTRACIÓN EN VIDEO: INTERFAZ SABER 11 EN VIVO
+         ========================================================================== -->
+    <section id="video-saber-section" class="video-saber-section">
+      <div class="section-title-wrap">
+        <span class="section-eyebrow">DEMOSTRACIÓN OFICIAL</span>
+        <h2 class="section-title">Explora la Interfaz de Saber 11 en Acción</h2>
+        <p class="section-desc">Observa cómo interactúa el estudiante con el simulacro, el descarte de distractores y las batallas académicas en tiempo real.</p>
+      </div>
+
+      <div class="video-saber-wrapper">
+        <div class="console-video-frame" style="background: rgba(255, 255, 255, 0.9); border: 1.5px solid var(--glass-border); border-radius: 28px; overflow: hidden; box-shadow: var(--shadow-soft-lg); max-width: 1100px; margin: 0 auto;">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 24px; background: rgba(245, 241, 235, 0.95); border-bottom: 1px solid rgba(68, 86, 96, 0.12);">
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span style="width: 12px; height: 12px; border-radius: 50%; background: #FF5F56; display: inline-block;"></span>
+              <span style="width: 12px; height: 12px; border-radius: 50%; background: #FFBD2E; display: inline-block;"></span>
+              <span style="width: 12px; height: 12px; border-radius: 50%; background: #27C93F; display: inline-block;"></span>
+            </div>
+            <span style="font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--slate-blue-dark); letter-spacing: 0.06em;">SABER 11 // PLATAFORMA ESCOLAR EN VIVO</span>
+            <span style="display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: #DC2626; background: rgba(220, 38, 38, 0.1); padding: 4px 12px; border-radius: 20px;">
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: #DC2626; display: inline-block;"></span> DEMO INTERACTIVA
+            </span>
+          </div>
+          <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; max-height: 580px; background: #0F172A; display: flex; align-items: center; justify-content: center;">
+            <video id="saber-main-video" src="saber-video-1.mp4" controls autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: contain;"></video>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div> <!-- /#view-colegios -->
+
+  <!-- ====================================================================
+       3. PESTAÑA: MUNDO IDIOMAS (TEF CANADÁ & IELTS CON VIDEOSCRUBBER)
+       ==================================================================== -->
+  <div id="view-idiomas" class="world-view">
+
+    <!-- ==========================================================================
+         HERO IDIOMAS: JULY MOUSE-TRACKING CHARACTER (ESTILO SECCIÓN PRUEBA)
+         July gira cabeza y ojos verdes en tiempo real siguiendo el cursor del ratón
+         ========================================================================== -->
+    <section id="july-idiomas-hero" class="july-idiomas-hero" aria-label="July - Mentora Bilingüe para Canadá">
+      <!-- 60FPS Mouse-tracking Stop-Motion Canvas -->
+      <canvas id="july-idiomas-canvas" class="july-idiomas-canvas"></canvas>
+      <div class="july-idiomas-overlay-grad"></div>
+
+      <!-- Floating Glass Presentation Content -->
+      <div class="july-idiomas-content">
+        <div class="july-eyebrow-badge">
+          <span class="pulse-cyan"></span>
+          <span>✦ MUNDO IDIOMAS • PREPARACIÓN MIGRATORIA 2026</span>
+        </div>
+        <h1 class="july-hero-title">
+          Conoce a July, tu Mentora <span>Bilingüe</span> para Canadá
+        </h1>
+        <p class="july-hero-desc">
+          Entrenamiento de alta exigencia para certificar <strong>TEF Canadá (NCLC 7+)</strong> y ganar hasta +50 puntos en Express Entry, o <strong>IELTS Academic (Band 7.5+)</strong> para admisión universitaria. Mueve el cursor de lado a lado para interactuar con July.
+        </p>
+
+        <div class="july-actions-group">
+          <a href="#idiomas-hub" class="july-btn-tef" onclick="document.getElementById('idiomas-hub').scrollIntoView({behavior: 'smooth'})">
+            <span>🇨🇦 ÉLAN TEF Canadá</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+          </a>
+          <a href="#idiomas-hub" class="july-btn-ielts" onclick="document.getElementById('idiomas-hub').scrollIntoView({behavior: 'smooth'})">
+            <span>🇬🇧 IELTS Master Prep</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Interactive Mouse Cue -->
+      <div class="july-mouse-tracking-hint">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8 12h8M12 8l4 4-4 4M4 12h.01M20 12h.01"/>
+        </svg>
+        <span>Mueve el cursor horizontalmente: July te sigue con la mirada</span>
+      </div>
+
+      <!-- Typewriter Quote Bubble (Bottom Right) -->
+      <div class="july-quote-bubble">
+        <img src="assets/frames_july_head/frame_0001.webp" alt="July" class="july-avatar-thumb">
+        <div class="july-quote-text">
+          <strong>July // Mentora Oficial:</strong> "Bonjour ! Prêt pour le Canada ? Acompáñame a conquistar esos +50 puntos para tu residencia permanente."
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         TRACK B: HUB ESPECIALIZADO DE IDIOMAS (TEF CANADÁ & IELTS)
+         Preparación de Alta Exigencia para Migración y Certificación Internacional
+         ========================================================================== -->
+    <section id="idiomas-hub" class="idiomas-hub-section">
+      <div class="section-title-wrap">
+        <span class="section-eyebrow" style="color: var(--canadian-crimson);">🇨🇦 🇬🇧 IDIOMAS DE ALTA EXIGENCIA // MIGRACIÓN Y UNIVERSIDADES</span>
+        <h2 class="section-title">Hub Especializado: TEF Canadá & IELTS</h2>
+        <p class="section-desc">
+          Diseñado para personas que necesitan pasar el examen <strong>TEF Canadá</strong> (para obtener hasta +50 puntos en Express Entry / residencia permanente) o certificar inglés en <strong>IELTS con Band 7.5+</strong>. La metodología entrena a escribir rápido y perfecto, memorizar verbos y conectores argumentativos y redactar con las rúbricas oficiales.
+        </p>
+      </div>
+
+      <div class="idiomas-grid-container">
+
+        <!-- ====================================================================
+             IDIOMAS CARD 1: ÉLAN TEF CANADÁ (FRANCÉS B1 -> B2+)
+             ==================================================================== -->
+        <div class="idioma-specialty-card card-elan-hub">
+          <div class="idioma-card-top-bar">
+            <div class="idioma-flag-wrap">
+              <span class="flag-badge-pill" style="background: rgba(200, 16, 46, 0.12); color: #C8102E; border: 1px solid rgba(200, 16, 46, 0.3);">
+                🇨🇦 OFICIAL TEF CANADÁ
+              </span>
+            </div>
+            <span class="idioma-band-target" style="color: #C8102E; font-weight: 800; font-family: var(--font-mono);">
+              B1 ➔ B2+ EN 160 DÍAS
+            </span>
+          </div>
+
+          <h3 class="idioma-app-title">ÉLAN TEF Canadá</h3>
+          <p class="idioma-app-lead">
+            "Entrena para escribir rápido y con ortografía perfecta, memorizar conectores indispensables y superar la prueba con máxima exigencia."
+          </p>
+
+          <div class="idioma-metric-row">
+            <div class="idioma-metric-box">
+              <span class="idioma-metric-sub">Puntos Migración Express Entry</span>
+              <div class="idioma-metric-val" style="color: #C8102E;">+50 Puntos CRS</div>
+            </div>
+            <div class="idioma-metric-box">
+              <span class="idioma-metric-sub">Nivel Requerido NCLC</span>
+              <div class="idioma-metric-val" style="color: var(--slate-blue-dark);">NCLC 7+ (B2+)</div>
+            </div>
+          </div>
+
+          <ul class="app-feature-list" style="margin: 20px 0;">
+            <li class="app-feature-item">
+              <span class="feature-check-icon" style="background: rgba(200, 16, 46, 0.15); color: #C8102E;">✓</span>
+              <span><strong>Escribir Rápido y Sin Faltas:</strong> Práctica contrarreloj con corrección instantánea de acentos graves, agudos, circunflejos y ortografía precisa.</span>
+            </li>
+            <li class="app-feature-item">
+              <span class="feature-check-icon" style="background: rgba(200, 16, 46, 0.15); color: #C8102E;">✓</span>
+              <span><strong>Conectores y Verbos B2/C1:</strong> Memorización activa de conectores indispensables (*en revanche, par ailleurs, d'autant plus que, ainsi*).</span>
+            </li>
+            <li class="app-feature-item">
+              <span class="feature-check-icon" style="background: rgba(200, 16, 46, 0.15); color: #C8102E;">✓</span>
+              <span><strong>Secciones A y B bajo Rúbrica CCI París:</strong> Redacción de hechos diversos y cartas argumentativas evaluadas por criterios oficiales de la Cámara de Comercio de París.</span>
+            </li>
+            <li class="app-feature-item">
+              <span class="feature-check-icon" style="background: rgba(200, 16, 46, 0.15); color: #C8102E;">✓</span>
+              <span><strong>Ear-Tuning Lab Francés y Quebequense:</strong> Audios nativos a velocidad real con acentos de Francia y Quebec para asegurar el puntaje de comprensión auditiva.</span>
+            </li>
+          </ul>
+
+          <div class="idioma-sample-box" style="background: rgba(200, 16, 46, 0.05); border-left: 4px solid #C8102E; padding: 14px 18px; border-radius: 0 12px 12px 0;">
+            <strong style="color: #C8102E;">Simulador de Expresión Escrita:</strong> "Section B: 200 palabras en 20 minutos con 0 errores ortográficos y 6 conectores argumentativos de nivel B2 obligatorios integrados."
+          </div>
+
+          <div style="margin-top: 24px;">
+            <button class="btn-primary" onclick="document.getElementById('interactive-console').scrollIntoView({behavior: 'smooth'})" style="background: #C8102E; width: 100%;">
+              Probar Simulador Élan TEF en Vivo →
+            </button>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             IDIOMAS CARD 2: APEX IELTS (INGLÉS INTERNACIONAL)
+             ==================================================================== -->
+        <div class="idioma-specialty-card card-apex-hub">
+          <div class="idioma-card-top-bar">
+            <div class="idioma-flag-wrap">
+              <span class="flag-badge-pill" style="background: rgba(30, 64, 175, 0.12); color: #1E40AF; border: 1px solid rgba(30, 64, 175, 0.3);">
+                🇬🇧 OFICIAL CAMBRIDGE IELTS
+              </span>
+            </div>
+            <span class="idioma-band-target" style="color: #1E40AF; font-weight: 800; font-family: var(--font-mono);">
+              B1 ➔ B2+/C1 EN 166 DÍAS
+            </span>
+          </div>
+
+          <h3 class="idioma-app-title">APEX IELTS</h3>
+          <p class="idioma-app-lead">
+            "Similar a Élan pero calibrado a la prueba IELTS: escribe contra el cronómetro, domina conectores C1 y asegura Band 7.5+ o superior."
+          </p>
+
+          <div class="idioma-metric-row">
+            <div class="idioma-metric-box">
+              <span class="idioma-metric-sub">Puntaje IELTS Proyectado</span>
+              <div class="idioma-metric-val" style="color: #1E40AF;">Band 8.0+</div>
+            </div>
+            <div class="idioma-metric-box">
+              <span class="idioma-metric-sub">Writing Lexical Score</span>
+              <div class="idioma-metric-val" style="color: var(--sage-success);">Band 8.5 (Cohesión)</div>
+            </div>
+          </div>
+
+          <ul class="app-feature-list" style="margin: 20px 0;">
+            <li class="app-feature-item">
+              <span class="feature-check-icon" style="background: rgba(30, 64, 175, 0.15); color: #1E40AF;">✓</span>
+              <span><strong>Writing Task 1 & 2 Contrarreloj:</strong> Redacción rápida de análisis de gráficos y ensayos académicos con corrección instantánea de gramática y sintaxis.</span>
+            </li>
+            <li class="app-feature-item">
+              <span class="feature-check-icon" style="background: rgba(30, 64, 175, 0.15); color: #1E40AF;">✓</span>
+              <span><strong>4 Rúbricas Oficiales de Cambridge:</strong> Evaluación en vivo de Task Response, Coherence & Cohesion, Lexical Resource y Grammatical Range.</span>
+            </li>
+            <li class="app-feature-item">
+              <span class="feature-check-icon" style="background: rgba(30, 64, 175, 0.15); color: #1E40AF;">✓</span>
+              <span><strong>Léxico Formal y Conectores C1:</strong> Banco de vocabulario avanzado (*notwithstanding, elucidate, underpin, pivotal*) sin recurrir a muletillas.</span>
+            </li>
+            <li class="app-feature-item">
+              <span class="feature-check-icon" style="background: rgba(30, 64, 175, 0.15); color: #1E40AF;">✓</span>
+              <span><strong>Speaking Lab Cronometrado:</strong> Práctica simulada de Parts 1, 2 y 3 con medición de fluidez, rango gramatical y tiempo de respuesta sin bloqueos.</span>
+            </li>
+          </ul>
+
+          <div class="idioma-sample-box" style="background: rgba(30, 64, 175, 0.05); border-left: 4px solid #1E40AF; padding: 14px 18px; border-radius: 0 12px 12px 0;">
+            <strong style="color: #1E40AF;">Evaluación Cambridge Writing Task 2:</strong> "285 palabras redactadas en 34 minutos con análisis de argumentos contrarios y vocabulario de nivel C1/C2 verificado."
+          </div>
+
+          <div style="margin-top: 24px;">
+            <button class="btn-primary" onclick="document.getElementById('interactive-console').scrollIntoView({behavior: 'smooth'})" style="background: #1E40AF; width: 100%;">
+              Probar Simulador Apex IELTS en Vivo →
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         INTERACTIVE CONSOLE DECK (LIVE EXPLORER OF THE 5 APPS)
+         ========================================================================== -->
+    <section id="interactive-console" class="console-section">
+      <div class="section-title-wrap" id="console-title-card">
+        <span class="section-eyebrow">SIMULADOR EN VIVO</span>
+        <h2 class="section-title">Explora la Interfaz de las 5 Aplicaciones</h2>
+        <p class="section-desc">Selecciona un producto para visualizar cómo interactúa el estudiante o el docente con sus herramientas analíticas.</p>
+      </div>
+
+      <div class="console-deck-wrapper" id="console-deck-wrapper">
+        <div class="console-deck-container" id="console-deck-card">
+        <!-- Tab Selector (5 Tabs) -->
+        <div class="console-tab-selector">
+          <button class="console-tab-btn active" data-pane="pane-elan">🇨🇦 FRANCÉS TEF // ÉLAN</button>
+          <button class="console-tab-btn" data-pane="pane-apex">🇬🇧 INGLÉS IELTS // APEX</button>
+          <button class="console-tab-btn" data-pane="pane-vector">🇨🇴 SABER 11 // VECTOR</button>
+          <button class="console-tab-btn" data-pane="pane-pulse">⚡ AGENDA VIRTUAL // PULSE</button>
+          <button class="console-tab-btn" data-pane="pane-morpho">📘 GUÍAS INTERACTIVAS // MORPHO</button>
+        </div>
+
+        <!-- Display Panes (5 Panes) -->
+        <div class="console-display-pane">
+
+          <!-- PANE 1: ÉLAN TEF -->
+          <div id="pane-elan" class="pane-view active-pane">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <h3 style="font-family: var(--font-display); font-size: 1.6rem; color: var(--slate-blue-dark);">Francés B1 a B2+ • Aprobación TEF Canadá & Expresión Escrita</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Entrenamiento de alta exigencia: escribir rápido y sin faltas ortográficas, memorizar verbos y conectores clave, y redactar según los parámetros oficiales de la prueba TEF Canadá (Express Entry).</p>
+              </div>
+              <span class="product-pill" style="background: rgba(200, 16, 46, 0.1); color: #C8102E; border-color: rgba(200, 16, 46, 0.3);">🇨🇦 Calibrado para TEF Canadá</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+              <div style="background: var(--bg-sand-base); padding: 18px; border-radius: 18px;">
+                <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Nivel Alcanzado</span>
+                <div style="font-size: 1.8rem; font-weight: 900; color: var(--slate-blue-dark); margin-top: 4px;">B2+ / NCLC 7+</div>
+              </div>
+              <div style="background: var(--bg-sand-base); padding: 18px; border-radius: 18px;">
+                <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Velocidad y Ortografía</span>
+                <div style="font-size: 1.8rem; font-weight: 900; color: var(--terracotta-accent); margin-top: 4px;">46 ppm // 100% Precisión</div>
+              </div>
+              <div style="background: var(--bg-sand-base); padding: 18px; border-radius: 18px;">
+                <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Verbos y Conectores</span>
+                <div style="font-size: 1.8rem; font-weight: 900; color: var(--sage-success); margin-top: 4px;">120 Dominados</div>
+              </div>
+            </div>
+
+            <div style="padding: 16px; border-left: 4px solid var(--slate-blue); background: rgba(68, 86, 96, 0.05); border-radius: 0 12px 12px 0;">
+              <strong>Evaluación de Expresión Escrita ÉLAN:</strong> "Sección B (Carta formal de opinión): 210 palabras redactadas en 19 minutos bajo presión. 0 errores ortográficos, estructura argumentativa sólida y conectores clave (*en revanche, d'ailleurs, ainsi*) empleados adecuadamente según los criterios oficiales de la Cámara de Comercio de París (CCI)."
+            </div>
+          </div>
+
+          <!-- PANE 2: APEX IELTS -->
+          <div id="pane-apex" class="pane-view">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <h3 style="font-family: var(--font-display); font-size: 1.6rem; color: var(--slate-blue-dark);">Inglés B1 a B2+ / C1 • Preparación Examen IELTS</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Similar a Élan pero calibrado a la prueba IELTS: redacción ágil bajo presión de tiempo, dominio de conectores formales, vocabulario académico y redacción según las 4 rúbricas de Cambridge.</p>
+              </div>
+              <span class="product-pill" style="background: rgba(30, 64, 175, 0.1); color: #1E40AF; border-color: rgba(30, 64, 175, 0.3);">🇬🇧 Calibrado para Examen IELTS</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+              <div style="background: var(--bg-sand-base); padding: 18px; border-radius: 18px;">
+                <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Puntaje Proyectado</span>
+                <div style="font-size: 1.8rem; font-weight: 900; color: var(--slate-blue-dark); margin-top: 4px;">Band 8.0+</div>
+              </div>
+              <div style="background: var(--bg-sand-base); padding: 18px; border-radius: 18px;">
+                <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Writing Task 1 & 2</span>
+                <div style="font-size: 1.8rem; font-weight: 900; color: var(--sage-success); margin-top: 4px;">Band 8.5 (Cohesión)</div>
+              </div>
+              <div style="background: var(--bg-sand-base); padding: 18px; border-radius: 18px;">
+                <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Vocabulario Formal</span>
+                <div style="font-size: 1.8rem; font-weight: 900; color: var(--slate-blue-dark); margin-top: 4px;">96% Precisión Léxica</div>
+              </div>
+            </div>
+
+            <div style="padding: 16px; border-left: 4px solid var(--terracotta-accent); background: rgba(200, 109, 81, 0.05); border-radius: 0 12px 12px 0;">
+              <strong>Evaluación de Redacción APEX:</strong> "Writing Task 2: 290 palabras estructuradas en 32 minutos. Cumplimiento sobresaliente de Task Response y Cohesion & Coherence con vocabulario formal C1 (*unprecedented, underpin, catalyze*) y cero faltas gramaticales."
+            </div>
+          </div>
+
+          <!-- PANE 3: VECTOR 11 -->
+          <div id="pane-vector" class="pane-view">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <h3 style="font-family: var(--font-display); font-size: 1.6rem; color: var(--slate-blue-dark);">Pruebas Saber 11 • Práctica Diaria, Batallas en Vivo y Puntaje Predictivo</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Los estudiantes resuelven preguntas oficiales diariamente, aprenden la técnica de descarte lógico, compiten en batallas académicas en tiempo real entre compañeros y acumulan todo su progreso hacia los 500 puntos.</p>
+              </div>
+              <span class="product-pill" style="background: rgba(106, 141, 115, 0.1); color: var(--sage-success); border-color: rgba(106, 141, 115, 0.3);">🇨🇴 5 Áreas Oficiales ICFES</span>
+            </div>
+
+            <!-- Video Demostración en Vivo de la Interfaz Saber 11 -->
+            <div class="console-video-frame" style="margin-bottom: 26px; background: rgba(255, 255, 255, 0.85); border: 1.5px solid var(--glass-border); border-radius: 24px; overflow: hidden; box-shadow: var(--shadow-soft-md);">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: rgba(245, 241, 235, 0.9); border-bottom: 1px solid rgba(68, 86, 96, 0.1);">
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <span style="width: 10px; height: 10px; border-radius: 50%; background: #FF5F56; display: inline-block;"></span>
+                  <span style="width: 10px; height: 10px; border-radius: 50%; background: #FFBD2E; display: inline-block;"></span>
+                  <span style="width: 10px; height: 10px; border-radius: 50%; background: #27C93F; display: inline-block;"></span>
+                </div>
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--slate-blue); letter-spacing: 0.05em;">SABER 11 // DEMOSTRACIÓN EN VIVO DE LA INTERFAZ</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; color: #DC2626; background: rgba(220, 38, 38, 0.1); padding: 4px 10px; border-radius: 20px;">
+                  <span style="width: 7px; height: 7px; border-radius: 50%; background: #DC2626; display: inline-block;"></span> VIDEO EN VIVO
+                </span>
+              </div>
+              <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; max-height: 520px; background: #0F172A; display: flex; align-items: center; justify-content: center;">
+                <video id="saber-console-video" src="saber-video-1.mp4" controls autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: contain;"></video>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px;">
+              <div style="background: var(--bg-sand-base); padding: 16px; border-radius: 16px;">
+                <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted);">Lectura Crítica</span>
+                <div style="font-size: 1.6rem; font-weight: 900; color: var(--slate-blue-dark); margin-top: 4px;">92 / 100</div>
+              </div>
+              <div style="background: var(--bg-sand-base); padding: 16px; border-radius: 16px;">
+                <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted);">Matemáticas</span>
+                <div style="font-size: 1.6rem; font-weight: 900; color: var(--slate-blue-dark); margin-top: 4px;">88 / 100</div>
+              </div>
+              <div style="background: var(--bg-sand-base); padding: 16px; border-radius: 16px;">
+                <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted);">Ciencias Naturales</span>
+                <div style="font-size: 1.6rem; font-weight: 900; color: var(--slate-blue-dark); margin-top: 4px;">86 / 100</div>
+              </div>
+              <div style="background: var(--bg-sand-base); padding: 16px; border-radius: 16px;">
+                <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted);">Sociales & Ciudadanas</span>
+                <div style="font-size: 1.6rem; font-weight: 900; color: var(--slate-blue-dark); margin-top: 4px;">84 / 100</div>
+              </div>
+              <div style="background: var(--bg-sand-base); padding: 16px; border-radius: 16px;">
+                <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted);">Inglés</span>
+                <div style="font-size: 1.6rem; font-weight: 900; color: var(--sage-success); margin-top: 4px;">95 / 100</div>
+              </div>
+            </div>
+
+            <div style="padding: 16px; border-left: 4px solid var(--gold-warm); background: rgba(212, 163, 89, 0.08); border-radius: 0 12px 12px 0;">
+              <strong>Radar de Progreso Saber 11:</strong> "Puntaje estimado: 420 / 500 pts (Percentil Nacional 99.4). Racha diaria de 32 días consecutivos y 48 batallas 1 vs 1 ganadas. Progreso acumulado en las 5 áreas con clasificación para becas de excelencia académica."
+            </div>
+          </div>
+
+          <!-- PANE 4: PULSE ACADÉMICO -->
+          <div id="pane-pulse" class="pane-view">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <h3 style="font-family: var(--font-display); font-size: 1.6rem; color: var(--slate-blue-dark);">Agenda Virtual Institucional • Calificaciones, Boletines, Observador y Acuses</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">La herramienta central para rectoría y coordinación: centraliza calificaciones, emite boletines automáticos, gestiona el observador del estudiante con respaldo institucional, muestra estadísticas por sede, curso y alumno, y envía circulares con acuse de recibo verificado.</p>
+              </div>
+              <span class="product-pill" style="background: rgba(106, 141, 115, 0.1); color: var(--sage-success); border-color: rgba(106, 141, 115, 0.3);">⚡ Gestión Académica Integral</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+              <div style="background: var(--bg-sand-base); padding: 18px; border-radius: 18px;">
+                <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Boletines y Calificaciones</span>
+                <div style="font-size: 1.8rem; font-weight: 900; color: var(--slate-blue-dark); margin-top: 4px;">1 Clic Automático</div>
+              </div>
+              <div style="background: var(--bg-sand-base); padding: 18px; border-radius: 18px;">
+                <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Observador del Estudiante</span>
+                <div style="font-size: 1.8rem; font-weight: 900; color: var(--slate-blue-dark); margin-top: 4px;">100% Digital y Seguro</div>
+              </div>
+              <div style="background: var(--bg-sand-base); padding: 18px; border-radius: 18px;">
+                <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Acuses de Recibido</span>
+                <div style="font-size: 1.8rem; font-weight: 900; color: var(--sage-success); margin-top: 4px;">98.6% Confirmados</div>
+              </div>
+            </div>
+
+            <div style="padding: 16px; border-left: 4px solid var(--sage-success); background: rgba(106, 141, 115, 0.08); border-radius: 0 12px 12px 0;">
+              <strong>Panel de Rectoría y Coordinación PULSE:</strong> "Boletines del periodo consolidados para los 24 cursos. 640 acudientes firmaron digitalmente el acuse de recibo de la circular de convivencia. Estadísticas de rendimiento escolar y asistencia actualizadas en tiempo real."
+            </div>
+          </div>
+
+          <!-- PANE 5: MORPHO GUIDES -->
+          <div id="pane-morpho" class="pane-view">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <h3 style="font-family: var(--font-display); font-size: 1.6rem; color: var(--slate-blue-dark);">Transformación de Guías Escolares • De Papel o PDF a Páginas Web Interactivas</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Transformamos las guías estáticas del colegio, renovamos por completo su aspecto visual y las convertimos en experiencias web dinámicas e interactivas: con micro-quizzes autocalificables, lectura guiada, multimedia y analítica en tiempo real.</p>
+              </div>
+              <span class="product-pill" style="background: rgba(30, 64, 175, 0.1); color: #1E40AF; border-color: rgba(30, 64, 175, 0.3);">📘 100% Web Dinámica</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+              <div style="background: var(--bg-sand-base); padding: 18px; border-radius: 18px;">
+                <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Formato Web Interactivo</span>
+                <div style="font-size: 1.8rem; font-weight: 900; color: var(--slate-blue-dark); margin-top: 4px;">Adiós a Fotocopias</div>
+              </div>
+              <div style="background: var(--bg-sand-base); padding: 18px; border-radius: 18px;">
+                <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Ahorro de Tiempo Docente</span>
+                <div style="font-size: 1.8rem; font-weight: 900; color: var(--sage-success); margin-top: 4px;">100% Calificación</div>
+              </div>
+              <div style="background: var(--bg-sand-base); padding: 18px; border-radius: 18px;">
+                <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Analítica de Comprensión</span>
+                <div style="font-size: 1.8rem; font-weight: 900; color: var(--terracotta-accent); margin-top: 4px;">Detalle por Pregunta</div>
+              </div>
+            </div>
+
+            <div style="padding: 16px; border-left: 4px solid var(--slate-blue); background: rgba(68, 86, 96, 0.05); border-radius: 0 12px 12px 0;">
+              <strong>Panel del Profesor MORPHO:</strong> "Guía #4 'Física y Leyes del Movimiento' convertida a la web: El 94% de los alumnos interactuó con los ejercicios interactivos y aprobó el quiz. El docente no tuvo que calificar ninguna hoja a mano."
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- ==========================================================================
+         MATRIZ DE IMPACTO POR AUDIENCIA (4 PILARES)
+         ========================================================================== -->
+    <section id="matriz-impacto" class="audience-section">
+      <div class="section-title-wrap" id="audience-title-card">
+        <span class="section-eyebrow">DISEÑADO PARA CADA ACTOR</span>
+        <h2 class="section-title">¿Cómo Transforma SYNAPSE la Experiencia Educativa?</h2>
+        <p class="section-desc">Un ecosistema coordinado donde estudiantes, docentes, directivos y familias ganan claridad, tiempo y resultados medibles.</p>
+      </div>
+
+      <div class="audience-grid" id="audience-grid">
+        <!-- Audience 1 -->
+        <div class="audience-card-wrapper" id="audience-wrapper-1">
+          <div class="audience-card">
+            <span class="audience-role-tag">01 // PARA CANDIDATOS A CANADÁ Y ESTUDIANTES</span>
+            <h3>De Nivel B1 a B2+ en Idiomas & Alto Puntaje Saber 11</h3>
+            <p>
+              Para quienes inician nivel B1 y necesitan alcanzar B2+ para aprobar el examen TEF Canadá (inmigración / Express Entry) o IELTS, y para bachilleres que buscan el máximo puntaje en Saber 11. Entrenas con máxima exigencia: escribiendo rápido y sin faltas ortográficas, memorizando verbos y conectores argumentativos clave, y compitiendo en batallas académicas diarias entre compañeros.
+            </p>
+            <div class="audience-metric-badge">
+              🎯 Impacto: Aprobación TEF Canadá B2+ / IELTS Band 7.5+ y 400+ pts Saber 11
+            </div>
+          </div>
+        </div>
+
+        <!-- Audience 2 -->
+        <div class="audience-card-wrapper" id="audience-wrapper-2">
+          <div class="audience-card">
+            <span class="audience-role-tag">02 // PARA RECTORES, RECTORAS Y COORDINACIÓN</span>
+            <h3>Control Institucional, Boletines y Ranking Académico</h3>
+            <p>
+              Todo el colegio en una sola plataforma: estadísticas de cómo va la institución, cada curso y cada estudiante. Emite boletines y calificaciones en un solo clic, gestiona el observador del estudiante digital con respaldo legal, recibe acuses de recibo en tiempo real de los acudientes y eleva el puntaje promedio en Saber 11 para posicionar al colegio en los primeros puestos.
+            </p>
+            <div class="audience-metric-badge">
+              📈 Impacto: 100% Boletines y acuses a tiempo + Ascenso en Ranking ICFES
+            </div>
+          </div>
+        </div>
+
+        <!-- Audience 3 -->
+        <div class="audience-card-wrapper" id="audience-wrapper-3">
+          <div class="audience-card">
+            <span class="audience-role-tag">03 // PARA LOS DOCENTES</span>
+            <h3>Guías Web Interactivas y Cero Horas Calificando Papel</h3>
+            <p>
+              Transformamos tus guías escolares y fotocopias estáticas en páginas web dinámicas e interactivas con diseño moderno. Los estudiantes resuelven micro-quizzes que se autocalifican de inmediato, ahorrándote fines de semana enteros de revisión manual y mostrándote qué tema causó dificultad antes de la siguiente clase.
+            </p>
+            <div class="audience-metric-badge">
+              ⏱️ Impacto: 100% Guías autocalificables y más tiempo para la docencia
+            </div>
+          </div>
+        </div>
+
+        <!-- Audience 4 -->
+        <div class="audience-card-wrapper" id="audience-wrapper-4">
+          <div class="audience-card">
+            <span class="audience-role-tag">04 // PARA PADRES DE FAMILIA Y ACUDIENTES</span>
+            <h3>Agenda Virtual en el Celular y Acuses de Recibo al Instante</h3>
+            <p>
+              Seguimiento claro y sin fricción del progreso escolar de tus hijos: calificaciones por periodo, tareas, anotaciones del observador del alumno y confirmación de lectura de circulares institucionales con acuse de recibido digital inmediato desde el celular.
+            </p>
+            <div class="audience-metric-badge">
+              🤝 Impacto: Comunicación directa sin circulares en papel extraviadas
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div> <!-- /#view-idiomas -->
+
+  <!-- ====================================================================
+       4. PESTAÑA: MUNDO EMISORA (INTRO 3D ORBITAL & RADIO 360 ESCOLAR)
+       ==================================================================== -->
+  <div id="view-emisora" class="world-view">
+    
+    <!-- Video Scrubber Stage: Intro 3D Orbital (192 Frames) -->
+    <section id="stage-scrub-emisora" class="world-scrubber-stage">
+      <div class="scrubber-sticky-viewport">
+        <canvas id="canvas-scrub-emisora" class="scrubber-canvas"></canvas>
+        
+        <div class="scrubber-hud-card">
+          <div class="hud-tag-row">
+            <span class="hud-pill" style="border-color: rgba(248, 113, 113, 0.6); background: rgba(239, 68, 68, 0.18); color: #FECACA;">MUNDO EMISORA</span>
+            <span class="hud-pill-secondary">INTRO 3D ORBITAL & 3 ISLAS</span>
+            <span class="hud-frame-counter" id="counter-emisora" style="color: #F87171; border-color: rgba(248, 113, 113, 0.4); background: rgba(239, 68, 68, 0.15);">001 / 192</span>
+          </div>
+          <h2 class="hud-title">Estación Radial Escolar & Podcasts 360</h2>
+          <p class="hud-desc">Desliza con el ratón para recorrer los rayos de energía y las islas temáticas del ecosistema S-cool en 3D.</p>
+          
+          <div class="hud-scrubber-bar-wrap">
+            <div class="hud-scrubber-progress" id="progress-emisora" style="background: linear-gradient(90deg, #EF4444 0%, #F59E0B 100%); box-shadow: 0 0 12px #F59E0B;"></div>
+          </div>
+          
+          <div class="hud-actions-row">
+            <div class="hud-mouse-cue">
+              <div class="hud-mouse-wheel"></div>
+              <span>Gira la rueda del ratón para avanzar</span>
+            </div>
+            <button class="hud-play-btn" id="playbtn-emisora" onclick="toggleWorldAutoPlay('emisora')">
+              <span class="play-icon">▶</span> Auto-Play
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         EMISORA ESCOLAR DIGITAL HUB (THIRD PILLAR: COLEGIOS • IDIOMAS • EMISORA)
+         ========================================================================== -->
+    <section id="emisora-hub" class="emisora-section" style="padding: 100px 24px 80px; position: relative; z-index: 10;">
+      <div class="section-title-wrap" style="text-align: center; max-width: 820px; margin: 0 auto 50px;">
+        <span class="section-eyebrow" style="background: rgba(118, 206, 20, 0.15); color: #438A04; border: 1px solid rgba(118, 206, 20, 0.35); padding: 6px 16px; border-radius: 50px; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.08em; display: inline-flex; align-items: center; gap: 8px;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: #76CE14; box-shadow: 0 0 10px #76CE14;"></span>
+          ON-AIR • EMISORA ESCOLAR DIGITAL 24/7
+        </span>
+        <h2 class="section-title" style="font-family: 'Outfit', sans-serif; font-size: 2.8rem; font-weight: 850; color: #123429; letter-spacing: -0.02em; margin-top: 14px;">
+          La Voz de tu Colegio en Streaming Global
+        </h2>
+        <p class="section-desc" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.05rem; color: #4D7667; line-height: 1.6; margin-top: 10px;">
+          Una estación radial interactiva para formar líderes comunicativos: streaming estudiantil, podcasts de oratoria en idiomas (inglés y francés), noticias de la comunidad y debates académicos en vivo.
+        </p>
+      </div>
+
+      <!-- Emisora Live Audio & Podcast Showcase -->
+      <div style="max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px;">
+        
+        <!-- Live Radio Card with Equalizer -->
+        <div style="background: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(240,250,245,0.75) 100%); backdrop-filter: blur(20px); border: 1.5px solid rgba(255,255,255,0.9); border-radius: 28px; padding: 32px; box-shadow: 0 20px 50px rgba(18,54,42,0.12); position: relative; overflow: hidden;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <span style="background: #123429; color: #76CE14; padding: 4px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em;">TRANSMITIENDO EN VIVO</span>
+            <span style="font-size: 0.82rem; font-weight: 700; color: #4D7667;">98.5 FM DIGITAL S-COOL</span>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 18px; margin: 24px 0;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #008C94 0%, #76CE14 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.8rem; box-shadow: 0 10px 24px rgba(0,140,148,0.35); cursor: pointer;">
+              ▶
+            </div>
+            <div>
+              <h4 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; color: #123429; margin: 0;">Voces del Saber • Especial Saber 11</h4>
+              <p style="font-size: 0.85rem; color: #4D7667; margin: 4px 0 0;">Panel con los 5 mejores puntajes y docentes tutores</p>
+            </div>
+          </div>
+
+          <!-- Animated Equalizer Bars Simulation -->
+          <div style="display: flex; align-items: flex-end; gap: 5px; height: 36px; padding: 8px 14px; background: rgba(18,54,42,0.06); border-radius: 14px; margin-top: 20px;">
+            <div style="flex: 1; background: #008C94; height: 60%; border-radius: 4px;"></div>
+            <div style="flex: 1; background: #76CE14; height: 95%; border-radius: 4px;"></div>
+            <div style="flex: 1; background: #008C94; height: 40%; border-radius: 4px;"></div>
+            <div style="flex: 1; background: #76CE14; height: 80%; border-radius: 4px;"></div>
+            <div style="flex: 1; background: #008C94; height: 100%; border-radius: 4px;"></div>
+            <div style="flex: 1; background: #76CE14; height: 50%; border-radius: 4px;"></div>
+            <div style="flex: 1; background: #008C94; height: 75%; border-radius: 4px;"></div>
+            <div style="flex: 1; background: #76CE14; height: 90%; border-radius: 4px;"></div>
+          </div>
+        </div>
+
+        <!-- Podcasts Channels Grid -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="background: rgba(255,255,255,0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.85); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 16px;">
+            <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(0,140,148,0.12); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #008C94;">
+              🗣️
+            </div>
+            <div>
+              <h5 style="font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 800; color: #123429; margin: 0;">Polyglot Club • Podcasts en Inglés y Francés</h5>
+              <p style="font-size: 0.8rem; color: #4D7667; margin: 3px 0 0;">Entrevistas y debates orales puntuados con rúbrica TEF e IELTS.</p>
+            </div>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.85); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 16px;">
+            <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(118,206,20,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #438A04;">
+              🧬
+            </div>
+            <div>
+              <h5 style="font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 800; color: #123429; margin: 0;">Ciencia & Futuro • Noticias de la Comunidad</h5>
+              <p style="font-size: 0.8rem; color: #4D7667; margin: 3px 0 0;">Proyectos de investigación y agenda institucional semanal.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div> <!-- /#view-emisora -->
+
+  <!-- ====================================================================
+       5. PESTAÑA: DE PRUEBA (MAINFRAME CREATIVE AGENCY HERO & MOUSE SCRUB)
+       ==================================================================== -->
+  <div id="view-prueba" class="world-view">
+        <!-- Multiverse Chromatic Flash Layer ("Cambio de mundo por un instante") -->
+        <div id="multiverse-chromatic-flash" class="multiverse-chromatic-flash" aria-hidden="true"></div>
+
+        <!-- Multiverse Ambient Atmospheric Warp Background -->
+        <div id="multiverse-ambient-warp" class="multiverse-ambient-warp" aria-hidden="true"></div>
+
+        <!-- Floating High-Tech Multiverse HUD Capsule -->
+        <div id="multiverse-hud-capsule" class="multiverse-hud-capsule" role="status" aria-live="polite">
+          <div class="hud-capsule-dot"></div>
+          <span class="hud-capsule-icon">✳︎</span>
+          <div class="hud-capsule-info">
+            <span class="hud-capsule-title">UNIVERSO MAINFRAME</span>
+            <span class="hud-capsule-badge">ECOSISTEMA ACTIVO</span>
+          </div>
+        </div>
+
+        <!-- 60FPS Universal Scrubber Canvas & Full-screen Video Background -->
+        <canvas id="mainframe-canvas" class="mainframe-canvas-bg"></canvas>
+        <video id="mainframe-video" class="mainframe-video-bg" muted playsinline preload="auto" poster="assets/mainframe_poster.jpg" src="assets/mainframe_bg.mp4">
+          <source src="assets/mainframe_bg.mp4" type="video/mp4">
+          <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260826_041744_63efcd78-bf7d-4039-99e2-2461e8a61903.mp4" type="video/mp4">
+        </video>
+        <div class="mainframe-video-overlay"></div>
+
+        <!-- Mainframe Navbar (fixed top, z-index: 10) -->
+        <header class="mainframe-navbar">
+          <!-- Logo (left) -->
+          <div class="mainframe-logo-wrap">
+            <span class="mainframe-logo-text">Mainframe®</span>
+            <span class="mainframe-logo-asterisk" aria-hidden="true">✳︎</span>
+          </div>
+
+          <!-- Desktop Nav Links (center, hidden below md) -->
+          <nav class="mainframe-nav-links" aria-label="Navegación Desktop Mainframe">
+            <a href="#labs" class="mainframe-nav-link" onclick="event.preventDefault()">Labs</a><span class="mainframe-nav-separator">,</span>
+            <a href="#studio" class="mainframe-nav-link" onclick="event.preventDefault()">Studio</a><span class="mainframe-nav-separator">,</span>
+            <a href="#openings" class="mainframe-nav-link" onclick="event.preventDefault()">Openings</a><span class="mainframe-nav-separator">,</span>
+            <a href="#shop" class="mainframe-nav-link" onclick="event.preventDefault()">Shop</a>
+          </nav>
+
+          <!-- Desktop CTA (right, hidden below md) -->
+          <a href="#contact" class="mainframe-nav-cta" onclick="event.preventDefault()">Get in touch</a>
+
+          <!-- Mobile Hamburger (visible below md) -->
+          <button id="mainframe-hamburger" class="mainframe-hamburger" aria-label="Abrir Menú Móvil">
+            <span class="mainframe-bar"></span>
+            <span class="mainframe-bar"></span>
+            <span class="mainframe-bar"></span>
+          </button>
+        </header>
+
+        <!-- Mobile Overlay (z-index: 9) -->
+        <div id="mainframe-mobile-overlay" class="mainframe-mobile-overlay">
+          <a href="#labs" class="mainframe-mobile-link">Labs</a>
+          <a href="#studio" class="mainframe-mobile-link">Studio</a>
+          <a href="#openings" class="mainframe-mobile-link">Openings</a>
+          <a href="#shop" class="mainframe-mobile-link">Shop</a>
+          <a href="#contact" class="mainframe-mobile-cta">Get in touch</a>
+        </div>
+
+        <!-- Mainframe Hero Section (z-index: 2) -->
+        <section class="mainframe-hero-section">
+          <div class="mainframe-content-container">
+            <!-- 1. Blurred Intro Label -->
+            <div class="mainframe-blurred-label">
+              Hey there, meet A.R.I.A,<br>
+              Mainframe's Adaptive Response Interface Agent
+            </div>
+
+            <!-- 2. Typewriter Text & Blinking Cursor -->
+            <p class="mainframe-typewriter-text">
+              <span id="mainframe-typewriter-text"></span><span id="mainframe-cursor" class="mainframe-cursor"></span>
+            </p>
+
+            <!-- 3. Action Pill Buttons -->
+            <div id="mainframe-pills-container" class="mainframe-action-pills-container">
+              <button class="mainframe-pill-btn">Pitch us an idea</button>
+              <button class="mainframe-pill-btn">Come work here</button>
+              <button class="mainframe-pill-btn">Send a brief hello</button>
+              <button class="mainframe-pill-btn">See how we operate</button>
+              <button id="mainframe-copy-pill" class="mainframe-pill-outline" title="Copiar correo al portapapeles">
+                <span>Reach us: <span class="mainframe-email-text">hello@mainframe.co</span></span>
+                <span class="mainframe-copy-icon">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                </span>
+                <span id="mainframe-copy-toast" class="mainframe-copy-toast">¡Copiado!</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Subtle Mouse Scrub Hint -->
+          <div class="mainframe-scrub-hint">
+            <span>⇄ Mueve el ratón horizontalmente para controlar el video</span>
+          </div>
+
+          <!-- Scroll Down Cue on Hero -->
+          <div class="mainframe-scroll-down-cue" onclick="document.getElementById('prueba-stacking-deck').scrollIntoView({behavior: 'smooth'})">
+            <span>Desliza para ver la baraja y el cambio de mundo 3D</span>
+            <svg class="mainframe-scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 13l5 5 5-5M12 4v14"/></svg>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             MAINFRAME MULTIVERSE STACKING CARDS DECK & 3D LOGO CHROMATIC SHIFTS
+             ==================================================================== -->
+        <section id="prueba-stacking-deck" class="stacking-deck-section">
+          <div class="stacking-deck-header">
+            <div class="stacking-deck-eyebrow">
+              <span>✦</span>
+              <span>SYNAPSE MULTIVERSE ENGINE • TRANSFORMACIÓN DINÁMICA 3D</span>
+            </div>
+            <h2 class="stacking-deck-title">
+              La Baraja de Aplicaciones <span>& Cambio de Mundo</span>
+            </h2>
+            <p class="stacking-deck-desc">
+              Al deslizar sobre cada tarjeta, la atmósfera de la página y los colores del logotipo 3D superior mutan automáticamente por un instante al universo visual de cada aplicación.
+            </p>
+
+            <!-- Interactive Universe Launcher Buttons -->
+            <div class="multiverse-selector-bar">
+              <button class="multiverse-nav-pill" data-universe="tef" onclick="navigateToUniverseCard('tef')">
+                <span>🍁 01 Francés TEF Canada</span>
+              </button>
+              <button class="multiverse-nav-pill" data-universe="ielts" onclick="navigateToUniverseCard('ielts')">
+                <span>🇬🇧 02 Inglés APEX IELTS</span>
+              </button>
+              <button class="multiverse-nav-pill" data-universe="vector" onclick="navigateToUniverseCard('vector')">
+                <span>⚡ 03 Preicfes VECTOR 11</span>
+              </button>
+              <button class="multiverse-nav-pill" data-universe="morpho" onclick="navigateToUniverseCard('morpho')">
+                <span>📖 04 Guías MORPHO</span>
+              </button>
+              <button class="multiverse-nav-pill" data-universe="pulse" onclick="navigateToUniverseCard('pulse')">
+                <span>📻 05 PULSE Agenda & Radio</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="stacking-cards-container">
+            <!-- Card 01: ÉLAN TEF Canada (French) -->
+            <article class="stacking-card" data-card-index="0" data-universe="tef">
+              <div class="stacking-card-header">
+                <div class="stacking-card-identity">
+                  <div class="stacking-card-num" style="color: #E11D48; border-color: rgba(225, 29, 72, 0.4);">01</div>
+                  <div class="stacking-card-titles">
+                    <span class="stacking-card-category" style="color: #F59E0B;">FRANCÉS MIGRATORIO • NCLC 7+ CANADÁ</span>
+                    <h3 class="stacking-card-name">ÉLAN TEF Canada</h3>
+                  </div>
+                </div>
+                <a href="#idiomas" class="stacking-card-cta" onclick="handleDeckCardCta(event, 'idiomas')" style="background: rgba(225, 29, 72, 0.2); border-color: #E11D48; color: #FFFFFF;">
+                  <span>Entrar al Mundo</span>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                </a>
+              </div>
+              <div class="stacking-card-bento">
+                <div class="stacking-bento-left">
+                  <div class="stacking-bento-box stacking-box-thumb">
+                    <img src="assets/images/elan_tef_thumb1.jpg" alt="Simulador de Redacción TEF">
+                    <div class="stacking-box-overlay">
+                      <span class="stacking-box-tag">Simulador NCLC 7+</span>
+                      <span class="stacking-box-chip"><span class="chip-dot" style="background: #E11D48;"></span>Oficial</span>
+                    </div>
+                  </div>
+                  <div class="stacking-bento-box stacking-box-thumb">
+                    <img src="assets/images/elan_tef_thumb2.jpg" alt="Campus y Certificación Canadá">
+                    <div class="stacking-box-overlay">
+                      <span class="stacking-box-tag">Rúbricas Ottawa</span>
+                      <span class="stacking-box-chip"><span class="chip-dot" style="background: #F59E0B;"></span>Inmersivo</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="stacking-bento-right">
+                  <img src="assets/images/elan_tef_wide.jpg" alt="Plataforma interactiva ÉLAN TEF">
+                  <div class="stacking-box-overlay">
+                    <span class="stacking-box-tag">Entrenamiento de Alta Exigencia • 1,200 Preguntas Cronometradas</span>
+                    <span class="stacking-box-chip"><span class="chip-dot" style="background: #E11D48;"></span>IA Activa</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 02: APEX IELTS Academic (English) -->
+            <article class="stacking-card" data-card-index="1" data-universe="ielts">
+              <div class="stacking-card-header">
+                <div class="stacking-card-identity">
+                  <div class="stacking-card-num" style="color: #2563EB; border-color: rgba(37, 99, 235, 0.4);">02</div>
+                  <div class="stacking-card-titles">
+                    <span class="stacking-card-category" style="color: #06B6D4;">INGLÉS INTERNACIONAL • BAND 8.5</span>
+                    <h3 class="stacking-card-name">APEX IELTS Academic</h3>
+                  </div>
+                </div>
+                <a href="#idiomas" class="stacking-card-cta" onclick="handleDeckCardCta(event, 'idiomas')" style="background: rgba(37, 99, 235, 0.2); border-color: #2563EB; color: #FFFFFF;">
+                  <span>Entrar al Mundo</span>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                </a>
+              </div>
+              <div class="stacking-card-bento">
+                <div class="stacking-bento-left">
+                  <div class="stacking-bento-box stacking-box-thumb">
+                    <img src="assets/frames_idiomas/frame_0040.webp" alt="IELTS Writing Task 1 & 2">
+                    <div class="stacking-box-overlay">
+                      <span class="stacking-box-tag">Writing Task 1 & 2</span>
+                      <span class="stacking-box-chip"><span class="chip-dot" style="background: #2563EB;"></span>Rubric 9.0</span>
+                    </div>
+                  </div>
+                  <div class="stacking-bento-box stacking-box-thumb">
+                    <img src="assets/frames_idiomas/frame_0080.webp" alt="Speaking AI Interviewer">
+                    <div class="stacking-box-overlay">
+                      <span class="stacking-box-tag">Speaking Simulator</span>
+                      <span class="stacking-box-chip"><span class="chip-dot" style="background: #06B6D4;"></span>Audio IA</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="stacking-bento-right">
+                  <img src="assets/frames_idiomas/frame_0120.webp" alt="Entrenamiento Auditivo Oficial">
+                  <div class="stacking-box-overlay">
+                    <span class="stacking-box-tag">Listening & Reading • Simulación Cronometrada Real</span>
+                    <span class="stacking-box-chip"><span class="chip-dot" style="background: #2563EB;"></span>Examinador</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 03: VECTOR 11 Saber Pro (Preicfes) -->
+            <article class="stacking-card" data-card-index="2" data-universe="vector">
+              <div class="stacking-card-header">
+                <div class="stacking-card-identity">
+                  <div class="stacking-card-num" style="color: #10B981; border-color: rgba(16, 185, 129, 0.4);">03</div>
+                  <div class="stacking-card-titles">
+                    <span class="stacking-card-category" style="color: #84CC16;">PREICFES • ALTO RENDIMIENTO ESCOLAR</span>
+                    <h3 class="stacking-card-name">VECTOR 11 Saber Pro</h3>
+                  </div>
+                </div>
+                <a href="#colegios" class="stacking-card-cta" onclick="handleDeckCardCta(event, 'colegios')" style="background: rgba(16, 185, 129, 0.2); border-color: #10B981; color: #FFFFFF;">
+                  <span>Entrar al Mundo</span>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                </a>
+              </div>
+              <div class="stacking-card-bento">
+                <div class="stacking-bento-left">
+                  <div class="stacking-bento-box stacking-box-thumb">
+                    <img src="assets/frames_colegios/frame_0030.webp" alt="Simulacro Diagnóstico Saber 11">
+                    <div class="stacking-box-overlay">
+                      <span class="stacking-box-tag">Diagnóstico 400+</span>
+                      <span class="stacking-box-chip"><span class="chip-dot" style="background: #10B981;"></span>Adaptativo</span>
+                    </div>
+                  </div>
+                  <div class="stacking-bento-box stacking-box-thumb">
+                    <img src="assets/frames_colegios/frame_0070.webp" alt="Batallas Académicas Gamificadas">
+                    <div class="stacking-box-overlay">
+                      <span class="stacking-box-tag">Batalla Diaria</span>
+                      <span class="stacking-box-chip"><span class="chip-dot" style="background: #84CC16;"></span>Rankings</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="stacking-bento-right">
+                  <img src="assets/frames_colegios/frame_0110.webp" alt="Salón de Clases 3D con Desglose por Áreas">
+                  <div class="stacking-box-overlay">
+                    <span class="stacking-box-tag">Matemáticas, Lectura Crítica, Ciencias y Sociales • Trazabilidad Total</span>
+                    <span class="stacking-box-chip"><span class="chip-dot" style="background: #10B981;"></span>Colegios</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 04: MORPHO Digital Guides -->
+            <article class="stacking-card" data-card-index="3" data-universe="morpho">
+              <div class="stacking-card-header">
+                <div class="stacking-card-identity">
+                  <div class="stacking-card-num" style="color: #7C3AED; border-color: rgba(124, 58, 237, 0.4);">04</div>
+                  <div class="stacking-card-titles">
+                    <span class="stacking-card-category" style="color: #C084FC;">EDITORIAL DIGITAL • GUÍAS ESCOLARES WEB</span>
+                    <h3 class="stacking-card-name">MORPHO Digital Guides</h3>
+                  </div>
+                </div>
+                <a href="#colegios" class="stacking-card-cta" onclick="handleDeckCardCta(event, 'colegios')" style="background: rgba(124, 58, 237, 0.2); border-color: #7C3AED; color: #FFFFFF;">
+                  <span>Entrar al Mundo</span>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                </a>
+              </div>
+              <div class="stacking-card-bento">
+                <div class="stacking-bento-left">
+                  <div class="stacking-bento-box stacking-box-thumb">
+                    <img src="assets/frames_colegios/frame_0140.webp" alt="Guías Interactivas con Autocalificación">
+                    <div class="stacking-box-overlay">
+                      <span class="stacking-box-tag">Autocalificación</span>
+                      <span class="stacking-box-chip"><span class="chip-dot" style="background: #7C3AED;"></span>Cero Papel</span>
+                    </div>
+                  </div>
+                  <div class="stacking-bento-box stacking-box-thumb">
+                    <img src="assets/frames_colegios/frame_0170.webp" alt="Dashboard Docente en Tiempo Real">
+                    <div class="stacking-box-overlay">
+                      <span class="stacking-box-tag">Analítica Docente</span>
+                      <span class="stacking-box-chip"><span class="chip-dot" style="background: #C084FC;"></span>-70% Tiempo</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="stacking-bento-right">
+                  <img src="assets/frames_colegios/frame_0185.webp" alt="Transformación Digital Curricular">
+                  <div class="stacking-box-overlay">
+                    <span class="stacking-box-tag">Guías Curriculares Vivas • Retroalimentación Paso a Paso con IA</span>
+                    <span class="stacking-box-chip"><span class="chip-dot" style="background: #7C3AED;"></span>Didáctico</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 05: PULSE Agenda Virtual 360 -->
+            <article class="stacking-card" data-card-index="4" data-universe="pulse">
+              <div class="stacking-card-header">
+                <div class="stacking-card-identity">
+                  <div class="stacking-card-num" style="color: #D97706; border-color: rgba(217, 119, 6, 0.4);">05</div>
+                  <div class="stacking-card-titles">
+                    <span class="stacking-card-category" style="color: #FBBF24;">GESTIÓN ESCOLAR • FAMILIAS & RECTORÍA</span>
+                    <h3 class="stacking-card-name">PULSE Agenda Virtual 360</h3>
+                  </div>
+                </div>
+                <a href="#emisora" class="stacking-card-cta" onclick="handleDeckCardCta(event, 'emisora')" style="background: rgba(217, 119, 6, 0.2); border-color: #D97706; color: #FFFFFF;">
+                  <span>Entrar al Mundo</span>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                </a>
+              </div>
+              <div class="stacking-card-bento">
+                <div class="stacking-bento-left">
+                  <div class="stacking-bento-box stacking-box-thumb">
+                    <img src="assets/frames_emisora/frame_0030.webp" alt="Observador del Estudiante Digital">
+                    <div class="stacking-box-overlay">
+                      <span class="stacking-box-tag">Observador Móvil</span>
+                      <span class="stacking-box-chip"><span class="chip-dot" style="background: #D97706;"></span>Acuse Firmado</span>
+                    </div>
+                  </div>
+                  <div class="stacking-bento-box stacking-box-thumb">
+                    <img src="assets/frames_emisora/frame_0070.webp" alt="Emisora Escolar Comunitaria">
+                    <div class="stacking-box-overlay">
+                      <span class="stacking-box-tag">Radio 360 & Podcasts</span>
+                      <span class="stacking-box-chip"><span class="chip-dot" style="background: #FBBF24;"></span>Voz Estudiantil</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="stacking-bento-right">
+                  <img src="assets/frames_emisora/frame_0120.webp" alt="Control de Asistencia y Citaciones">
+                  <div class="stacking-box-overlay">
+                    <span class="stacking-box-tag">Comunicación Institucional en Vivo • Notificaciones Push a Padres</span>
+                    <span class="stacking-box-chip"><span class="chip-dot" style="background: #D97706;"></span>360 Conexión</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+
+    </div> <!-- Fin .world-view-container -->
+  </div> <!-- Fin .page-wrapper -->
+
+  <!-- Application Scripts -->
+  <script src="js/digital_scool_3d.js?v=80.0"></script>
+  <script src="js/scrollytelling.js?v=46.0"></script>
+  <script src="js/microinteractions.js?v=45.0"></script>
+  <script src="js/world_scrubber.js?v=1.0"></script>
+  <script src="js/world_tabs.js?v=3.0_menu"></script>
+  <script src="js/mainframe.js?v=1.0"></script>
+  <script src="js/stacking-deck.js?v=2.0"></script>
+  <script src="js/multiverse-shift.js?v=1.0"></script>
+  <script src="js/july_idiomas.js?v=1.0"></script>
+  <script src="js/july_hub_scroll.js?v=1.0"></script>
+  <script src="js/tef_3d_logo.js?v=1.0"></script>
+  <script src="js/inicio_scroll.js?v=13.0_logo_shift"></script>
+  <script src="js/colegios_hero_scroll.js?v=4.1"></script>
+  <script src="js/app.js?v=52.0"></script>
+</body>
+</html>

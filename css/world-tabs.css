@@ -1,0 +1,617 @@
+/* ==========================================================================
+   SYNAPSE / DIGITAL S-COOL • WORLD TABS & VIDEO SCRUBBER ENGINE
+   Tabbed Platform Architecture: Hub • Colegios • Idiomas • Emisora
+   ========================================================================== */
+
+/* Top Floating Glass World Tab Bar */
+.world-tab-bar {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: rgba(7, 11, 16, 0.78);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 40px;
+  box-shadow: 0 16px 42px -6px rgba(0, 0, 0, 0.55), inset 0 1px 2px rgba(255, 255, 255, 0.25);
+  user-select: none;
+  transition: transform 0.35s ease, opacity 0.35s ease, bottom 0.35s ease, top 0.35s ease;
+}
+
+.world-tab-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.world-tab-toggle {
+  display: none;
+}
+
+/* Inicio Hero: Botón minimalista flotante discreto en esquina superior derecha */
+body[data-current-world="inicio"] .world-tab-bar,
+body:not([data-current-world]) .world-tab-bar {
+  top: 22px;
+  right: 32px;
+  left: auto;
+  transform: none;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+body[data-current-world="inicio"] .world-tab-toggle,
+body:not([data-current-world]) .world-tab-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(200, 235, 255, 0.08) 50%, rgba(100, 215, 255, 0.15) 100%);
+  backdrop-filter: blur(20px) saturate(180%) brightness(1.05);
+  -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.42);
+  border-radius: 13px;
+  box-shadow: 0 8px 24px rgba(0, 15, 40, 0.22), inset 0 1px 2px rgba(255, 255, 255, 0.85), inset 0 0 12px rgba(90, 220, 255, 0.12);
+  color: #FFFFFF;
+  font-family: -apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 3px rgba(0, 20, 50, 0.45);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+body[data-current-world="inicio"] .world-tab-toggle:hover,
+body:not([data-current-world]) .world-tab-toggle:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.32) 0%, rgba(200, 235, 255, 0.14) 50%, rgba(90, 225, 255, 0.22) 100%);
+  border-color: rgba(140, 235, 255, 0.85);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0, 25, 60, 0.28), 0 0 20px rgba(90, 220, 255, 0.40), inset 0 1px 3px rgba(255, 255, 255, 0.95);
+}
+
+body[data-current-world="inicio"] .world-tab-bar.is-menu-open .world-tab-toggle,
+body:not([data-current-world]) .world-tab-bar.is-menu-open .world-tab-toggle {
+  border-color: #5de4ff;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.55), inset 0 1px 3px #ffffff;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0%, rgba(90, 225, 255, 0.20) 100%);
+}
+
+body[data-current-world="inicio"] .tab-toggle-spark,
+body:not([data-current-world]) .tab-toggle-spark {
+  display: none !important;
+}
+
+body[data-current-world="inicio"] .tab-toggle-arrow,
+body:not([data-current-world]) .tab-toggle-arrow {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.75rem;
+  transition: transform 0.24s ease;
+}
+
+body[data-current-world="inicio"] .world-tab-bar.is-menu-open .tab-toggle-arrow,
+body:not([data-current-world]) .world-tab-bar.is-menu-open .tab-toggle-arrow {
+  transform: rotate(180deg);
+}
+
+body[data-current-world="inicio"] .world-tab-list,
+body:not([data-current-world]) .world-tab-list {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  padding: 10px;
+  background: linear-gradient(180deg, rgba(10, 20, 36, 0.85) 0%, rgba(7, 14, 25, 0.92) 100%);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  border-radius: 16px;
+  box-shadow: 0 20px 48px rgba(0, 10, 30, 0.55), inset 0 1px 2px rgba(255, 255, 255, 0.35);
+  min-width: 185px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px) scale(0.96);
+  transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 130;
+}
+
+body[data-current-world="inicio"] .world-tab-bar.is-menu-open .world-tab-list,
+body:not([data-current-world]) .world-tab-bar.is-menu-open .world-tab-list {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+body[data-current-world="inicio"] .world-tab-list .world-tab-btn,
+body:not([data-current-world]) .world-tab-list .world-tab-btn {
+  width: 100%;
+  justify-content: flex-start;
+  padding: 9px 14px;
+  border-radius: 12px;
+}
+
+body[data-current-world="prueba"] .world-tab-bar {
+  top: auto;
+  bottom: 22px;
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 16px 42px -6px rgba(0, 0, 0, 0.75), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.world-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 25px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.70);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.world-tab-btn .tab-icon {
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+.world-tab-btn .tab-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.world-tab-btn:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.world-tab-btn:hover .tab-icon {
+  transform: scale(1.15);
+}
+
+/* Active Tab Pill States */
+.world-tab-btn.is-active {
+  color: #FFFFFF;
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.28) 0%, rgba(0, 140, 180, 0.16) 100%);
+  border-color: rgba(0, 240, 255, 0.65);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.60);
+}
+
+.world-tab-btn.is-active .tab-dot {
+  background: #00F0FF;
+  box-shadow: 0 0 8px #00F0FF;
+}
+
+/* Specific Accent Glows per World Tab */
+.world-tab-btn[data-world="colegios"].is-active {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.28) 0%, rgba(5, 150, 105, 0.16) 100%);
+  border-color: rgba(52, 211, 153, 0.65);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.60);
+}
+.world-tab-btn[data-world="colegios"].is-active .tab-dot {
+  background: #34D399;
+  box-shadow: 0 0 8px #34D399;
+}
+
+.world-tab-btn[data-world="idiomas"].is-active {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.28) 0%, rgba(200, 16, 46, 0.20) 100%);
+  border-color: rgba(96, 165, 250, 0.65);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.60);
+}
+.world-tab-btn[data-world="idiomas"].is-active .tab-dot {
+  background: #60A5FA;
+  box-shadow: 0 0 8px #60A5FA;
+}
+
+.world-tab-btn[data-world="emisora"].is-active {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.28) 0%, rgba(245, 158, 11, 0.20) 100%);
+  border-color: rgba(248, 113, 113, 0.65);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.60);
+}
+.world-tab-btn[data-world="emisora"].is-active .tab-dot {
+  background: #F87171;
+  box-shadow: 0 0 8px #F87171;
+}
+
+.world-tab-btn[data-world="prueba"].is-active {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0%, rgba(180, 190, 205, 0.18) 100%);
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.60);
+}
+.world-tab-btn[data-world="prueba"].is-active .tab-dot {
+  background: #FFFFFF;
+  box-shadow: 0 0 8px #FFFFFF;
+}
+
+.world-tab-btn[data-world="inicio"].is-active {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0%, rgba(180, 190, 205, 0.18) 100%);
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.60);
+}
+.world-tab-btn[data-world="inicio"].is-active .tab-dot {
+  background: #FFFFFF;
+  box-shadow: 0 0 8px #FFFFFF;
+}
+
+/* ==========================================================================
+   WORLD VIEWS ARCHITECTURE (ISOLATED TAB SCREENS)
+   ========================================================================== */
+.world-view-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.world-view {
+  display: none;
+  opacity: 0;
+  width: 100%;
+  position: relative;
+}
+
+.world-view.is-active {
+  display: block !important;
+  opacity: 1 !important;
+  transform: none !important;
+  animation: worldViewFadeIn 0.35s ease forwards;
+}
+
+#view-colegios {
+  overflow: visible !important;
+  transform: none !important;
+}
+
+@keyframes worldViewFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   WORLD VIDEO SCRUBBER ON CANVAS (APPLE-STYLE SCROLL INTERACTION)
+   ========================================================================== */
+.world-scrubber-stage {
+  position: relative;
+  width: 100%;
+  height: 250vh; /* Smooth, generous scroll distance for 192 frames */
+  background: #070B10;
+}
+
+.scrubber-sticky-viewport {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 45%, #102430 0%, #070B10 75%);
+}
+
+.scrubber-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Floating Glass HUD Overlay */
+.scrubber-hud-card {
+  position: absolute;
+  bottom: 38px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(860px, calc(100% - 48px));
+  background: rgba(7, 11, 16, 0.72);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 24px;
+  padding: 22px 28px;
+  box-shadow: 0 24px 50px -10px rgba(0, 0, 0, 0.65), inset 0 1px 2px rgba(255, 255, 255, 0.30);
+  z-index: 10;
+}
+
+.hud-tag-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.hud-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: rgba(0, 240, 255, 0.16);
+  border: 1px solid rgba(0, 240, 255, 0.50);
+  color: #C8F7FF;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hud-pill-secondary {
+  color: rgba(255, 255, 255, 0.65);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.hud-frame-counter {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #00F0FF;
+  background: rgba(0, 240, 255, 0.12);
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 240, 255, 0.30);
+}
+
+.hud-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 850;
+  color: #FFFFFF;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.01em;
+}
+
+.hud-desc {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.80);
+  line-height: 1.45;
+  margin: 0 0 16px 0;
+}
+
+/* Scrub Progress Bar */
+.hud-scrubber-bar-wrap {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 14px;
+}
+
+.hud-scrubber-progress {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00C6FF 0%, #0072FF 100%);
+  box-shadow: 0 0 12px #00C6FF;
+  border-radius: 6px;
+  transition: width 0.08s linear;
+}
+
+.hud-actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.hud-mouse-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.70);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hud-mouse-wheel {
+  width: 14px;
+  height: 20px;
+  border: 1.5px solid rgba(255, 255, 255, 0.60);
+  border-radius: 10px;
+  position: relative;
+}
+
+.hud-mouse-wheel::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 5px;
+  background: #00F0FF;
+  border-radius: 2px;
+  animation: hudWheelScroll 1.5s ease-in-out infinite;
+}
+
+@keyframes hudWheelScroll {
+  0% { transform: translate(-50%, 0); opacity: 1; }
+  100% { transform: translate(-50%, 8px); opacity: 0; }
+}
+
+.hud-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  color: #FFFFFF;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hud-play-btn:hover {
+  background: rgba(0, 240, 255, 0.25);
+  border-color: rgba(0, 240, 255, 0.70);
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.35);
+}
+
+.hud-play-btn.is-playing {
+  background: rgba(16, 185, 129, 0.28);
+  border-color: rgba(52, 211, 153, 0.80);
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.40);
+}
+
+/* World Content Section Following Scrubber */
+.world-content-stage {
+  padding: 60px 24px 100px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.world-header-intro {
+  padding: 100px 24px 36px;
+  max-width: 980px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.world-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.world-header-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 850;
+  color: #FFFFFF;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+}
+
+.world-header-subtitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+  max-width: 720px;
+  margin: 0 auto 20px;
+}
+
+.world-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.world-feature-card {
+  background: rgba(14, 22, 33, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 28px 24px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.world-feature-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 240, 255, 0.35);
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.50);
+}
+
+.world-card-icon {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.world-card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 750;
+  color: #FFFFFF;
+  margin-bottom: 10px;
+}
+
+.world-card-desc {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.55;
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.world-card-action {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #00F0FF;
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: gap 0.2s ease;
+}
+
+.world-card-action:hover {
+  gap: 10px;
+  color: #38BDF8;
+}

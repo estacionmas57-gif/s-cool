@@ -1,0 +1,823 @@
+/* ==========================================================================
+   COLEGIOS • HERO SCROLL-DRIVEN TRANSITION STAGE
+   Transición cinematográfica de dos fases en el Hero:
+   - Fase 1: Protagonista y recuadro institucional "Tu colegio, más digital."
+   - Fase 2 (Scroll): El recuadro desaparece hacia la izquierda y emergen:
+     • Escena panorámica con el titular "Tres necesidades. Una nueva forma de avanzar."
+     • Eje 1 (Izquierda): Gestión académica (Profesor, pantallas de control, boletines)
+     • Eje 2 (Centro-Derecha): Preparación Saber 11 (Estudiantes, ICFES, trofeo)
+     • Eje 3 (Derecha): Guías interactivas (Libros, laptop con módulos web y física)
+   ========================================================================== */
+
+/* Contenedor de scroll con pista de 280vh para secuenciación fluida */
+.colegios-hero-scroll-track {
+  position: relative;
+  width: 100%;
+  height: 280vh;
+  background-color: #060B14;
+  margin: 0;
+  padding: 0;
+}
+
+/* Viewport fijo de 100vh durante el scroll */
+.colegios-hero-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: clamp(84px, 10vh, 100px) max(28px, 4vw) clamp(64px, 8vh, 80px) max(28px, 4vw);
+  box-sizing: border-box;
+  background-color: #060B14;
+  z-index: 10;
+}
+
+/* ==========================================================================
+   CAPAS DE FONDO CINEMATOGRÁFICO
+   ========================================================================== */
+
+.colegios-hero-bg-base,
+.colegios-hero-bg-story {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+  pointer-events: none;
+}
+
+.colegios-hero-bg-base {
+  z-index: 1;
+}
+
+.colegios-hero-bg-story {
+  z-index: 2;
+  opacity: 0;
+}
+
+.colegios-hero-bg-base img,
+.colegios-hero-bg-story img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: opacity;
+}
+
+/* Scrim sutil de iluminación y contraste */
+.colegios-hero-scrim-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    /* Oscurecimiento superior para visibilidad óptima del menú */
+    linear-gradient(180deg, rgba(6, 11, 20, 0.70) 0%, rgba(6, 11, 20, 0) 18%),
+    /* Suave viñeta lateral muy sutil para preservar luminosidad */
+    linear-gradient(90deg, rgba(6, 11, 20, 0.15) 0%, transparent 22%, transparent 78%, rgba(6, 11, 20, 0.20) 100%),
+    /* Base inferior */
+    linear-gradient(0deg, rgba(6, 11, 20, 0.55) 0%, transparent 20%);
+}
+
+/* ==========================================================================
+   FASE 1: RECUADRO INICIAL (Desaparece al hacer scroll)
+   ========================================================================== */
+
+.colegios-hero-card {
+  position: relative;
+  z-index: 10;
+  width: clamp(330px, 32vw, 435px);
+  max-width: 33vw;
+  box-sizing: border-box;
+  background: linear-gradient(
+    140deg,
+    rgba(255, 255, 255, 0.24) 0%,
+    rgba(26, 52, 92, 0.44) 38%,
+    rgba(12, 28, 54, 0.54) 100%
+  );
+  backdrop-filter: blur(20px) saturate(165%);
+  -webkit-backdrop-filter: blur(20px) saturate(165%);
+  border: 1.5px solid rgba(255, 255, 255, 0.38);
+  border-radius: 26px;
+  padding: clamp(22px, 2.4vw, 32px);
+  box-shadow: 
+    0 18px 46px rgba(0, 10, 26, 0.38),
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.65),
+    inset 0 0 24px rgba(56, 189, 248, 0.14),
+    0 0 32px rgba(56, 189, 248, 0.18);
+  transform: translateY(0);
+  will-change: opacity, transform;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+/* ==========================================================================
+   LOGO 3D S-COOL • ANCLA DE MARCA FLOTANTE A MANO IZQUIERDA ARRIBA
+   ========================================================================== */
+.colegios-top-brand {
+  position: absolute;
+  top: clamp(20px, 3vh, 32px);
+  left: max(28px, 4vw);
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(10, 22, 44, 0.45);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  border-radius: 20px;
+  padding: 6px 16px 6px 8px;
+  box-shadow: 
+    0 12px 32px rgba(0, 10, 26, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    0 0 24px rgba(56, 189, 248, 0.15);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  user-select: none;
+}
+
+.colegios-top-brand:hover {
+  transform: translateY(-2px) scale(1.02);
+  border-color: rgba(56, 189, 248, 0.55);
+  box-shadow: 
+    0 16px 40px rgba(0, 10, 26, 0.45),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    0 0 32px rgba(56, 189, 248, 0.30);
+}
+
+.colegios-brand-logo-wrap {
+  position: relative;
+  width: clamp(42px, 4vw, 54px);
+  height: clamp(56px, 5.5vw, 72px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 6px 16px rgba(0, 162, 255, 0.45)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.colegios-brand-3d-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: translateZ(0);
+  animation: floatScoolLogo 4.5s ease-in-out infinite;
+}
+
+@keyframes floatScoolLogo {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(-1.5deg);
+  }
+}
+
+.colegios-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.colegios-brand-title {
+  font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: clamp(16px, 1.4vw, 19px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #FFFFFF 0%, #AEE6FF 55%, #38BDF8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+
+.colegios-brand-badge {
+  font-family: 'Space Grotesk', monospace, sans-serif;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #38BDF8;
+  background: rgba(56, 189, 248, 0.14);
+  border: 1px solid rgba(56, 189, 248, 0.32);
+  padding: 2px 7px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+/* 1. Header de Metadatos Arquitectónicos en Tarjeta */
+.hero-card-brand-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.hero-card-logo-mini {
+  width: 42px;
+  height: 58px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 6px 14px rgba(56, 189, 248, 0.45));
+  animation: floatScoolLogo 4.5s ease-in-out infinite 0.5s;
+}
+
+.hero-card-logo-mini img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.hero-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0;
+}
+
+.hero-meta-kicker {
+  font-family: 'Helvetica Now Display', 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.hero-meta-divider {
+  width: 14px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.hero-meta-system {
+  font-family: 'Helvetica Now Display', 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.52);
+}
+
+/* 2. Titular Editorial de Alto Impacto */
+.colegios-hero-title {
+  margin: 0 0 12px 0;
+  font-family: 'Outfit', 'Plus Jakarta Sans', -apple-system, sans-serif;
+  font-size: clamp(2rem, 2.6vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  color: #FFFFFF;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
+}
+
+.hero-title-editorial {
+  display: inline-block;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.06em;
+  letter-spacing: -0.015em;
+  color: #38BDF8;
+  text-shadow: 
+    0 0 20px rgba(56, 189, 248, 0.45),
+    0 2px 12px rgba(0, 0, 0, 0.35);
+  position: relative;
+}
+
+.hero-title-editorial::after {
+  content: '';
+  position: absolute;
+  left: 1px;
+  right: 2px;
+  bottom: 2px;
+  height: 1.5px;
+  background: #38BDF8;
+  opacity: 0.75;
+  border-radius: 1px;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+}
+
+/* 3. Subtítulo Explicativo */
+.colegios-hero-subtitle {
+  margin: 0 0 20px 0;
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  font-size: clamp(0.90rem, 1.02vw, 1.04rem);
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(241, 245, 249, 0.84);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* 4. Triptych Dock Arquitectónico (Aprendizaje, Organización, Contenido) */
+.hero-triptych-dock {
+  display: flex;
+  align-items: stretch;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 16px;
+  padding: 8px 10px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  gap: 2px;
+}
+
+.triptych-segment {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 7px 8px;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.triptych-segment:hover,
+.triptych-segment:focus-visible {
+  background: rgba(255, 255, 255, 0.14);
+  transform: translateY(-1px);
+}
+
+.segment-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.segment-num {
+  font-family: 'Helvetica Now Display', monospace, system-ui, sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.60);
+  letter-spacing: 0.08em;
+}
+
+.segment-bar {
+  width: 12px;
+  height: 1.5px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 1px;
+  transition: width 0.25s ease, background 0.25s ease;
+}
+
+.triptych-segment:hover .segment-bar {
+  width: 20px;
+  background: #FFFFFF;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.85);
+}
+
+.segment-title {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+.segment-sub {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 9.5px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.triptych-divider {
+  width: 1px;
+  align-self: stretch;
+  margin: 6px 2px;
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.25) 50%, transparent 100%);
+}
+
+/* ==========================================================================
+   FASE 2: ELEMENTOS FLOTANTES & HOTSPOTS INTERACTIVOS (LOS 3 NÚCLEOS)
+   ========================================================================== */
+
+.colegios-story-interactive-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+  pointer-events: none;
+  opacity: 0;
+  will-change: opacity, transform;
+  transition: opacity 0.35s ease;
+}
+
+.colegios-cluster-hotspot {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  z-index: 16;
+}
+
+/* Posiciones porcentuales exactas sobre los pedestales */
+.cluster-left {
+  left: 14.5%;
+  top: 78.8%;
+  width: 220px;
+  height: 90px;
+}
+
+.cluster-center {
+  left: 60.7%;
+  top: 81.4%;
+  width: 220px;
+  height: 90px;
+}
+
+.cluster-right {
+  left: 86.8%;
+  top: 81.4%;
+  width: 220px;
+  height: 90px;
+}
+
+/* Halo brillante sobre el pedestal exacto */
+.cluster-halo-glow {
+  position: absolute;
+  inset: -6px;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.glow-cyan {
+  border: 2px solid rgba(0, 229, 255, 0.85);
+  box-shadow: 0 0 35px rgba(0, 229, 255, 0.65), inset 0 0 20px rgba(0, 229, 255, 0.35);
+}
+
+.glow-purple {
+  border: 2px solid rgba(179, 136, 255, 0.85);
+  box-shadow: 0 0 35px rgba(179, 136, 255, 0.65), inset 0 0 20px rgba(179, 136, 255, 0.35);
+}
+
+.glow-green {
+  border: 2px solid rgba(0, 230, 118, 0.85);
+  box-shadow: 0 0 35px rgba(0, 230, 118, 0.65), inset 0 0 20px rgba(0, 230, 118, 0.35);
+}
+
+.colegios-cluster-hotspot:hover .cluster-halo-glow,
+.colegios-cluster-hotspot.is-focused .cluster-halo-glow {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+/* Botón disparador interactivo sutil */
+.cluster-interactive-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  opacity: 0.85;
+}
+
+.trigger-cyan {
+  background: rgba(6, 26, 44, 0.85);
+  border: 1px solid rgba(0, 229, 255, 0.7);
+  color: #E0F7FA;
+}
+
+.trigger-purple {
+  background: rgba(30, 10, 52, 0.85);
+  border: 1px solid rgba(179, 136, 255, 0.7);
+  color: #F3E8FF;
+}
+
+.trigger-green {
+  background: rgba(6, 36, 20, 0.85);
+  border: 1px solid rgba(0, 230, 118, 0.7);
+  color: #E8F5E9;
+}
+
+.colegios-cluster-hotspot:hover .cluster-interactive-trigger,
+.colegios-cluster-hotspot.is-focused .cluster-interactive-trigger {
+  opacity: 1;
+  transform: translateY(-3px) scale(1.06);
+}
+
+.trigger-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+.trigger-cyan .trigger-pulse-dot {
+  background: #00E5FF;
+  box-shadow: 0 0 10px #00E5FF;
+}
+
+.trigger-purple .trigger-pulse-dot {
+  background: #B388FF;
+  box-shadow: 0 0 10px #B388FF;
+}
+
+.trigger-green .trigger-pulse-dot {
+  background: #00E676;
+  box-shadow: 0 0 10px #00E676;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.3); }
+}
+
+/* Flyout Glassmorphic con detalles institucionales */
+.cluster-glass-flyout {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px) scale(0.95);
+  width: clamp(270px, 23vw, 340px);
+  background: rgba(8, 16, 30, 0.94);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  padding: 16px 18px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 30px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 30;
+  text-align: left;
+}
+
+.cluster-left .cluster-glass-flyout {
+  left: 30%;
+}
+
+.cluster-right .cluster-glass-flyout {
+  left: 70%;
+}
+
+.colegios-cluster-hotspot:hover .cluster-glass-flyout,
+.colegios-cluster-hotspot.is-focused .cluster-glass-flyout {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.cluster-left:hover .cluster-glass-flyout,
+.cluster-left.is-focused .cluster-glass-flyout {
+  transform: translateX(-30%) translateY(0) scale(1);
+}
+
+.cluster-right:hover .cluster-glass-flyout,
+.cluster-right.is-focused .cluster-glass-flyout {
+  transform: translateX(-70%) translateY(0) scale(1);
+}
+
+.flyout-header h4 {
+  margin: 6px 0 10px 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.flyout-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cyan-tag {
+  background: rgba(0, 229, 255, 0.15);
+  color: #80DEEA;
+  border: 1px solid rgba(0, 229, 255, 0.35);
+}
+
+.purple-tag {
+  background: rgba(179, 136, 255, 0.15);
+  color: #D1C4E9;
+  border: 1px solid rgba(179, 136, 255, 0.35);
+}
+
+.green-tag {
+  background: rgba(0, 230, 118, 0.15);
+  color: #A5D6A7;
+  border: 1px solid rgba(0, 230, 118, 0.35);
+}
+
+.flyout-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.flyout-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  color: #CBD5E1;
+  line-height: 1.45;
+}
+
+.flyout-features li strong {
+  color: #FFFFFF;
+}
+
+.flyout-features li span {
+  font-size: 13px;
+  line-height: 1;
+}
+
+/* ==========================================================================
+   SCROLL CUE & INDICADOR DE FASE
+   ========================================================================== */
+
+.colegios-scroll-cue {
+  position: absolute;
+  bottom: clamp(24px, 4vh, 38px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  border-radius: 999px;
+  background: rgba(10, 18, 34, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #CBD5E1;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.colegios-scroll-cue:hover {
+  background: rgba(16, 28, 52, 0.9);
+  color: #FFFFFF;
+  border-color: rgba(56, 189, 248, 0.45);
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.2);
+}
+
+.colegios-scroll-mouse {
+  width: 14px;
+  height: 22px;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  padding-top: 3px;
+  box-sizing: border-box;
+}
+
+.colegios-scroll-wheel {
+  width: 2.5px;
+  height: 5px;
+  background-color: #38BDF8;
+  border-radius: 2px;
+  animation: mouseWheelScrub 1.8s infinite ease-in-out;
+}
+
+@keyframes mouseWheelScrub {
+  0% { transform: translateY(0); opacity: 1; }
+  60% { transform: translateY(6px); opacity: 0.2; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+
+.colegios-scroll-arrow {
+  color: #38BDF8;
+  font-size: 13px;
+  animation: bounceArrow 1.8s infinite ease-in-out;
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
+/* Indicador discreto de fase (Fase 1: Introducción | Fase 2: Las 3 Necesidades) */
+.colegios-phase-indicator {
+  position: absolute;
+  right: clamp(24px, 3.5vw, 42px);
+  bottom: clamp(28px, 4vh, 42px);
+  z-index: 20;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: rgba(8, 16, 30, 0.65);
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+}
+
+.phase-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.phase-dot.is-active {
+  background: #34D399;
+  width: 20px;
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN & MOBILE ADAPTATION
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .colegios-hero-card {
+    width: clamp(320px, 38vw, 420px);
+    max-width: 40vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .colegios-hero-sticky {
+    padding: 80px 20px 40px 20px;
+    align-items: flex-end;
+  }
+
+  .colegios-hero-card {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 50px;
+    padding: 22px;
+  }
+
+  @media (max-width: 480px) {
+    .hero-triptych-dock .segment-sub {
+      display: none;
+    }
+  }
+
+  .cluster-left {
+    left: 20%;
+    top: 76%;
+  }
+
+  .cluster-center {
+    left: 55%;
+    top: 82%;
+  }
+
+  .cluster-right {
+    left: 80%;
+    top: 76%;
+  }
+
+  .cluster-glass-flyout {
+    width: 240px;
+  }
+}

@@ -1,0 +1,1112 @@
+/* ==========================================================================
+   COLEGIOS • SEGUNDA ESCENA DE STORYTELLING CINEMATOGRÁFICO SCROLL-DRIVEN (V3.0)
+   "Tres necesidades. Una nueva forma de avanzar."
+   Estética profesional, cálida, tecnológica y cinematográfica en sintonía con el Hero:
+   - Atmósfera lumínica cálida (luz dorada de atrio escolar + hologramas cian y esmeralda)
+   - Cristal esmerilado translúcido con rebordes de luz multicapa y profundidad espacial
+   - Composición central flotante (Pedestal holográfico del campus digital)
+   - 3 escenarios progresivos con transiciones suaves en torno al centro
+   ========================================================================== */
+
+/* 1. Contenedor de scroll con altura para navegación natural (280vh) */
+.colegios-storytelling-section {
+  position: relative;
+  width: 100%;
+  height: 280vh;
+  background-color: #060A14;
+  box-sizing: border-box;
+}
+
+/* 2. Marco fijo (Sticky 100vh) con iluminación volumétrica de atrio */
+.colegios-story-sticky {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(72px, 8.2vh, 88px) max(22px, 4.2vw) clamp(22px, 2.8vh, 32px) max(22px, 4.2vw);
+  box-sizing: border-box;
+  /* Fondo ambiental: evoca el atrio escolar iluminado por el sol cálido y pantallas holográficas */
+  background: 
+    /* Resplandor solar cálido superior derecho (como la luz del hero) */
+    radial-gradient(circle 600px at 85% 15%, rgba(245, 158, 11, 0.12) 0%, transparent 70%),
+    /* Resplandor holográfico cian-esmeralda inferior izquierdo */
+    radial-gradient(circle 550px at 15% 75%, rgba(16, 185, 129, 0.10) 0%, transparent 65%),
+    /* Halo central de concentración */
+    radial-gradient(ellipse 70% 50% at 50% 50%, rgba(56, 189, 248, 0.06) 0%, transparent 75%),
+    /* Trama de cuadrícula arquitectónica sutil */
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    #060A14;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px, 100% 100%;
+}
+
+/* 3. Encabezado HTML Principal y Narrativo */
+.story-scene-header {
+  text-align: center;
+  max-width: 920px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 20;
+  flex-shrink: 0;
+}
+
+.story-kicker-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(56, 189, 248, 0.12));
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.15);
+  margin-bottom: 8px;
+}
+
+.kicker-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #34D399;
+  box-shadow: 0 0 10px #34D399, 0 0 4px #FFFFFF;
+  animation: pulseKickerGlow 2.2s infinite ease-in-out;
+}
+
+@keyframes pulseKickerGlow {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.35); opacity: 1; filter: drop-shadow(0 0 6px #34D399); }
+}
+
+.kicker-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #A7F3D0;
+}
+
+.story-hero-title {
+  margin: 0 0 6px 0;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.85rem, 3.4vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
+}
+
+.story-title-highlight {
+  background: linear-gradient(135deg, #A7F3D0 0%, #34D399 38%, #38BDF8 75%, #FBBF24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  filter: drop-shadow(0 2px 14px rgba(52, 211, 153, 0.25));
+}
+
+.story-hero-subtitle {
+  margin: 0 auto 10px auto;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(0.92rem, 1.25vw, 1.08rem);
+  font-weight: 450;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 720px;
+}
+
+/* Indicador dinámico de escenario activo (diseño tipo chip editorial) */
+.story-current-scenario-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: rgba(11, 19, 36, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(52, 211, 153, 0.12);
+  transition: all 0.4s ease;
+}
+
+.scenario-number-badge {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(52, 211, 153, 0.25);
+  color: #34D399;
+  border: 1px solid rgba(52, 211, 153, 0.55);
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.25);
+  transition: all 0.4s ease;
+}
+
+.scenario-active-name {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.02em;
+  transition: color 0.4s ease;
+}
+
+/* 4. Canvas Escénico Panorámico */
+.story-stage-canvas {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+/* ==========================================================================
+   COMPOSICIÓN VISUAL CENTRAL (PEDESTAL HOLOGRÁFICO DEL ECOSISTEMA)
+   Permanece fija en el centro del viewport durante el scroll
+   ========================================================================== */
+.story-central-anchor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 270px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.central-core-glass {
+  width: 100%;
+  padding: 24px 20px;
+  border-radius: 28px;
+  background: linear-gradient(165deg, rgba(14, 25, 48, 0.88) 0%, rgba(8, 14, 28, 0.94) 100%);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    0 24px 60px rgba(0, 0, 0, 0.75),
+    0 0 45px rgba(16, 185, 129, 0.22),
+    0 1px 0 rgba(255, 255, 255, 0.3) inset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Anillos orbitales giratorios */
+.core-orbital-ring {
+  position: absolute;
+  top: -35%;
+  left: -35%;
+  width: 170%;
+  height: 170%;
+  border-radius: 50%;
+  border: 1px dashed rgba(52, 211, 153, 0.3);
+  pointer-events: none;
+  animation: coreRingRotate 32s linear infinite;
+}
+
+.core-orbital-ring-outer {
+  position: absolute;
+  top: -55%;
+  left: -55%;
+  width: 210%;
+  height: 210%;
+  border-radius: 50%;
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  pointer-events: none;
+  animation: coreRingRotateRev 45s linear infinite;
+}
+
+@keyframes coreRingRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes coreRingRotateRev {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.core-emblem-node {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.35), rgba(56, 189, 248, 0.25));
+  border: 1px solid rgba(52, 211, 153, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 0 24px rgba(52, 211, 153, 0.4), 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.core-label-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.core-stage-eyebrow {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #34D399;
+  text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+}
+
+.core-stage-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.core-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 10.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.core-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #34D399;
+  box-shadow: 0 0 8px #34D399;
+}
+
+/* Modos de iluminación según el escenario activo */
+.colegios-storytelling-section[data-active-scenario="0"] .central-core-glass {
+  border-color: rgba(52, 211, 153, 0.5);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 45px rgba(16, 185, 129, 0.25);
+}
+
+.colegios-storytelling-section[data-active-scenario="1"] .central-core-glass {
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 45px rgba(56, 189, 248, 0.28);
+}
+.colegios-storytelling-section[data-active-scenario="1"] .core-emblem-node {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.4), rgba(245, 158, 11, 0.25));
+  border-color: rgba(56, 189, 248, 0.7);
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.5);
+}
+.colegios-storytelling-section[data-active-scenario="1"] .core-stage-eyebrow {
+  color: #38BDF8;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+.colegios-storytelling-section[data-active-scenario="1"] .core-status-dot {
+  background-color: #38BDF8;
+  box-shadow: 0 0 8px #38BDF8;
+}
+
+.colegios-storytelling-section[data-active-scenario="2"] .central-core-glass {
+  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 45px rgba(245, 158, 11, 0.25);
+}
+.colegios-storytelling-section[data-active-scenario="2"] .core-emblem-node {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.35), rgba(16, 185, 129, 0.35));
+  border-color: rgba(245, 158, 11, 0.7);
+  box-shadow: 0 0 24px rgba(245, 158, 11, 0.45);
+}
+.colegios-storytelling-section[data-active-scenario="2"] .core-stage-eyebrow {
+  color: #FBBF24;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+.colegios-storytelling-section[data-active-scenario="2"] .core-status-dot {
+  background-color: #FBBF24;
+  box-shadow: 0 0 8px #FBBF24;
+}
+
+/* ==========================================================================
+   LOS TRES ESCENARIOS VISUALES EN TORNO AL CENTRO
+   Disposición espacial con profundidad, resplandor lateral y suavidad de fade
+   ========================================================================== */
+.story-scenario-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 300px 1.25fr;
+  align-items: center;
+  gap: 24px;
+  max-width: 1320px;
+  margin: 0 auto;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.95) translateY(28px);
+  filter: blur(5px);
+  transition: 
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.65s;
+  pointer-events: none;
+}
+
+.story-scenario-stage.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translateY(0);
+  filter: blur(0px);
+  pointer-events: auto;
+}
+
+.story-scenario-stage.is-passed {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.95) translateY(-28px);
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.scenario-center-gap {
+  height: 100%;
+  pointer-events: none;
+}
+
+.scenario-wing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+/* Paneles de vidrio holográfico (Glassmorphism de alta gama) */
+.card-glass-panel {
+  background: linear-gradient(145deg, rgba(13, 23, 44, 0.85) 0%, rgba(9, 16, 32, 0.90) 100%);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 22px;
+  padding: 20px 22px;
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.65),
+    0 1px 0 rgba(255, 255, 255, 0.22) inset,
+    0 0 25px rgba(56, 189, 248, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-glass-panel:hover {
+  border-color: rgba(52, 211, 153, 0.45);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(16, 185, 129, 0.18);
+}
+
+.panel-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 9px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.panel-header-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panel-badge-pill {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.22);
+  color: #6EE7B7;
+  border: 1px solid rgba(52, 211, 153, 0.45);
+}
+
+/* ==========================================================================
+   ESCENARIO A — GESTIÓN ACADÉMICA
+   Calendario, notas, informes y comunicaciones
+   ========================================================================== */
+.cal-grid-mini {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  text-align: center;
+}
+
+.cal-head {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.45);
+  padding: 2px 0;
+}
+
+.cal-num {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 0;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.cal-num.is-event {
+  background: rgba(16, 185, 129, 0.32);
+  color: #A7F3D0;
+  font-weight: 800;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.45);
+}
+
+.cal-num.is-today {
+  border: 1px solid #38BDF8;
+  color: #FFFFFF;
+  font-weight: 800;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+}
+
+.cal-event-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.cal-pill-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.grades-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.grade-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.grade-val-tag {
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  background: rgba(16, 185, 129, 0.25);
+  color: #34D399;
+  border: 1px solid rgba(52, 211, 153, 0.35);
+}
+
+.stats-track-box {
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stats-track-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 5px;
+}
+
+.stats-track-bar {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.stats-track-fill {
+  height: 100%;
+  width: 96.4%;
+  background: linear-gradient(90deg, #10B981, #34D399, #38BDF8);
+  border-radius: 999px;
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.55);
+}
+
+.bulletin-cert-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 12px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px dashed rgba(52, 211, 153, 0.45);
+  border-radius: 12px;
+}
+
+.comms-instant-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 11px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* ==========================================================================
+   ESCENARIO B — APRENDIZAJE (PREPARACIÓN SABER 11)
+   Preguntas tipo ICFES, indicadores de progreso y resultados
+   ========================================================================== */
+.saber-q-box {
+  background: linear-gradient(145deg, rgba(13, 23, 44, 0.88) 0%, rgba(9, 16, 32, 0.92) 100%);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 22px;
+  padding: 20px 22px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 35px rgba(56, 189, 248, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.saber-timer-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(248, 113, 113, 0.5);
+  color: #FCA5A5;
+  font-size: 11px;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+}
+
+.saber-prompt-quote {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 11px 14px;
+  border-radius: 12px;
+  border-left: 3px solid #38BDF8;
+}
+
+.saber-opts-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.saber-opt-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 12px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.88);
+  transition: all 0.2s ease;
+}
+
+.saber-opt-row .opt-badge {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.saber-opt-row.is-correct {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: #34D399;
+  color: #FFFFFF;
+  box-shadow: 0 0 16px rgba(52, 211, 153, 0.35);
+}
+
+.saber-opt-row.is-correct .opt-badge {
+  background: #34D399;
+  color: #064E3B;
+}
+
+.saber-correct-toast {
+  padding: 7px 12px;
+  border-radius: 9px;
+  background: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  font-size: 11.5px;
+  color: #A7F3D0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.saber-score-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(16, 185, 129, 0.18));
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.score-big-val {
+  font-family: 'Outfit', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.saber-ranking-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.rank-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rank-row.is-active-saloon {
+  background: rgba(56, 189, 248, 0.22);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  font-weight: 700;
+  color: #FFFFFF;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+}
+
+/* ==========================================================================
+   ESCENARIO C — MATERIALES EDUCATIVOS (GUÍAS INTERACTIVAS)
+   Guía escolar impresa transformada en publicación digital moderna
+   ========================================================================== */
+.paper-guide-panel {
+  background: #181C28;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 20px 22px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65);
+  opacity: 0.85;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.paper-clip-element {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  width: 24px;
+  height: 11px;
+  background: #4B5563;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.paper-static-line {
+  height: 7px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.digital-guide-panel {
+  background: linear-gradient(145deg, rgba(14, 26, 48, 0.88) 0%, rgba(9, 17, 34, 0.94) 100%);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  border-radius: 22px;
+  padding: 20px 22px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(16, 185, 129, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.digital-audio-bar {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 13px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+}
+
+.audio-play-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #34D399;
+  color: #064E3B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+  flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.5);
+}
+
+.audio-wave-anim {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex: 1;
+  height: 18px;
+}
+
+.wave-bar-elem {
+  width: 3px;
+  background: #34D399;
+  border-radius: 2px;
+  animation: waveBarPulse 1.2s infinite ease-in-out alternate;
+}
+
+@keyframes waveBarPulse {
+  0% { height: 3px; opacity: 0.35; }
+  100% { height: 16px; opacity: 1; }
+}
+
+.digital-quiz-chip {
+  padding: 9px 13px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 12px;
+  font-size: 11.5px;
+}
+
+/* 5. Barra Inferior de Navegación & Progreso */
+.story-footer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 940px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 20;
+  flex-shrink: 0;
+  gap: 16px;
+}
+
+.story-steps-dock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(13, 21, 38, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 5px 10px;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.story-step-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.65);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.story-step-pill:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.story-step-pill.is-active {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.28), rgba(56, 189, 248, 0.22));
+  border: 1px solid rgba(52, 211, 153, 0.65);
+  color: #FFFFFF;
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.35);
+}
+
+.story-step-pill.is-active .step-num {
+  color: #34D399;
+  font-weight: 800;
+}
+
+.story-progress-meter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  max-width: 290px;
+}
+
+.meter-track {
+  flex: 1;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.meter-fill {
+  width: 33.33%;
+  height: 100%;
+  background: linear-gradient(90deg, #10B981 0%, #34D399 50%, #38BDF8 100%);
+  border-radius: 999px;
+  box-shadow: 0 0 12px #34D399;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.meter-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.65);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   ADAPTACIÓN RESPONSIVA (TABLETS & MÓVILES)
+   ========================================================================== */
+@media (max-width: 1180px) {
+  .story-scenario-stage {
+    grid-template-columns: 1fr 240px 1.15fr;
+    gap: 16px;
+  }
+  .story-central-anchor {
+    width: 220px;
+  }
+}
+
+@media (max-width: 860px) {
+  .colegios-story-sticky {
+    padding: 64px 14px 16px 14px;
+    height: 100vh;
+  }
+
+  .story-hero-title {
+    font-size: clamp(1.25rem, 4.2vw, 1.55rem);
+    margin-bottom: 4px;
+  }
+
+  .story-hero-subtitle {
+    font-size: 0.8rem;
+    line-height: 1.35;
+    margin-bottom: 6px;
+  }
+
+  .story-current-scenario-indicator {
+    padding: 3px 12px;
+    gap: 8px;
+  }
+
+  .scenario-active-name {
+    font-size: 12px;
+  }
+
+  .story-stage-canvas {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    margin: 4px 0;
+    overflow: hidden;
+  }
+
+  .story-central-anchor {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto 6px auto;
+    flex-shrink: 0;
+    z-index: 15;
+  }
+
+  .central-core-glass {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 6px 12px;
+    gap: 8px;
+    border-radius: 14px;
+  }
+
+  .core-orbital-ring,
+  .core-orbital-ring-outer {
+    display: none;
+  }
+
+  .core-emblem-node {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .core-label-group {
+    align-items: flex-start;
+    flex: 1;
+  }
+
+  .core-stage-eyebrow {
+    font-size: 9px;
+  }
+
+  .core-stage-title {
+    font-size: 13px;
+  }
+
+  .core-status-pill {
+    padding: 2px 7px;
+    font-size: 9.5px;
+  }
+
+  .story-scenario-stage {
+    position: absolute;
+    inset: 0;
+    top: 52px;
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: none;
+    gap: 8px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 4px 8px 4px;
+    max-height: calc(100% - 52px);
+  }
+
+  .scenario-center-gap {
+    display: none;
+  }
+
+  .scenario-wing {
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  .card-glass-panel,
+  .saber-q-box,
+  .paper-guide-panel,
+  .digital-guide-panel {
+    padding: 12px 14px;
+    border-radius: 14px;
+    gap: 8px;
+  }
+
+  .panel-header-title {
+    font-size: 12px;
+  }
+
+  .saber-prompt-quote {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+
+  .story-footer-nav {
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .story-steps-dock {
+    width: 100%;
+    justify-content: space-between;
+    padding: 3px 6px;
+  }
+
+  .story-step-pill {
+    padding: 4px 8px;
+    font-size: 10px;
+    gap: 4px;
+  }
+
+  .story-progress-meter {
+    width: 100%;
+    max-width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* ==========================================================================
+   PREFERS-REDUCED-MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .story-scenario-stage {
+    transition: opacity 0.25s ease !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .core-orbital-ring,
+  .core-orbital-ring-outer,
+  .kicker-pulse-dot,
+  .wave-bar-elem {
+    animation: none !important;
+  }
+}

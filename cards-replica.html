@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarjetas Holográficas Traslúcidas Cyan Glass • Réplica Idéntica</title>
+  
+  <style>
+    :root {
+      --card-w: 272px;
+      --card-h: 165px;
+      --card-radius: 24px;
+      --neon-cyan: #5de4ff;
+      --neon-cyan-glow: rgba(0, 240, 255, 0.7);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      /* Fondo por defecto: Fotograma real del video Hero para apreciar la traslucidez */
+      background: url('assets/frames_inicio/frame_0120.webp') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      font-family: Arial, 'Helvetica Neue', Helvetica, 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      transition: background 0.3s ease;
+    }
+
+    /* Contenedor horizontal que distribuye las 3 tarjetas con perspectiva 3D */
+    .cards-reference-stage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      max-width: 1080px;
+      width: 100%;
+      margin: 0 auto;
+      perspective: 1200px;
+      perspective-origin: 50% 45%;
+    }
+
+    /* ── Tarjeta Holográfica Traslúcida Base (Vidrio Frosted Crystal) ── */
+    .holo-card {
+      position: relative;
+      width: var(--card-w);
+      height: var(--card-h);
+      border-radius: var(--card-radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      text-decoration: none;
+      overflow: hidden;
+      
+      /* 1. Fondo de Cristal Traslúcido Frosted Glass (permite ver el cielo, nubes y ciudad detrás) */
+      background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.16) 0%, 
+        rgba(180, 230, 255, 0.06) 40%, 
+        rgba(100, 200, 255, 0.05) 70%, 
+        rgba(0, 225, 255, 0.12) 100%
+      );
+
+      /* 2. Filtro Óptico Glassmorphic (desenfoque de refracción del fondo) */
+      backdrop-filter: blur(5px) saturate(115%) brightness(1.02);
+      -webkit-backdrop-filter: blur(5px) saturate(115%) brightness(1.02);
+
+      /* 3. Borde exterior de neón cian eléctrico con resplandor suave */
+      border: 2px solid var(--neon-cyan);
+      box-shadow: 
+        0 0 10px var(--neon-cyan-glow),
+        0 0 20px rgba(0, 240, 255, 0.35),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8),
+        inset 0 0 10px rgba(0, 230, 255, 0.15);
+      
+      transform-style: preserve-3d;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+                  box-shadow 0.35s ease,
+                  background 0.35s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ── Orientación de Perspectiva 3D Real (Colegio y Emisora anguladas hacia la pantalla) ── */
+    /* 1. Colegio: +2px lado derecho, +2px abajo */
+    #card-colegio {
+      width: calc(var(--card-w) - 23px);
+      height: calc(var(--card-h) - 8px);
+      transform: rotateY(16deg) rotateX(0.5deg);
+      transform-origin: center right;
+    }
+
+    /* 2. Canadá: -4px izquierda, +2px abajo */
+    #card-canada {
+      width: calc(var(--card-w) - 4px);
+      height: calc(var(--card-h) + 2px);
+      transform: rotateY(0deg);
+      transform-origin: center center;
+    }
+
+    /* 3. Emisora Digital: -3px de la derecha */
+    #card-emisora {
+      width: calc(var(--card-w) - 3px);
+      transform: rotateY(-6deg) rotateX(0.5deg);
+      transform-origin: center left;
+    }
+
+    /* 4. Contorno interior sutil de vidrio */
+    .holo-card::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 21px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-top-color: rgba(255, 255, 255, 0.85);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* 5. Destello luminoso superior en el borde */
+    .holo-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 12%;
+      right: 12%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, #ffffff 30%, var(--neon-cyan) 70%, transparent 100%);
+      filter: blur(0.5px);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* 6. Tipografía idéntica a la muestra (Arial / Helvetica Bold) */
+    .holo-card span {
+      position: relative;
+      z-index: 3;
+      color: #ffffff;
+      font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+      font-weight: 700;
+      font-size: 52px;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      text-shadow: 
+        0 2px 4px rgba(0, 15, 45, 0.35),
+        0 0 12px rgba(90, 220, 255, 0.5);
+      transition: transform 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    /* Tarjeta de dos líneas ("Emisora Digital") */
+    .holo-card.double-line span {
+      font-size: 48px;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Microinteracciones Hover y Clic respetando la perspectiva 3D ── */
+    #card-colegio:hover {
+      transform: rotateY(11deg) translateY(-4px) scale(1.025);
+    }
+    #card-canada:hover {
+      transform: rotateY(0deg) translateY(-4px) scale(1.025);
+    }
+    #card-emisora:hover {
+      transform: rotateY(-3deg) translateY(-4px) scale(1.025);
+    }
+
+    .holo-card:hover {
+      background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.22) 0%, 
+        rgba(180, 230, 255, 0.10) 40%, 
+        rgba(100, 200, 255, 0.08) 70%, 
+        rgba(0, 225, 255, 0.20) 100%
+      );
+      box-shadow: 
+        0 0 15px rgba(0, 240, 255, 0.9),
+        0 0 32px rgba(0, 220, 255, 0.55),
+        0 12px 24px rgba(0, 20, 50, 0.25),
+        inset 0 1px 3px rgba(255, 255, 255, 0.95);
+    }
+
+    .holo-card:hover span {
+      text-shadow: 
+        0 2px 6px rgba(0, 15, 45, 0.45),
+        0 0 18px rgba(90, 220, 255, 0.85);
+    }
+
+    #card-colegio:active { transform: rotateY(16deg) translateY(1px) scale(0.98); }
+    #card-canada:active { transform: rotateY(0deg) translateY(1px) scale(0.98); }
+    #card-emisora:active { transform: rotateY(-5deg) translateY(1px) scale(0.98); }
+
+    /* ── Barra para alternar el fondo y comprobar la traslucidez ── */
+    .theme-toggle-panel {
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 8px 18px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 14px;
+      color: #e2e8f0;
+      font-weight: 600;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .theme-toggle-btn {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle-btn.active {
+      background: #0ea5e9;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
+    }
+
+    /* Modos de fondo */
+    body.mode-video {
+      background: url('assets/frames_inicio/frame_0120.webp') no-repeat center center fixed;
+      background-size: cover;
+    }
+    body.mode-dark {
+      background: #070d18;
+    }
+    body.mode-white {
+      background: #ffffff;
+    }
+    body.mode-white .theme-toggle-panel {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: #cbd5e1;
+      color: #334155;
+    }
+    body.mode-white .theme-toggle-btn {
+      color: #64748b;
+    }
+    body.mode-white .theme-toggle-btn.active {
+      color: #ffffff;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .cards-reference-stage {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body class="mode-video">
+
+  <main class="cards-reference-stage" id="cards-stage">
+    <!-- Tarjeta 1: Colegio -->
+    <a href="#colegios" class="holo-card" id="card-colegio" aria-label="Ir a Colegio">
+      <span>Colegio</span>
+    </a>
+
+    <!-- Tarjeta 2: Canadá -->
+    <a href="#canada" class="holo-card" id="card-canada" aria-label="Ir a Canadá">
+      <span>Canadá</span>
+    </a>
+
+    <!-- Tarjeta 3: Emisora Digital -->
+    <a href="#emisora" class="holo-card double-line" id="card-emisora" aria-label="Ir a Emisora Digital">
+      <span>Emisora<br>Digital</span>
+    </a>
+  </main>
+
+  <!-- Panel para alternar fondos y verificar la traslucidez -->
+  <aside class="theme-toggle-panel" aria-label="Selector de Fondo">
+    <span>Comprobar Traslucidez:</span>
+    <button type="button" class="theme-toggle-btn active" id="btn-video" onclick="setBg('video')">Fondo Video Hero</button>
+    <button type="button" class="theme-toggle-btn" id="btn-dark" onclick="setBg('dark')">Fondo Noche Oscuro</button>
+    <button type="button" class="theme-toggle-btn" id="btn-white" onclick="setBg('white')">Fondo Blanco</button>
+  </aside>
+
+  <script>
+    function setBg(mode) {
+      document.body.className = 'mode-' + mode;
+      document.querySelectorAll('.theme-toggle-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + mode);
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    // Efecto sutil 3D Tilt con el movimiento del ratón respetando el ángulo base de cada tarjeta
+    const baseAngles = {
+      'card-colegio': { baseY: 16, baseX: 0.5 },
+      'card-canada': { baseY: 0, baseX: 0 },
+      'card-emisora': { baseY: -5, baseX: 0.5 }
+    };
+
+    const cards = document.querySelectorAll('.holo-card');
+    cards.forEach(card => {
+      const base = baseAngles[card.id] || { baseY: 0, baseX: 0 };
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const deltaX = (y / (rect.height / 2)) * -4;
+        const deltaY = (x / (rect.width / 2)) * 5;
+        card.style.transform = `rotateY(${(base.baseY + deltaY).toFixed(2)}deg) rotateX(${(base.baseX + deltaX).toFixed(2)}deg) translateY(-4px) scale(1.025)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+  </script>
+</body>
+</html>

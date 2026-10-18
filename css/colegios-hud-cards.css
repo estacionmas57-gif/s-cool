@@ -1,0 +1,826 @@
+/* ==========================================================================
+   COLEGIOS • HOLOGRAPHIC HUD CARDS (3D INWARD PERSPECTIVE & SPATIAL POSITIONS)
+   Posiciones exactas según la imagen de referencia:
+   - Tarjeta 1: AGENDA DIGITAL (Lateral izquierdo superior, perspectiva hacia adentro)
+   - Tarjeta 2: PROGRESO ESTUDIANTIL (Medio-izquierdo junto a la protagonista)
+   - Tarjeta 3: RECURSOS INTERACTIVOS (Superior derecho, bajo la viga/techo)
+   - Tarjeta 4: COMUNIDAD EDUCATIVA (Inferior derecho, sobre los pufs amarillos)
+   Aparición secuencial con scroll: 1º Agenda -> 2º Progreso -> 3º Recursos -> 4º Comunidad.
+   ========================================================================== */
+
+/* Contenedor HUD con perspectiva 3D inmersiva */
+.colegios-hud-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+  pointer-events: none;
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+  box-sizing: border-box;
+  opacity: 1;
+}
+
+/* Lienzo 3D de las tarjetas */
+.colegios-hud-grid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   ESTRUCTURA GENERAL DE TARJETA HUD
+   ========================================================================== */
+
+.hud-card {
+  position: absolute;
+  background: linear-gradient(145deg, rgba(6, 22, 45, 0.90) 0%, rgba(3, 13, 28, 0.94) 100%);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 2px solid #00F0FF;
+  border-radius: 20px;
+  box-sizing: border-box;
+  box-shadow:
+    0 0 20px rgba(0, 240, 255, 0.40),
+    inset 0 0 14px rgba(0, 240, 255, 0.16),
+    0 14px 36px rgba(0, 0, 0, 0.70);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  pointer-events: auto;
+  overflow: visible !important;
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  opacity: 0; /* Controlado secuencialmente por scroll en JS */
+}
+
+.hud-card:hover {
+  box-shadow:
+    0 0 32px rgba(0, 240, 255, 0.65),
+    inset 0 0 20px rgba(0, 240, 255, 0.25),
+    0 20px 45px rgba(0, 0, 0, 0.85);
+  border-color: #38FFFF;
+}
+
+/* Cabecera de la tarjeta */
+.hud-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 7px;
+  margin-bottom: 10px;
+  border-bottom: none;
+  position: relative;
+}
+
+.hud-card-recursos .hud-card-header {
+  border-bottom: 1px solid rgba(0, 240, 255, 0.25);
+  padding-bottom: 8px;
+  margin-bottom: 11px;
+}
+
+.hud-header-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-card-title {
+  margin: 0;
+  font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  line-height: 1.15;
+}
+
+.hud-header-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  filter: drop-shadow(0 0 5px #00F0FF);
+}
+
+/* Indicador de estado verde neón (Hoja / Gotero en esquina superior derecha) */
+.hud-status-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  filter: drop-shadow(0 0 7px rgba(0, 255, 102, 0.85));
+  animation: hudPulseBadge 3s infinite ease-in-out;
+}
+
+.hud-status-badge svg {
+  width: 17px;
+  height: 17px;
+}
+
+@keyframes hudPulseBadge {
+  0%, 100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 7px rgba(0, 255, 102, 0.85)); }
+  50% { opacity: 0.85; transform: scale(1.08); filter: drop-shadow(0 0 12px rgba(0, 255, 102, 1)); }
+}
+
+/* ==========================================================================
+   POSICIONES EXACTAS Y PERSPECTIVA 3D HACIA ADENTRO
+   ========================================================================== */
+
+/* 1. TARJETA AGENDA DIGITAL (Lateral izquierdo superior) */
+.hud-card-agenda {
+  left: 4.8%;
+  top: 8%;
+  width: clamp(230px, 19vw, 280px);
+  padding: 14px 16px 16px 16px;
+  transform-origin: left center;
+}
+
+/* 2. TARJETA PROGRESO ESTUDIANTIL (Medio-izquierdo junto a la chica) */
+.hud-card-progreso {
+  left: 21.8%;
+  top: 18.5%;
+  width: clamp(225px, 18.5vw, 275px);
+  padding: 14px 16px 16px 16px;
+  transform-origin: left center;
+}
+
+/* 3. TARJETA RECURSOS INTERACTIVOS (Superior derecho) */
+.hud-card-recursos {
+  right: 3.8%;
+  top: 6.8%;
+  width: clamp(260px, 22.5vw, 330px);
+  padding: 14px 18px 16px 18px;
+  transform-origin: right center;
+}
+
+/* 4. TARJETA COMUNIDAD EDUCATIVA (Inferior derecho, sobre pufs amarillos) */
+.hud-card-comunidad {
+  right: 3.8%;
+  top: 54.5%;
+  width: clamp(260px, 22.5vw, 330px);
+  padding: 14px 18px 16px 18px;
+  transform-origin: right center;
+}
+
+/* ==========================================================================
+   DETALLE DE CONTENIDOS: TARJETA 1 (AGENDA DIGITAL)
+   ========================================================================== */
+
+.hud-schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.hud-schedule-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  transition: transform 0.2s ease;
+}
+
+.hud-schedule-row:hover {
+  transform: translateX(3px);
+}
+
+.hud-time-pill {
+  width: 60px;
+  min-width: 60px;
+  padding: 6px 0;
+  border-radius: 7px;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: #FFFFFF;
+  text-align: center;
+  letter-spacing: 0.02em;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+}
+
+.hud-time-pill.pill-orange {
+  background: linear-gradient(135deg, #FF8A00 0%, #FF6E00 100%);
+  box-shadow: 0 3px 8px rgba(255, 122, 0, 0.4);
+}
+
+.hud-time-pill.pill-green {
+  background: linear-gradient(135deg, #00E63D 0%, #00C82B 100%);
+  box-shadow: 0 3px 8px rgba(0, 214, 50, 0.4);
+}
+
+.hud-time-pill.pill-blue {
+  background: linear-gradient(135deg, #0072FF 0%, #0056E0 100%);
+  box-shadow: 0 3px 8px rgba(0, 102, 255, 0.4);
+}
+
+.hud-time-pill.pill-purple {
+  background: linear-gradient(135deg, #B200FF 0%, #9000E0 100%);
+  box-shadow: 0 3px 8px rgba(176, 0, 255, 0.4);
+}
+
+.hud-class-info {
+  flex: 1;
+  background: rgba(11, 35, 62, 0.82);
+  border: 1px solid rgba(0, 240, 255, 0.14);
+  border-radius: 7px;
+  padding: 5px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 33px;
+  box-shadow: inset 0 0 8px rgba(0, 240, 255, 0.05);
+}
+
+.hud-class-subject {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.hud-class-room {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #7DD3FC;
+  line-height: 1.2;
+  margin-top: 1px;
+}
+
+/* ==========================================================================
+   DETALLE DE CONTENIDOS: TARJETA 2 (PROGRESO ESTUDIANTIL)
+   ========================================================================== */
+
+.hud-progreso-body {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+}
+
+.hud-chart-panel {
+  position: relative;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.hud-chart-axes {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 18px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.hud-axis-mark {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #94A3B8;
+  width: 100%;
+}
+
+.hud-axis-mark span {
+  width: 18px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.hud-axis-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(0, 240, 255, 0.12);
+}
+
+.hud-axis-range-icon {
+  position: absolute;
+  left: 4px;
+  top: 76px;
+  font-size: 10px;
+  color: #00F0FF;
+  letter-spacing: -1px;
+  pointer-events: none;
+  filter: drop-shadow(0 0 3px #00F0FF);
+}
+
+.hud-bars-container {
+  margin-left: 22px;
+  height: 100px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 6px 18px 6px;
+  position: relative;
+}
+
+.hud-trend-svg-overlay {
+  position: absolute;
+  left: 22px;
+  top: 2px;
+  right: 6px;
+  bottom: 18px;
+  width: calc(100% - 28px);
+  height: 80px;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.hud-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 17px;
+  height: 100%;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 2;
+}
+
+.hud-bar-fill {
+  width: 17px;
+  border-radius: 3px 3px 0 0;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.hud-bar-fill.bar-ene {
+  height: 16px;
+  background: #00E676;
+}
+
+.hud-bar-fill.bar-feb {
+  height: 32px;
+  background: #00D632;
+}
+
+.hud-bar-fill.bar-mar {
+  height: 52px;
+  background: #00A3FF;
+}
+
+.hud-bar-fill.bar-abr {
+  height: 74px;
+  background: #FF8C00;
+}
+
+.hud-bar-label {
+  position: absolute;
+  bottom: -16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #CBD5E1;
+}
+
+.hud-gauge-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.hud-donut-wrap {
+  position: relative;
+  width: 95px;
+  height: 95px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hud-donut-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.hud-activity-slider {
+  width: 100%;
+  max-width: 100px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.hud-runner-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #00FF66;
+  box-shadow: 0 0 6px #00FF66;
+  flex-shrink: 0;
+}
+
+.hud-runner-track {
+  flex: 1;
+  height: 2px;
+  background: rgba(0, 240, 255, 0.35);
+  position: relative;
+  border-radius: 2px;
+}
+
+.hud-runner-track::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 65%;
+  height: 100%;
+  background: #00F0FF;
+  box-shadow: 0 0 5px #00F0FF;
+  border-radius: 2px;
+}
+
+.hud-runner-icon {
+  filter: drop-shadow(0 0 5px #00FF66);
+  color: #00FF66;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.hud-runner-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ==========================================================================
+   DETALLE DE CONTENIDOS: TARJETAS 3 Y 4 (BOTONES DE ACCIÓN)
+   ========================================================================== */
+
+.hud-buttons-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 4px;
+  width: 100%;
+}
+
+.hud-interactive-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hud-interactive-tile:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+
+.hud-tile-box {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 58px;
+  background: rgba(7, 26, 52, 0.75);
+  border: 1.5px solid rgba(0, 240, 255, 0.42);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset 0 0 8px rgba(0, 240, 255, 0.12),
+    0 3px 10px rgba(0, 0, 0, 0.4);
+  transition: all 0.25s ease;
+  color: #00F0FF;
+}
+
+.hud-interactive-tile:hover .hud-tile-box {
+  border-color: #00F0FF;
+  background: rgba(10, 36, 70, 0.9);
+  box-shadow:
+    0 0 16px rgba(0, 240, 255, 0.6),
+    inset 0 0 12px rgba(0, 240, 255, 0.26);
+}
+
+.hud-tile-box svg {
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 0 4px rgba(0, 240, 255, 0.6));
+  transition: transform 0.25s ease;
+}
+
+.hud-interactive-tile:hover .hud-tile-box svg {
+  transform: scale(1.08);
+}
+
+.hud-tile-label {
+  margin-top: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #E2E8F0;
+  text-align: center;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  transition: color 0.2s ease;
+}
+
+.hud-interactive-tile:hover .hud-tile-label {
+  color: #FFFFFF;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+}
+
+/* ==========================================================================
+   HOLOGRAPHIC SUB-PILLS & TETHERS (Saber 11, Guías, Gestión)
+   ========================================================================== */
+
+.hud-subpill {
+  position: absolute;
+  top: calc(100% - 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: top center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  opacity: 0;
+  z-index: 30;
+}
+
+/* Tether vertical line with 2 glowing beads */
+.hud-tether-line {
+  position: relative;
+  width: 2px;
+  height: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tether-purple {
+  background: #C084FC;
+  box-shadow: 0 0 10px rgba(192, 132, 252, 0.85), 0 0 4px #A855F7;
+}
+
+.tether-green {
+  background: #34D399;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.85), 0 0 4px #10B981;
+}
+
+.tether-cyan {
+  background: #00F0FF;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.85), 0 0 4px #00F0FF;
+}
+
+.tether-node-top,
+.tether-node-bot {
+  border-radius: 50%;
+}
+
+.tether-purple .tether-node-top {
+  width: 9px;
+  height: 9px;
+  background: #FFFFFF;
+  box-shadow: 0 0 12px #C084FC, 0 0 4px #FFFFFF;
+  margin-top: -4px;
+}
+
+.tether-purple .tether-node-bot {
+  width: 7px;
+  height: 7px;
+  background: #C084FC;
+  box-shadow: 0 0 8px #A855F7;
+  margin-bottom: -3px;
+}
+
+.tether-green .tether-node-top {
+  width: 9px;
+  height: 9px;
+  background: #FFFFFF;
+  box-shadow: 0 0 12px #34D399, 0 0 4px #FFFFFF;
+  margin-top: -4px;
+}
+
+.tether-green .tether-node-bot {
+  width: 7px;
+  height: 7px;
+  background: #34D399;
+  box-shadow: 0 0 8px #10B981;
+  margin-bottom: -3px;
+}
+
+.tether-cyan .tether-node-top {
+  width: 9px;
+  height: 9px;
+  background: #FFFFFF;
+  box-shadow: 0 0 12px #00F0FF, 0 0 4px #FFFFFF;
+  margin-top: -4px;
+}
+
+.tether-cyan .tether-node-bot {
+  width: 7px;
+  height: 7px;
+  background: #00F0FF;
+  box-shadow: 0 0 8px #00F0FF;
+  margin-bottom: -3px;
+}
+
+/* Subpill box styling */
+.hud-subpill-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 18px;
+  border-radius: 16px;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  transition: all 0.25s ease;
+  user-select: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  white-space: nowrap;
+  min-width: 190px;
+}
+
+.hud-subpill-saber11 .hud-subpill-box {
+  background: linear-gradient(135deg, rgba(28, 8, 52, 0.90) 0%, rgba(14, 4, 28, 0.94) 100%);
+  border: 2px solid #C084FC;
+  box-shadow:
+    0 0 20px rgba(192, 132, 252, 0.45),
+    inset 0 0 12px rgba(192, 132, 252, 0.18),
+    0 10px 28px rgba(0, 0, 0, 0.65);
+}
+
+.hud-subpill-saber11:hover .hud-subpill-box {
+  border-color: #E9D5FF;
+  box-shadow:
+    0 0 32px rgba(192, 132, 252, 0.75),
+    inset 0 0 18px rgba(192, 132, 252, 0.3),
+    0 14px 34px rgba(0, 0, 0, 0.8);
+  transform: scale(1.03);
+}
+
+.hud-subpill-guias .hud-subpill-box {
+  background: linear-gradient(135deg, rgba(4, 32, 22, 0.90) 0%, rgba(2, 18, 12, 0.94) 100%);
+  border: 2px solid #34D399;
+  box-shadow:
+    0 0 20px rgba(52, 211, 153, 0.45),
+    inset 0 0 12px rgba(52, 211, 153, 0.18),
+    0 10px 28px rgba(0, 0, 0, 0.65);
+}
+
+.hud-subpill-guias:hover .hud-subpill-box {
+  border-color: #A7F3D0;
+  box-shadow:
+    0 0 32px rgba(52, 211, 153, 0.75),
+    inset 0 0 18px rgba(52, 211, 153, 0.3),
+    0 14px 34px rgba(0, 0, 0, 0.8);
+  transform: scale(1.03);
+}
+
+.hud-subpill-gestion .hud-subpill-box {
+  background: linear-gradient(135deg, rgba(6, 26, 50, 0.90) 0%, rgba(3, 14, 28, 0.94) 100%);
+  border: 2px solid #00F0FF;
+  box-shadow:
+    0 0 20px rgba(0, 240, 255, 0.45),
+    inset 0 0 12px rgba(0, 240, 255, 0.18),
+    0 10px 28px rgba(0, 0, 0, 0.65);
+}
+
+.hud-subpill-gestion:hover .hud-subpill-box {
+  border-color: #67E8F9;
+  box-shadow:
+    0 0 32px rgba(0, 240, 255, 0.75),
+    inset 0 0 18px rgba(0, 240, 255, 0.3),
+    0 14px 34px rgba(0, 0, 0, 0.8);
+  transform: scale(1.03);
+}
+
+/* Icon Wrap */
+.subpill-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subpill-divider {
+  width: 1px;
+  height: 30px;
+}
+
+.hud-subpill-saber11 .subpill-divider {
+  background: rgba(192, 132, 252, 0.4);
+}
+
+.hud-subpill-guias .subpill-divider {
+  background: rgba(52, 211, 153, 0.4);
+}
+
+.hud-subpill-gestion .subpill-divider {
+  background: rgba(0, 240, 255, 0.4);
+}
+
+/* Text formatting */
+.subpill-text-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.15;
+}
+
+.subpill-text-line1,
+.subpill-text-line2 {
+  font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: clamp(14px, 1.1vw, 16px);
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.01em;
+}
+
+/* Sub-pills are cleanly anchored to the bottom edge of their respective parent cards */
+.hud-subpill-saber11,
+.hud-subpill-guias,
+.hud-subpill-gestion {
+  top: calc(100% - 2px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ==========================================================================
+   ADAPTACIÓN RESPONSIVA (TABLETS Y MÓVILES)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .colegios-hud-layer {
+    perspective: none;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 70px 20px 60px 20px;
+  }
+
+  .colegios-hud-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 640px;
+    margin: auto;
+    height: auto;
+  }
+
+  .hud-card {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+  }
+
+  .hud-subpill {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    margin: 6px 0;
+  }
+
+  .hud-tether-line {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .colegios-hud-grid {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+  }
+}
+

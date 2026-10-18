@@ -1,0 +1,151 @@
+import os, subprocess
+from PIL import Image
+import numpy as np
+
+html = """<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 1280px;
+      height: 720px;
+      overflow: hidden;
+      background: url('assets/frames_inicio/frame_0120.webp') no-repeat center center;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .holo-card {
+      position: absolute;
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      overflow: hidden;
+      
+      /* Pure translucent crystal glass (alta traslucidez) */
+      background: linear-gradient(180deg, 
+        rgba(215, 240, 255, 0.18) 0%, 
+        rgba(160, 215, 255, 0.08) 40%, 
+        rgba(100, 185, 255, 0.08) 70%, 
+        rgba(0, 220, 255, 0.15) 100%
+      );
+
+      /* Optical glassmorphism blur */
+      backdrop-filter: blur(5px) saturate(115%) brightness(1.02);
+      -webkit-backdrop-filter: blur(5px) saturate(115%) brightness(1.02);
+
+      /* Crisp electric cyan border & soft neon glow */
+      border: 2px solid #5ee5ff;
+      box-shadow: 
+        0 0 10px rgba(0, 240, 255, 0.65),
+        0 0 22px rgba(0, 220, 255, 0.35),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8),
+        inset 0 0 10px rgba(0, 225, 255, 0.2);
+    }
+
+    /* Subtle top glowing bar */
+    .holo-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.95) 30%, rgba(94, 229, 255, 0.95) 70%, transparent 100%);
+      filter: blur(0.5px);
+      pointer-events: none;
+    }
+
+    .holo-card span {
+      position: relative;
+      z-index: 3;
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 50px;
+      letter-spacing: 0.01em;
+      line-height: 1;
+      text-shadow: 
+        0 2px 6px rgba(0, 15, 45, 0.35),
+        0 0 12px rgba(56, 189, 248, 0.6);
+    }
+
+    .holo-card.double-line span {
+      font-size: 40px;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    /* Positions matching video */
+    .hotspot-colegios {
+      left: 6.25%; top: 31.25%;
+      width: 22.5%; height: 24.5%;
+    }
+    .hotspot-canada {
+      left: 46.88%; top: 32.5%;
+      width: 21.0%; height: 23.5%;
+    }
+    .hotspot-emisora {
+      left: 70.0%; top: 30.5%;
+      width: 22.5%; height: 25.5%;
+    }
+  </style>
+</head>
+<body>
+  <div class="holo-card hotspot-colegios">
+    <span>Colegio</span>
+  </div>
+  <div class="holo-card hotspot-canada">
+    <span>Canadá</span>
+  </div>
+  <div class="holo-card double-line hotspot-emisora">
+    <span>Emisora<br>Digital</span>
+  </div>
+</body>
+</html>
+"""
+
+with open('test_translucent_v3.html', 'w', encoding='utf-8') as f:
+    f.write(html)
+
+edge = r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
+png_file = os.path.abspath('test_translucent_v3.png')
+subprocess.run([
+    edge,
+    '--headless=new',
+    '--disable-gpu',
+    '--window-size=1280,720',
+    f'--screenshot={png_file}',
+    'file:///' + os.path.abspath('test_translucent_v3.html')
+], capture_output=True)
+
+ren_full = Image.open(png_file)
+crop_canada_ren = ren_full.crop((580, 215, 890, 425))
+crop_canada_ren.save('canada_translucent_v3_crop.png')
+
+# User's uploaded reference:
+ref_user = Image.open(r'C:\Users\estac\.gemini\antigravity-ide\brain\b2b9e79c-333e-45db-982b-0cec8017693f\.user_uploaded\media_1792281756807.png')
+
+# Side by side comparison:
+comp = Image.new('RGB', (ref_user.width, ref_user.height + ref_user.height + 10))
+comp.paste(ref_user.convert('RGB'), (0, 0))
+comp.paste(crop_canada_ren.resize((ref_user.width, ref_user.height)), (0, ref_user.height + 10))
+comp.save('translucent_v3_comparison.png')
+print('translucent_v3_comparison.png saved')

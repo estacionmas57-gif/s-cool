@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interacción • Mujer Señalando con el Mouse</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hud {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 16px 22px;
+      border-radius: 14px;
+      font-size: 14px;
+      line-height: 1.6;
+      pointer-events: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .hud h1 { font-size: 16px; color: #4EBEB4; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+    .hud h1 span.badge {
+      background: rgba(78, 190, 180, 0.2);
+      border: 1px solid #4EBEB4;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      color: #4EBEB4;
+    }
+    .hud p { color: rgba(255, 255, 255, 0.8); }
+    .hud .stats { color: #f59e0b; font-weight: 700; margin-top: 4px; font-variant-numeric: tabular-nums; }
+
+    .canvas-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .cue-pill {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 10px 24px;
+      border-radius: 999px;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    }
+    .cue-pill .arrows {
+      color: #4EBEB4;
+      font-weight: 900;
+      font-size: 16px;
+      animation: pulse-arrows 1.5s infinite ease-in-out;
+    }
+    @keyframes pulse-arrows {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hud">
+    <h1>Interacción con el Brazo <span class="badge">60 FPS WebP</span></h1>
+    <p>Mueve el mouse horizontalmente (izquierda ↔ derecha).</p>
+    <div class="stats" id="hud-stats">Frame: 1 / 63 | Posición: 0%</div>
+  </div>
+
+  <div class="cue-pill">
+    <span class="arrows">←</span> Mueve el cursor a los lados <span class="arrows">→</span>
+  </div>
+
+  <div class="canvas-container">
+    <canvas id="interactive-canvas"></canvas>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const TOTAL_FRAMES = 63;
+      const FRAMES_DIR = 'assets/frames_woman_pointing';
+      const canvas = document.getElementById('interactive-canvas');
+      const ctx = canvas.getContext('2d', { alpha: false });
+      const hudStats = document.getElementById('hud-stats');
+
+      const frames = new Array(TOTAL_FRAMES + 1);
+      let targetProgress = 0;
+      let currentProgress = 0;
+      let lastDrawnIndex = -1;
+      let isRendering = false;
+
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(window.innerWidth * dpr);
+        canvas.height = Math.round(window.innerHeight * dpr);
+        if (lastDrawnIndex > 0) {
+          drawFrame(lastDrawnIndex);
+        } else {
+          drawFrame(1);
+        }
+      }
+
+      function loadFrame(i, cb) {
+        if (i < 1 || i > TOTAL_FRAMES) return null;
+        if (frames[i]) return frames[i];
+        const img = new Image();
+        const num = String(i).padStart(4, '0');
+        img.src = `${FRAMES_DIR}/frame_${num}.webp`;
+        img.onload = () => {
+          if (cb) cb(i);
+          if (i === 1 && lastDrawnIndex === -1) {
+            drawFrame(1);
+          }
+        };
+        frames[i] = img;
+        return img;
+      }
+
+      function preloadAll() {
+        // Load first and last immediately
+        loadFrame(1);
+        loadFrame(TOTAL_FRAMES);
+
+        // Preload rest in quick stream
+        let cur = 2;
+        function streamNext() {
+          const CHUNK = 8;
+          let count = 0;
+          while (cur < TOTAL_FRAMES && count < CHUNK) {
+            loadFrame(cur);
+            cur++;
+            count++;
+          }
+          if (cur < TOTAL_FRAMES) {
+            setTimeout(streamNext, 20);
+          }
+        }
+        setTimeout(streamNext, 40);
+      }
+
+      function getNearestLoaded(idx) {
+        if (frames[idx] && frames[idx].complete && frames[idx].naturalWidth > 0) return frames[idx];
+        for (let off = 1; off < TOTAL_FRAMES; off++) {
+          const lo = frames[idx - off];
+          if (lo && lo.complete && lo.naturalWidth > 0) return lo;
+          const hi = frames[idx + off];
+          if (hi && hi.complete && hi.naturalWidth > 0) return hi;
+        }
+        return frames[1];
+      }
+
+      function drawFrame(idx) {
+        const img = getNearestLoaded(idx);
+        if (!img || !img.complete || img.naturalWidth === 0) return;
+
+        const cW = canvas.width;
+        const cH = canvas.height;
+        const iW = img.naturalWidth;
+        const iH = img.naturalHeight;
+
+        const scale = Math.max(cW / iW, cH / iH);
+        const dW = iW * scale;
+        const dH = iH * scale;
+        const dX = (cW - dW) * 0.5;
+        const dY = (cH - dH) * 0.5;
+
+        ctx.drawImage(img, dX, dY, dW, dH);
+        lastDrawnIndex = idx;
+
+        if (hudStats) {
+          hudStats.textContent = `Frame: ${idx} / ${TOTAL_FRAMES} | Brazo: ${(currentProgress * 100).toFixed(0)}%`;
+        }
+      }
+
+      function onMouseMove(e) {
+        const margin = window.innerWidth * 0.12;
+        const effectiveW = Math.max(1, window.innerWidth - margin * 2);
+        const clampedX = Math.max(0, Math.min(effectiveW, e.clientX - margin));
+        targetProgress = clampedX / effectiveW;
+
+        if (!isRendering) {
+          isRendering = true;
+          requestAnimationFrame(renderLoop);
+        }
+      }
+
+      function renderLoop() {
+        const diff = targetProgress - currentProgress;
+        currentProgress += diff * 0.12; // Natural, responsive LERP smoothing
+
+        const targetIndex = Math.min(TOTAL_FRAMES, Math.max(1, Math.round(1 + currentProgress * (TOTAL_FRAMES - 1))));
+
+        if (targetIndex !== lastDrawnIndex) {
+          drawFrame(targetIndex);
+        }
+
+        if (Math.abs(diff) > 0.001) {
+          requestAnimationFrame(renderLoop);
+        } else {
+          isRendering = false;
+        }
+      }
+
+      window.addEventListener('resize', resize);
+      window.addEventListener('mousemove', onMouseMove, { passive: true });
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches && e.touches.length > 0) {
+          onMouseMove(e.touches[0]);
+        }
+      }, { passive: true });
+
+      resize();
+      preloadAll();
+    })();
+  </script>
+</body>
+</html>

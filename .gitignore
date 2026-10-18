@@ -1,0 +1,41 @@
+# Binaries & tools
+tools/ffmpeg.exe
+tools/ffprobe.exe
+node_modules/
+
+# Scratch & Browser profiles
+scratch/
+__pycache__/
+*.pyc
+
+# Root debug and test scripts
+/*.png
+/*.jpg
+/*.txt
+/*.blend1
+check_*.js
+inspect_*.js
+debug_*.js
+diag_*.js
+verify_*.js
+test_*.js
+capture_*.js
+generate_*.js
+get_*.js
+preview_*.js
+step_*.py
+range_server.py
+s_polygon_data.py
+find_bounds.js
+calc_screen_box.js
+scratch_check.js
+reorganize_html.js
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment / IDE
+.vscode/
+.idea/

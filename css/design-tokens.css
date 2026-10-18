@@ -1,0 +1,77 @@
+/* ==========================================================================
+   AURA / GREENOASIS • DESIGN SYSTEM TOKENS
+   Inspired by the botanical minimalist reference images:
+   - Soft organic sage green gradients (#4F7355 to #8DB38D to #D2E6D0)
+   - Pure crisp white typography and pill borders
+   - Warm orange and subtle gold accents
+   - Frosted glassmorphism with high-diffusion backdrop blur
+   ========================================================================== */
+
+:root {
+  /* GreenOasis Reference Botanical Palette */
+  --bg-sage-dark: #567e65;
+  --bg-sage-medium: #799584;
+  --bg-sage-light: #9ecaa2;
+  --bg-sage-soft: #aedeb1;
+  --bg-sage-pale: #c6e1c4;
+  --bg-sage-mist: #e8f5e7;
+
+  /* Legacy compatibility maps */
+  --bg-sand-light: #c6e1c4;
+  --bg-sand-base: #9ecaa2;
+  --bg-sand-dark: #799584;
+  --bg-sand-shadow: #567e65;
+  --chalkboard-deep: #1e3a29;
+  --chalkboard-accent: #A3E635;
+  --desk-wood: #D4AF37;
+  --canadian-crimson: #FF7A30;
+  --oxford-blue: #1c4b35;
+  --slate-blue: #2d563e;
+  --slate-blue-dark: #193826;
+
+  /* Gradient Studios */
+  --hero-gradient-bg: radial-gradient(circle at 48% 38%, #162E3B 0%, #0E1A24 45%, #070B10 100%);
+  --card-gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.10) 100%);
+  
+  /* Brand Accent Colors */
+  --accent-orange: #FF7A30;
+  --accent-orange-glow: rgba(255, 122, 48, 0.35);
+  --accent-gold: #D4AF37;
+  --accent-emerald: #1B4D2E;
+  --accent-lime: #A3E635;
+
+  /* Frosted Glassmorphism Tokens (Exact Match to Reference Cards) */
+  --glass-bg: rgba(255, 255, 255, 0.22);
+  --glass-bg-subtle: rgba(255, 255, 255, 0.12);
+  --glass-bg-solid: rgba(255, 255, 255, 0.35);
+  --glass-border: rgba(255, 255, 255, 0.45);
+  --glass-border-subtle: rgba(255, 255, 255, 0.25);
+  --glass-border-glow: rgba(255, 255, 255, 0.75);
+  --glass-blur: 28px;
+
+  /* Text & Contrast */
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(255, 255, 255, 0.90);
+  --text-muted: rgba(255, 255, 255, 0.70);
+  --text-dark: #1F3323;
+  --text-on-dark: #FFFFFF;
+  --text-on-glass: #FFFFFF;
+
+  /* Typography */
+  --font-display: 'Outfit', 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-mono: 'Space Grotesk', monospace;
+
+  /* Soft Organic Shadows (from the reference composition) */
+  --shadow-soft-sm: 0 8px 24px rgba(25, 45, 28, 0.12);
+  --shadow-soft-md: 0 16px 40px rgba(25, 45, 28, 0.18);
+  --shadow-soft-lg: 0 30px 70px rgba(25, 45, 28, 0.24);
+  --shadow-glass: 0 20px 50px rgba(20, 40, 22, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+
+  /* Animation Easing */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.2s var(--ease-smooth);
+  --transition-normal: 0.4s var(--ease-smooth);
+  --transition-slow: 0.8s var(--ease-smooth);
+}

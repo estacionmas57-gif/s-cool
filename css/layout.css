@@ -1,0 +1,465 @@
+/* ==========================================================================
+   AURA • LAYOUT & GLOBAL NAVIGATION (WARM MINIMALIST GLASS)
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background-color: #070B10;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  overflow-x: clip;
+  position: relative;
+  background-image: 
+    radial-gradient(circle at 48% 38%, #162E3B 0%, #0E1A24 45%, #070B10 100%);
+  background-attachment: fixed;
+}
+
+/* Custom Minimal Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #070B10;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E3A4B;
+  border-radius: 10px;
+  border: 2px solid #070B10;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2E5A74;
+}
+
+/* ==========================================================================
+   BACKGROUND 3D CANVAS (MATTE SPHERES)
+   ========================================================================== */
+#spheres-canvas-container {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none; /* Allows user to click glass UI over canvas */
+  overflow: hidden;
+  will-change: opacity, transform;
+}
+
+#spheres-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ==========================================================================
+   CUSTOM MAGNETIC CURSOR
+   ========================================================================== */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: var(--slate-blue);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s var(--ease-smooth), height 0.25s var(--ease-smooth), background-color 0.25s;
+}
+
+.custom-cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(68, 86, 96, 0.35);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.12s ease-out, width 0.3s var(--ease-smooth), height 0.3s var(--ease-smooth), border-color 0.3s, background-color 0.3s;
+}
+
+.custom-cursor.hovered {
+  width: 16px;
+  height: 16px;
+  background-color: var(--terracotta-accent);
+}
+
+.custom-cursor-follower.hovered {
+  width: 54px;
+  height: 54px;
+  border-color: rgba(200, 109, 81, 0.4);
+  background-color: rgba(200, 109, 81, 0.06);
+}
+
+/* ==========================================================================
+   FLOATING FROSTED GLASS HEADER
+   ========================================================================== */
+.app-header {
+  display: none !important; /* Top navbar removed as requested */
+}
+
+/* ==========================================================================
+   3 DISTRIBUTED FROSTED GLASS ECOSYSTEM BUBBLES (COLEGIOS, IDIOMAS, EMISORA)
+   Estilo Vidrioso Blanco (Translucent Frosted Glass) - Static / Sin Vaivén
+   ========================================================================== */
+.ecosystem-bubbles-dock {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 90;
+}
+
+.eco-bubble-item {
+  pointer-events: auto;
+  position: fixed;
+  width: 106px;
+  height: 106px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  /* Translucent Frosted Glass (Estilo Vidrioso Blanco) */
+  background: radial-gradient(circle at 32% 25%, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.18) 58%, rgba(255, 255, 255, 0.08) 100%) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.68) !important;
+  box-shadow: 0 16px 38px -6px rgba(18, 48, 30, 0.20), inset 0 2px 4px rgba(255, 255, 255, 0.80), inset 0 -2px 6px rgba(255, 255, 255, 0.12) !important;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease, opacity 0.4s ease, background 0.35s ease, filter 0.35s ease;
+  overflow: visible;
+}
+
+/* Pulsing Aura Halo Ring */
+.bubble-pulse-ring {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 235, 255, 0.75);
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+/* Active Ecosystem Bubble State (Glowing Cyan Aura & Elevation) */
+.eco-bubble-item.is-active-pillar {
+  opacity: 1 !important;
+  transform: scale(1.12) translateY(-2px) !important;
+  border-color: rgba(140, 245, 255, 0.95) !important;
+  box-shadow: 
+    0 0 36px rgba(0, 230, 255, 0.45),
+    0 20px 48px -4px rgba(0, 0, 0, 0.55),
+    inset 0 2px 6px #FFFFFF,
+    inset 0 -2px 6px rgba(0, 230, 255, 0.30) !important;
+  background: radial-gradient(circle at 32% 25%, rgba(255, 255, 255, 0.52) 0%, rgba(180, 245, 255, 0.28) 55%, rgba(0, 200, 230, 0.16) 100%) !important;
+}
+
+.eco-bubble-item.is-active-pillar .bubble-pulse-ring {
+  opacity: 1;
+  animation: ecoPulseRing 2.5s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+@keyframes ecoPulseRing {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.85;
+    border-color: rgba(0, 240, 255, 0.85);
+  }
+  60% {
+    transform: scale(1.24);
+    opacity: 0.18;
+    border-color: rgba(0, 240, 255, 0.25);
+  }
+  100% {
+    transform: scale(1.34);
+    opacity: 0;
+  }
+}
+
+/* Dormant Bubble State (Softly dimmed when another pillar is focused) */
+.eco-bubble-item.is-dormant-pillar {
+  opacity: 0.50 !important;
+  transform: scale(0.95) !important;
+  filter: brightness(0.85);
+}
+
+.eco-bubble-item.is-dormant-pillar:hover {
+  opacity: 0.95 !important;
+  transform: scale(1.08) translateY(-2px) !important;
+  filter: brightness(1.08);
+}
+
+/* Status Indicator Chip on Bubbles */
+.bubble-active-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: rgba(0, 230, 255, 0.25);
+  border: 1px solid rgba(0, 240, 255, 0.70);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: var(--font-mono);
+  font-size: 0.46rem;
+  font-weight: 800;
+  color: #E0F7FF;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: 2px;
+  box-shadow: 0 0 8px rgba(0, 230, 255, 0.40);
+  opacity: 0;
+  transform: translateY(2px) scale(0.88);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.eco-bubble-item.is-active-pillar .bubble-active-chip {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.bubble-active-chip .chip-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #00F0FF;
+  box-shadow: 0 0 5px #00F0FF;
+  animation: chipBlink 1.4s ease-in-out infinite;
+}
+
+@keyframes chipBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* Emisora On-Air Pulse State */
+.eco-bubble-item.is-onair-pulse {
+  border-color: rgba(255, 75, 100, 0.90) !important;
+  box-shadow: 
+    0 0 35px rgba(255, 60, 90, 0.50),
+    0 20px 45px -4px rgba(0, 0, 0, 0.50),
+    inset 0 2px 8px #FFFFFF !important;
+}
+.eco-bubble-item.is-onair-pulse .bubble-pulse-ring {
+  border-color: rgba(255, 60, 90, 0.80);
+  opacity: 1;
+  animation: ecoPulseRing 1.6s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+/* Specific Positions matching reference drawing - Static (No Vaivén / Movement) */
+/* Bubble 1: Colegios (Upper area, above 'S' and 'DIGITAL') */
+.bubble-colegios {
+  top: clamp(45px, 8.5vh, 85px);
+  left: clamp(34%, 38.5vw, 44%);
+  animation: none !important;
+}
+
+/* Bubble 2: Idiomas (Mid-left area, to the left of 'S') */
+.bubble-idiomas {
+  top: clamp(200px, 28vh, 275px);
+  left: clamp(14%, 18vw, 24%);
+  animation: none !important;
+}
+
+/* Bubble 3: Emisora (Lower-left area, below level of 'S') */
+.bubble-emisora {
+  top: clamp(520px, 66vh, 630px);
+  left: clamp(15%, 19.5vw, 25%);
+  animation: none !important;
+}
+
+/* Gloss Highlight Crescent */
+.bubble-gloss-highlight {
+  position: absolute;
+  top: 7px;
+  left: 18px;
+  width: 36px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 100%);
+  transform: rotate(-28deg);
+  pointer-events: none;
+}
+
+.bubble-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  margin-bottom: 2px;
+  color: #FFFFFF;
+}
+
+.bubble-svg {
+  width: 25px;
+  height: 25px;
+  stroke: #FFFFFF !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(10, 30, 15, 0.35));
+}
+
+.bubble-text-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+.bubble-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  color: #FFFFFF !important;
+  text-transform: uppercase;
+  line-height: 1.1;
+  text-shadow: 0 1px 3px rgba(10, 30, 15, 0.40);
+}
+
+.bubble-tag {
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  font-weight: 750;
+  color: rgba(255, 255, 255, 0.92) !important;
+  letter-spacing: 0.03em;
+  margin-top: 1px;
+  text-shadow: 0 1px 2px rgba(10, 30, 15, 0.30);
+}
+
+/* Hover State */
+.eco-bubble-item:hover {
+  transform: scale(1.10) translateY(-3px) !important;
+  box-shadow: 0 24px 50px -4px rgba(18, 48, 30, 0.30), inset 0 2px 6px #FFFFFF !important;
+  background: radial-gradient(circle at 32% 25%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.28) 60%, rgba(255, 255, 255, 0.15) 100%) !important;
+  border-color: rgba(255, 255, 255, 0.90) !important;
+}
+
+.eco-bubble-item:hover .bubble-svg {
+  transform: scale(1.15) rotate(4deg);
+  stroke: #FFFFFF !important;
+}
+
+/* Smooth fade out when scrolling past hero */
+.ecosystem-bubbles-dock.scrolled-out {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.ecosystem-bubbles-dock.scrolled-out .eco-bubble-item {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  transform: scale(0.8) !important;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.brand-sphere-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #F0E5D3 0%, var(--slate-blue) 100%);
+  box-shadow: 0 4px 12px rgba(45, 40, 35, 0.18);
+  position: relative;
+}
+
+.brand-text-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.brand-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--slate-blue-light);
+  text-transform: uppercase;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-link-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 50px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s var(--ease-smooth);
+}
+
+.nav-link-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.header-cta-btn {
+  background: var(--slate-blue);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(68, 86, 96, 0.25);
+  transition: all 0.25s var(--ease-smooth);
+}
+
+.header-cta-btn:hover {
+  background: var(--slate-blue-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(68, 86, 96, 0.35);
+}
+
+/* Mobile Nav responsive */
+@media (max-width: 860px) {
+  .nav-links {
+    display: none;
+  }
+}
